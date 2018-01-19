@@ -1,29 +1,30 @@
+---
+title: docker的入门教程
+date: 2018-01-19 20:51:41
+tags:
+---
 # Docker入门级简易手册
-本篇经作为新手入门使用，大神们可以指导小弟修正，不喜勿喷，谢谢
-
-在线版：https://github.com/buxiaomo/MarkdownBooks
-
-
 
 本篇主要讲解如下几个知识点：
 
-1. CentOS7与Ubuntu下安装Docker，配置加速器
+1、CentOS7与Ubuntu下安装Docker，配置加速器
 
-2. 常见Dockerfile命令讲解
+2、常见Dockerfile命令讲解
 
-3. docker-compo安装与常见命令讲解
+3、 docker-compo安装与常见命令讲解
 
-4. 根据项目如何使用Docker部署应用
+4、 根据项目如何使用Docker部署应用
 
-   1. Swarm集群下发布基于LNMP的WordPress应用发布
-   2. NodeJS应用发布
-   3. Flask应用发布
-   4. 基于Tomcat定制封装Jenkins镜像
+    1. Swarm集群下发布基于LNMP的WordPress应用发布
+    2. NodeJS应用发布
+    3. Flask应用发布
+    4. 基于Tomcat定制封装Jenkins镜像
 
-5. 搭建私有仓库
+5、搭建私有仓库
 
-6. 每次代码写好了都要自己构建觉得麻烦怎么办？
+6、每次代码写好了都要自己构建觉得麻烦怎么办？
 
+<!---more--->
    ​
 
 
@@ -103,7 +104,7 @@ systemctl restart docker
 ```dockerfile
 FROM <image>
 FROM <image>:<tag>
-FROM <image>:<digest> 
+FROM <image>:<digest>
 
 eg:
 FROM debian:jessie
@@ -309,7 +310,7 @@ apt-get install python-pip -y
 # 通用命令
 pip --version
 pip install --upgrade pip
-pip install -U -i https://pypi.tuna.tsinghua.edu.cn/simple docker-compose 
+pip install -U -i https://pypi.tuna.tsinghua.edu.cn/simple docker-compose
 docker-compose version
 ```
 
@@ -888,7 +889,7 @@ CMD ["python","ssserver.py"]
 启动容器：
 
 ```
-docker run -d --name ssserverweb 
+docker run -d --name ssserverweb
 -p 8080:8000 \
 -v /var/run/docker.sock:/var/run/docker.sock:ro \
 -e ALIYUN_ID=*** \
@@ -1069,7 +1070,3 @@ systemctl restart docker
 2、使用GitHub代码托管与daocloud的公有云服务，构建速度不错，比Dockerhub快，不用等太久。
 
 3、Jenkins + github/Gitlab（自己动手丰衣足食）
-
-
-
-若有错误欢迎指出修正：95112082@qq.com
