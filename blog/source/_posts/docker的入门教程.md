@@ -807,9 +807,7 @@ memory_limit = 64M
 upload_max_filesize = 64M
 post_max_size = 64M
 max_execution_time = 600
-```
 
-本实例项目地址：https://github.com/buxiaomo/docker-compose/tree/master/wordpress
 
 总结：
 

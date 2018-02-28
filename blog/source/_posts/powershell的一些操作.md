@@ -5,10 +5,14 @@ tags:
 ---
 ### powershell中使用vim编辑器
 习惯使用linux的shell的用户在使用window时会习惯的使用powershell进行操作，而vim编辑器则是linux系统的必备编辑器了，如何在windows的powershell中使用vim命令调用vim编辑器呢？
+### powershell的一些命令
+linux中shell的命令大部分同样在powershll中可用.
 
 <!---more--->
-##### 准备工作
+#### powershell中使用vim编辑器
+
 ---
+
 1、下载安装vim编辑器：要使用vim命令在命令窗口打开vim编辑器首先得有vim编辑器软件，windows系统是默认的编辑器是记事本，所以得自己安装vim编辑器
 
 [vim编辑器下载地址](https://en.softonic.com/download/vim/windows/post-download?sl=1)
@@ -49,3 +53,7 @@ Function Edit-Vimrc
 }
 ```
 6、添加上述代码后，保存关闭记事本，然后重启PowerShell后，就可以正常使用了，输入vim即可在powershell中打开vim编辑器了。
+
+---
+
+#### powershell的一些命令

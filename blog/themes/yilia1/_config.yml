@@ -7,20 +7,19 @@ menu:
 
 # SubNav
 subnav:
-  github: "#"
-  weibo: "#"
-  rss: "#"
-  zhihu: "#"
-  qq: "#"
-  weixin: "#"
+  github: "https://github.com/qxx666"
+  weibo: "https://weibo.com/3959705863/profile?topnav=1&wvr=6&is_all=1"
+ # rss: "#"
+ # zhihu: "#"
+ # weixin: "#"
   #jianshu: "#"
   #douban: "#"
   #segmentfault: "#"
   #bilibili: "#"
   #acfun: "#"
-  #mail: "mailto:litten225@qq.com"
-  facebook: "#"
-  google: "#"
+  mail: "1170859893@qq.com"
+  facebook: "https://www.facebook.com/profile.php?id=100011004437070&ref=bookmarks"
+ # google: "#"
   #twitter: "#"
   #linkedin: "#"
 
