@@ -47,17 +47,28 @@ mv ambari.repo /etc/yum.repos.d/
 yum clean all
 yum list|grep ambari
 ```
-看到以下内容，说明ambari库设置正确
+1、看到以下内容，说明ambari库设置正确
 ![](/assets/img/ambari-repo.png)
 
-然后便可以执行一下命令进行安装
+2、然后便可以执行一下命令进行安装
 ```
 yum install ambari-server
 ```
-安装完成后执行一下命令进行初始化ambari-server
+3、安装完成后执行一下命令进行初始化ambari-server
 ~~~
 amari-server setup
 ~~~
-在这个交互式的设置中，采用默认配置即可。Ambari 会使用 Postgres 数据库，默认会安装并使用 Oracle 的 JDK。默认设置了 Ambari GUI 的登录用户为 admin/admin。并且指定 Ambari Server 的运行用户为 root。
+4、在这个交互式的设置中，采用默认配置即可。Ambari 会使用 Postgres 数据库，默认会安装并使用 Oracle 的 JDK。默认设置了 Ambari GUI 的登录用户为 admin/admin。并且指定 Ambari Server 的运行用户为 root。
 
-一般选择默认就可以了，如果安装途中遇到
+###### 一般选择默认就可以了，如果安装途中可能会遇到postgress报错问题，只要根据提示升级数据库就可以
+
+5、启动ambari服务
+```
+ambary-server start
+```
+6、在浏览器输入：http://ip:8080
+```
+用户名：admin
+密码：admin
+```
+7、接下来按照图形界面安装即可

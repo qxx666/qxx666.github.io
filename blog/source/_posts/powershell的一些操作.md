@@ -3,6 +3,7 @@ title: powershell的一些x操作
 date: 2018-01-19 17:27:28
 tags:
 ---
+##### 摘要
 ### powershell中使用vim编辑器
 习惯使用linux的shell的用户在使用window时会习惯的使用powershell进行操作，而vim编辑器则是linux系统的必备编辑器了，如何在windows的powershell中使用vim命令调用vim编辑器呢？
 ### powershell的一些命令
