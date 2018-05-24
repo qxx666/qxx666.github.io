@@ -21,7 +21,7 @@ tags:
 
 CentOS7默认采用的是firewalld管理netfilter子系统，底层调用的仍然是iptables命令。不同的防火墙软件相互间存在冲突，使用某个时应禁用其他的。
 ![工作原理](/assets/img/过滤.png)
-#### <font color=#0088 face="">Netfilter
+#### <font color=#0088 >Netfilter
 netfilter是Linux 2.4内核引入的全新的包过滤引擎。由一些数据包过滤表组成，这些表包含内核用来控制信息包过滤的规则集。iptables等等都是在用户空间修改过滤表规则的便捷工具。
 
 netfilter在数据包必须经过且可以读取规则的位置，共设有5个控制关卡。这5个关卡处的检查规则分别放在5个规则链中（有的叫钩子函数（hook functions）。也就是说5条链对应着数据包传输路径中的5个控制关卡，链中的规则会在对应的关卡检查和处理。任何一个数据包，只要经过本机，必然经过5个链中的某个或某几个。
@@ -36,7 +36,7 @@ netfilter在数据包必须经过且可以读取规则的位置，共设有5个�
 
 在进行路由选择后处理数据包（POSTROUTING）。
 ~~~
-#### <font color=#0088 face="">数据包的传输过程
+#### <font color=#0088 >数据包的传输过程
 
 1、当一个数据包进入网卡时，它首先进入PREROUTING链，内核根据数据包目的IP判断是否需要转送出去。
 
@@ -44,7 +44,7 @@ netfilter在数据包必须经过且可以读取规则的位置，共设有5个�
 
 3、如果数据包是要转发出去的，且内核允许转发，数据包就会如图所示向右移动，经过FORWARD链，然后到达POSTROUTING链输出。
 
-#### <font color=#0088 face="">Iptables
+#### <font color=#0088 >Iptables
 起源于freeBSD的ipfirewall(内核1.x时代)，所有规则都在内核中；2.0x后更名为ipchains，可以定义多条规则并串用；现在叫iptables，使用表组织规则链。
 
 iptablses按照用途和使用场合，将5条链各自切分到五张不同的表中。也就是说每张表中可以按需要单独为某些链配置规则。例如，mangle表和filter表中都能为INPUT链配置规则，当数据包流经INPUT位置（进入用户空间），这两个表中INPUT链的规则都会用来做过滤检查。
@@ -102,7 +102,7 @@ iptablses按照用途和使用场合，将5条链各自切分到五张不同的�
 
 隐式扩展匹配(对-p PROTO的扩展，或者说是-p PROTO的附加匹配条件)
 
-<font color=#0099ff face="">-m PROTO 可以省略，所以叫隐式
+<font color=#0099ff >-m PROTO 可以省略，所以叫隐式
 
 ```
 -m tcp   //-p tcp的扩展
@@ -190,7 +190,7 @@ MARK                 打防火墙标记。继续匹配规则。
 MIRROR           发送包之前交换IP源和目的地址，将数据包返回。中断过滤。
 ~~~  
 
-二、 <font color=#0088 face="">实例
+二、 <font color=#0088 >实例
 
 ```
 iptables -F           //删除iptables现有规则
@@ -243,12 +243,146 @@ iptables -t nat -A PREROUTING -d 192.168.10.18 -p tcp --dport 80 -j DNAT --to-de
 
 ```
 
- #### <font color=#0088 face="">Firewalld
+ #### <font color=#0088 >Firewalld
  dynamic firewall daemon。支持ipv4和ipv6。Centos7中默认将防火墙从iptables升级为了firewalld。firewalld相对于iptables主要的优点有：
 
  firewalld可以动态修改单条规则，而不需要像iptables那样，在修改了规则后必须得全部刷新才可以生效；
  firewalld在使用上要比iptables人性化很多，即使不明白“五张表五条链”而且对TCP/IP协议也不理解也可以实现大部分功能。　　
 
-一.firewalld的主要概念
+一.<font color=#0888>firewalld的主要概念
 
-1、过滤规则集合：zone
+1、过滤规则集合：<font color=#00888 >zone
+
+相较于传统的防火墙管理配置工具，firewalld支持动态更新技术并加入了区域（zone）的概念。简单来说，区域就是firewalld预先准备了几套防火墙策略集合（策略模板），用户可以根据生产场景的不同而选择合适的策略集合，从而实现防火墙策略之间的快速切换。例如，我们有一台笔记本电脑，每天都要在办公室、咖啡厅和家里使用。按常理来讲，这三者的安全性按照由高到低的顺序来排列，应该是家庭、公司办公室、咖啡厅。当前，我们希望为这台笔记本电脑指定如下防火墙策略规则：在家中允许访问所有服务；在办公室内仅允许访问文件共享服务；在咖啡厅仅允许上网浏览。在以往，我们需要频繁地手动设置防火墙策略规则，而现在只需要预设好区域集合，然后只需轻点鼠标就可以自动切换了，从而极大地提升了防火墙策略的应用效率。
+
+2、区域概念与作用
+
+防火墙的网络区域定义了网络连接的可信等级，我们可以根据不同场景来调用不同的firewalld区域，区域规则有：
+
+| 区域   | 默认规则策略     |
+| :------------- | :------------- |
+| trusted        | 允许所有的数据包。       |
+| home           | 拒绝流入的数据包，除非与输出流量数据包相关或是ssh,mdns,ipp-client,samba-client与dhcpv6-client服务则允许    |
+|internal        | 等同于home区域|
+| work           | 	拒绝流入的数据包，除非与输出流量数据包相关或是ssh,ipp-client与dhcpv6-client服务则允许       |
+| public         |拒绝流入的数据包，除非与输出流量数据包相关或是ssh,dhcpv6-client服务则允许。    |
+| external       |拒绝流入的数据包，除非与输出流量数据包相关或是ssh服务则允许。 |
+|dmz             |拒绝流入的数据包，除非与输出流量数据包相关或是ssh服务则允许。     |
+| block          |拒绝流入的数据包，除非与输出流量数据包相关。  |
+| drop           |拒绝流入的数据包，除非与输出流量数据包相关。 |
+
+3、字符管理工具
+
+如果想要更高效的配置妥当防火墙，那么就一定要学习字符管理工具firewall-cmd命令,命令参数有：
+
+| 参数                          |作用    |
+| :-------------              | :------------- |
+| --get-default-zone            | 查询默认的区域名称。      |
+| --set-default-zone=<区域名称>    |设置默认的区域，永久生效。    |
+|--get-zones                     | 显示可用的区域。 |
+| --get-services               |显示预先定义的服务。      |
+|--get-active-zones           |显示当前正在使用的区域与网卡名称。    |
+| --add-source=                | 将来源于此IP或子网的流量导向指定的区域。 |
+| --remove-source=             | 不再将此IP或子网的流量导向某个指定区域。       |
+| --add-interface=<网卡名称>     | 将来自于该网卡的所有流量都导向某个指定区域。   |
+|--change-interface=<网卡名称>      |将某个网卡与区域做关联。|
+|--list-all                    |显示当前区域的网卡配置参数，资源，端口以及服务等信息。  |
+|--list-all-zones               |显示所有区域的网卡配置参数，资源，端口以及服务等信息。  |
+|--add-service=<服务名>	       |设置默认区域允许该服务的流量。 |
+| --add-port=<端口号/协议>       | 允许默认区域允许该端口的流量。     |
+| --remove-service=<服务名>      |设置默认区域不再允许该服务的流量。    |
+| --remove-port=<端口号/协议>     | 允许默认区域不再允许该端口的流量。 |
+|--reload                       | 让“永久生效”的配置规则立即生效，覆盖当前的。 |
+| --panic-on                   |开启应急状况模式   |
+| --panic-off                  | 关闭应急状况模式|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### <font color=#0088>服务的访问控制列表(TCP Wrappers)
+TCP Wrappers是RHEL 7系统中默认启用的一款流量监控程序，它能够根据来访主机的地址与本机的目标服务程序作出允许或拒绝的操作。换句话说，Linux系统中其实有两个层面的防火墙，第一种是前面讲到的基于<font color=#FF000>TCP/IP协议的流量</font>过滤工具，而TCP Wrappers服务则是能允许或禁止<font color=#FF000>Linux系统提供服务</font>的防火墙，从而在更高层面保护了Linux系统的安全运行。
+
+TCP Wrappers服务的防火墙策略由两个控制列表文件所控制，用户可以编辑允许控制列表文件来放行对服务的请求流量，也可以编辑拒绝控制列表文件来阻止对服务的请求流量。控制列表文件修改后会立即生效，系统将会先检查允许控制列表文件（/etc/hosts.allow），如果匹配到相应的允许策略则放行流量；如果没有匹配，则去进一步匹配拒绝控制列表文件（/etc/hosts.deny），若找到匹配项则拒绝该流量。如果这两个文件全都没有匹配到，则默认放行流量
+
+<font color=#FF0000 >在配置TCP Wrappers服务时需要遵循两个原则：
+
+<font color=#00888>1、编写拒绝策略规则时，填写的是服务名称，而非协议名称；
+<font color=#00888>2、建议先编写拒绝策略规则，再编写允许策略规则，以便直观地看到相应的效果。
+<font color=#00888>3、 要想用好tcp_wrappers，首先检查某种服务是否受tcp_wrappers 管理,这种检查不一定正确
+```
+ldd $(which domainname) | grep libwra
+domainname=sshd httpd smb xinetd .........
+```
+1、与tcp_wrappers相关的文件有
+
+/etc/hosts.allow
+
+/etc/hosts.deny
+
+2、这两个文件格式
+
+<font color=#ff000>服务列表 ：地址列表 ：选项
+```
+A. 服务列表格式：如果有多个服务，那么就用逗号隔开
+B. 地址列表格式：
+1. 标准IP地址：例如：192.168.0.254，192.168.0.56如果多于一个用，隔开
+2. 主机名称：例如：www.baidu.com，　.example.con匹配整个域
+3. 利用掩码：192.168.0.0/255.255.255.0指定整个网段
+   注意：tcp_wrappers的掩码只支持长格式，不能用：192.168.0.0/24
+4. 网络名称：例如 @mynetwork
+宏定义
+ALL ：指代所有主机
+LOCAL ：指代本地主机
+KNOWN ：能够解析的
+UNKNOWN ：不能解析的
+PARANOID ：
+如：
+/etc/hosts.allow
+ sshd:192.168.0.0
+    /etc/hosts.deny
+ sshd:ALL
+ 此例子表明：sshd服务只允许192.168.0.0网段的主机访问，其他拒绝。
+C. 扩展选项：
+1、spawn : 执行某个命令
+如：
+vsftpd:192.168.0.0/255.255.255.0 ：spawn echo “login attempt from %c”to %s” | mail –s warning root
+ 其意是当192.168.0.0网段的主机来访问时，给root发一封邮件，邮件主题是：waring，邮件内容是：客户端主机（%c）试图访问服务端主机（%s)
+2、twist : 中断命令的执行：
+vsftpd:192.168.0.0/255.255.255.0: twist echo -e "\n\nWARNING connection not allowed.\n\n"
+ 其意是当未经允许的电脑尝试登入你的主机时， 对方的屏幕上就会显示上面的最后一行
+```
+
+3、高级用法
+```
+daemaon@host：client_list
+对于多块网卡的linux主机，要想用tcp_wrappers做一些控制得基于接口：
+如eth0所在的网段：192.168.0.0 eth1所在的网段：192.168.1.0
+ 则：
+   sshd@192.168.0.11:192.168.0.
+   sshd@192.168.1.34:192.168.1.
+   则两句可以根据需要写到hosts.allow或hosts.deny中
+典例：
+/etc/hosts.allow
+ sshd:ALL EXCEPT .cracker.org EXCEPT trusted.cracker.org
+/etc/hosts.deny
+ sshd:ALL
+此例用到了EXCEPT的嵌套,其意思是：允许所有访问sshd服务，在域.cracker.org的不允许访问
+但是trusted.cracker.org除外
+sshd：ALL 就是拒绝.cracker.org的访问，因为默认是允许，所以在hosts.deny中必须明确定义。
+```

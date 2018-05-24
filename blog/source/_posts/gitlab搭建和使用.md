@@ -129,6 +129,3 @@ yum install git
 
 * 浏览器登入gitlab产看修改结果
 ![](/assets/img/w2.png)
-
-
-###### 这里简单的说了一下gitlab部署和使用，至于怎么利用docker swarm将gitlab做成服务以集群的方式工作，以保证高可用，以及gitlab版本控制，权限控制等更多操作，等下一次有时间整理出来供大家参考。

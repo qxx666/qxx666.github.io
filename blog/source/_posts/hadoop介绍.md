@@ -3,21 +3,21 @@ title: hadoop介绍
 date: 2018-04-19 10:09:02
 tags:
 ---
-## hadoop生态
-#### MapReduce：分布式计算框架
-#### hdfs：分布式文件系统
-#### hive：建立在hdfs上的数据仓库
- Hive 主要是用来做数据分析的数据仓库，支持标准SQL 查询， 做数据分析很是方便，
-#### hbase：建立在hadoop上的面向列的开源数据库
-当我们用HBase 存储实时数据的时候， 如果要做一些数据分析方面的操作， 就比较困难了， 要写MapReduce Job。
-#### pig和hive都是数据分析的工具
-#### Flume、Scribe，Chukwa数据收集，收集非结构化数据的工具。
-#### Hiho、Sqoop：将关系数据库中的数据导入HDFS的或hbase中的工具
-#### Oozie：作业流调度引擎
-#### Avro:数据序列化工具
-#### mahout:数据挖掘工具
 ![hadoop生态](/assets/img/hadoop生态.jpg)
-
+```
+## hadoop生态
+1、 MapReduce：分布式计算框架
+3、hive：建立在hdfs上的数据仓库
+ Hive 主要是用来做数据分析的数据仓库，支持标准SQL 查询， 做数据分析很是方便，
+4、hbase：建立在hadoop上的面向列的开源数据库
+当我们用HBase 存储实时数据的时候， 如果要做一些数据分析方面的操作， 就比较困难了， 要写MapReduce Job。
+5、pig和hive都是数据分析的工具
+6、Flume、Scribe，Chukwa数据收集，收集非结构化数据的工具。
+7、 Hiho、Sqoop：将关系数据库中的数据导入HDFS的或hbase中的工具
+8、 Oozie：作业流调度引擎
+9、 Avro:数据序列化工具
+10、 mahout:数据挖掘工具
+```
 <!---more--->
 首先我们先了解一下Hadoop的起源。然后介绍一些关于Hadoop生态系统中的具体工具的使用方法。如:HDFS、MapReduce、Yarn、Zookeeper、Hive、HBase、Oozie、Mahout、Pig、Flume、Sqoop。
 ## Hadoop的起源

@@ -312,5 +312,4 @@ substr(string, start [, length])
 功能：取string字符串中的子串，从start开始，取length个；start从1开始计数；
 system(command)
 功能：执行系统command并将结果返回至awk命令
-
 ```

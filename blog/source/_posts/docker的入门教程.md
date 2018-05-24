@@ -300,7 +300,8 @@ docker-compose version
 
 #### 方法二
 
-```shell
+```
+shell
 CentOS:
 yum install epel-release -y
 yum install python-pip -y
@@ -321,7 +322,8 @@ docker-compose version
 
 注意nginx、php、mysql、redis这几个容器的网络是怎么通讯的。
 
-```yaml
+```
+yaml
 # 定义docker-compose版本，有些参数只有高版本才有，底版本没有
 version: '3.4'
 # 定义服务，可以是一个，也可以是多个
@@ -432,7 +434,8 @@ networks:
 
 以下文件中将只会备注单机版中没有说明的部分。
 
-```yaml
+```
+yaml
 version: '3.4'
 services:
     nginx:
@@ -588,7 +591,8 @@ MySQL：https://hub.docker.com/_/mysql/
 
 准备编排文件，内容如下（docker-compose.yaml）：
 
-```yaml
+```
+yaml
 version: '3.4'
 services:
     nginx:
@@ -809,7 +813,7 @@ upload_max_filesize = 64M
 post_max_size = 64M
 max_execution_time = 600
 
-
+```
 总结：
 
 本实例我们直接使用的是官方的镜像，没有做定制操作，原因如下：
