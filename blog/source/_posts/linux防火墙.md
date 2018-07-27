@@ -6,6 +6,8 @@ tags:
 #### <font color=#0088 face="">摘要
 <font color=#0099ff face="">本章将分别使用iptables、firewall-cmd、firewall-config和TCP Wrappers等防火墙策略配置服务来完成数十个根据真实工作需求而设计的防火墙策略配置实验。
 
+<!---more--->
+
 #### <font color=#0088 face="">防火墙种类
 
 
@@ -244,10 +246,13 @@ iptables -t nat -A PREROUTING -d 192.168.10.18 -p tcp --dport 80 -j DNAT --to-de
 ```
 
  #### <font color=#0088 >Firewalld
- dynamic firewall daemon。支持ipv4和ipv6。Centos7中默认将防火墙从iptables升级为了firewalld。firewalld相对于iptables主要的优点有：
+ dynamic firewall daemon。支持ipv4和ipv6。Centos7中默认将防火墙从iptables升级为了firewalld。
+ <font color=#0888>firewalld相对于iptables主要的优点有：
 
- firewalld可以动态修改单条规则，而不需要像iptables那样，在修改了规则后必须得全部刷新才可以生效；
- firewalld在使用上要比iptables人性化很多，即使不明白“五张表五条链”而且对TCP/IP协议也不理解也可以实现大部分功能。　　
+ 1. firewalld可以动态修改单条规则，而不需要像iptables那样，在修改了规则后必须得全部刷新才可以生效；
+ 2. firewalld在使用上要比iptables人性化很多，即使不明白“五张表五条链”而且对TCP/IP协议也不理解也可以实现大部分功能。　　
+
+ <font color=#0888>firewalld自身并不具备防火墙的功能，而是和iptables一样需要通过内核的netfilter来实现，也就是说firewalld和 iptables一样，他们的作用都是用于维护规则，而真正使用规则干活的是内核的netfilter，只不过firewalld和iptables的结构以及使用方法不一样罢了。
 
 一.<font color=#0888>firewalld的主要概念
 
@@ -273,7 +278,9 @@ iptables -t nat -A PREROUTING -d 192.168.10.18 -p tcp --dport 80 -j DNAT --to-de
 
 3、字符管理工具
 
-如果想要更高效的配置妥当防火墙，那么就一定要学习字符管理工具firewall-cmd命令,命令参数有：
+如果想要更高效的配置妥当防火墙，那么就一定要学习字符<font color=#0888>管理工具firewall-cmd命令</font>.
+1. 命令格式：firewall-cmd [参数]
+2. 命令参数有：
 
 | 参数                          |作用    |
 | :-------------              | :------------- |

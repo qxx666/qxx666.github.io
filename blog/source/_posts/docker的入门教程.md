@@ -825,7 +825,6 @@ max_execution_time = 600
 3、官方镜像基本可以满足大部分应用需求，所以基本不需要进行定制化，如果需要定制化可以直接使用FROM BASEIMAGE去做定制化，而不是从头再来。
 
 
-
 ### NodeJS应用发布
 
 ​	针对自己写Dockerfile构将APP镜像，首先需要有一点，你的APP必须可以前台运行！！！
@@ -906,11 +905,9 @@ ssserverweb:latest
 
 
 
-
 ### 基于Tomcat封装Jenkins镜像
 
 待补充
-
 
 
 ## 搭建私有仓库
