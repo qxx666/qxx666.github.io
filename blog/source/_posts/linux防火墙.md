@@ -68,7 +68,8 @@ iptablses按照用途和使用场合，将5条链各自切分到五张不同的�
 [](/assets/img/iptables.png)
 
 一、<font color=#0088 face="">命令格式：
-<font color=#0099ff face="">iptables [-t TABLE] COMMAND [CHAIN] [CRETIRIA]...  [-j  ACTION]
+<font color=#0099ff face="">iptables [-t table] COMMAND [chain] [CRETIRIA]...  [-j  ACTION]
+<font color=#0099ff face="">iptables [-t 表] -命令 匹配   操作
 
 1、COMMAND 命令选项
 ```
@@ -89,11 +90,13 @@ iptablses按照用途和使用场合，将5条链各自切分到五张不同的�
 
 ```
 -p|--proto  PROTO                      //按协议匹配，如tcp、udp、icmp，all表示所有协议。 （/etc/protocols中的协议名）
+    --sport           源端口号>       指定数据包匹配的源端口号
+    --dport           目的端口号>     指定数据包匹配的目的端口号
 -s|--source ADDRESS[/mask]...          //按数据包的源地址匹配，可使用IP地址、网络地址、主机名、域名
 -d|--destination ADDRESS[/mask]...     //按目标地址匹配，可使用IP地址、网络地址、主机名、域名
 -i|--in-interface INPUTNAME[ +]        //按入站接口(网卡)名匹配，+用于通配。如 eth0, eth+ 。一般用在INPUT和PREROUTING链
 -o|--out-interface OUTPUTNAME[+]       //按出站接口(网卡)名匹配，+用于通配。如 eth0, eth+ 。一般用在OUTPUT和POSTROUTING链
-
+-m|--match           匹配的模块      指定数据包规则所使用的过滤模块
 可使用 ! 可以否定一个子句，如-p !tcp
 ```
 3、 扩展匹配
@@ -162,24 +165,24 @@ iptablses按照用途和使用场合，将5条链各自切分到五张不同的�
 　　　　--uid-owner 500   //用来匹配来自本机的封包，是否为某特定使用者所产生的,可以避免服务器使用root或其它身分将敏感数据传送出
 　　　　--gid-owner O     //用来匹配来自本机的封包，是否为某特定使用者群组所产生的
 　　　　--pid-owner 78    //用来匹配来自本机的封包，是否为某特定进程所产生的
-　　　　--sid-owner 100   //用来匹配来自本机的封包，是否为某特定连接（Session ID）的响应封包
+　　　　--sd-owner 100   //用来匹配来自本机的封包，是否为某特定连接（Session ID）的响应封包
 
 ```
 4、 ACTION 目标策略(TARGET)
 ~~~
 -j|--jump TARGET                //跳转到目标规则，可能加载target extension
 -g|--goto  CHAIN                //跳转到指定链，不再返回
-ACCEPT             规则验证通过，不再检查当前链的后续规则，直接跳到下一个规则链。
-DROP                直接丢弃数据包，不给任何回应。中断过滤。
-REJECT             拒绝数据包通过，会返回响应信息。中断过滤。
+  ACCEPT             规则验证通过，不再检查当前链的后续规则，直接跳到下一个规则链。
+  DROP                直接丢弃数据包，不给任何回应。中断过滤。
+  REJECT             拒绝数据包通过，会返回响应信息。中断过滤。
 --reject-with  tcp-reset|port-unreachable|echo-reply
-LOG                  在/var/log/messages文件中记录日志，然后将数据包传递给下一条规则。详细位置可查看/etc/syslog.conf配置文件
+  LOG       在/var/log/messages文件中记录日志，然后将数据包传递给下一条规则。详细位置可查看/etc/syslog.conf配置文件
 --log-prefix "INPUT packets"
-ULOG                更广范围的日志记录信息
-QUEUE              防火墙将数据包移交到用户空间，通过一个内核模块把包交给本地用户程序。中断过滤。
-RETURN            防火墙停止执行当前链中的后续规则，并返回到调用链。主要用在自定义链中。
-custom_chain    转向自定义规则链
-DNAT                目标地址转换，改变数据包的目标地址。外网访问内网资源，主要用在PREROUTING。完成后跳到下一个规则链
+  ULOG                更广范围的日志记录信息
+  QUEUE              防火墙将数据包移交到用户空间，通过一个内核模块把包交给本地用户程序。中断过滤。
+  RETURN            防火墙停止执行当前链中的后续规则，并返回到调用链。主要用在自定义链中。
+  custom_chain    转向自定义规则链
+  DNAT                目标地址转换，改变数据包的目标地址。外网访问内网资源，主要用在PREROUTING。完成后跳到下一个规则链
 --to-destination ADDRESS[-ADDRESS][:PORT[-PORT]]
 SNAT                源地址转换，改变数据包的源地址。内网访问外网资源。主机的IP地址必须是静态的，主要用在POSTROUTING。完成后跳到下一个规则链。
 --to-source ADDRESS[-ADDRESS][:PORT[-PORT]]
@@ -187,10 +190,58 @@ MASQUERADE   源地址伪装，用于主机IP是ISP动态分配的情况，会�
 --to-ports 1024-31000
 REDIRECT        数据包重定向，主要是端口重定向，把包分流。处理完成后继续匹配其他规则。能会用这个功能来迫使站点上的所有Web流量都通过一个Web高速缓存，比如Squid。
 --to-ports 8080
-MARK                 打防火墙标记。继续匹配规则。
+  MARK                 打防火墙标记。继续匹配规则。
 --set-mark 2
-MIRROR           发送包之前交换IP源和目的地址，将数据包返回。中断过滤。
+  MIRROR           发送包之前交换IP源和目的地址，将数据包返回。中断过滤。
 ~~~  
+
+```
+-j 参数用来指定要进行的处理动作，常用的处理动作包括：ACCEPT、REJECT、DROP、REDIRECT、MASQUERADE、LOG、DNAT、SNAT、MIRROR、QUEUE、RETURN、MARK。
+
+分别说明如下：
+
+ACCEPT 将数据包放行，进行完此处理动作后，将不再比对其它规则，直接跳往下一个规则链（natostrouting）。
+
+REJECT 拦阻该数据包，并传送数据包通知对方，可以传送的数据包有几个选择：ICMP port-unreachable、ICMP echo-reply 或是tcp-reset（这个数据包会要求对方关闭联机），进行完此处理动作后，将不再比对其它规则，直接 中断过滤程序。 范例如下：
+
+iptables -A FORWARD -p TCP --dport 22 -j REJECT --reject-with tcp-reset
+
+DROP 丢弃包不予处理，进行完此处理动作后，将不再比对其它规则，直接中断过滤程序。
+
+REDIRECT 将包重新导向到另一个端口（PNAT），进行完此处理动作后，将会继续比对其它规则。 这个功能可以用来实作通透式porxy 或用来保护 web 服务器。例如：
+
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080
+
+MASQUERADE 改写数据包来源 IP为防火墙 NIC IP，可以指定 port 对应的范围，进行完此处理动作后，直接跳往下一个规则（mangleostrouting）。这个功能与 SNAT 略有不同，当进行 IP 伪装时，不需指定要伪装成哪个 IP，IP 会从网卡直接读取，当使用拨号连接时，IP 通常是由 ISP 公司的 DHCP 服务器指派的，这个时候 MASQUERADE 特别有用。范例如下：linux基础
+
+iptables -t nat -A POSTROUTING -p TCP -j MASQUERADE --to-ports 1024-31000
+
+LOG 将封包相关讯息纪录在 /var/log 中，详细位置请查阅 /etc/syslog.conf 配置文件，进行完此处理动作后，将会继续比对其规则。例如：
+
+iptables -A INPUT -p tcp -j LOG --log-prefix "INPUT packets"
+
+SNAT 改写封包来源 IP 为某特定 IP 或 IP 范围，可以指定 port 对应的范围，进行完此处理动作后，将直接跳往下一个规则（mangleostrouting）。范例如下：
+
+iptables -t nat -A POSTROUTING -p tcp-o eth0 -j SNAT --to-source 194.236.50.155-194.236.50.160:1024-32000
+
+DNAT 改写封包目的地 IP 为某特定 IP 或 IP 范围，可以指定 port 对应的范围，进行完此处理动作后，将会直接跳往下一个规炼（filter:input 或 filter:forward）。范例如下：
+
+iptables -t nat -A PREROUTING -p tcp -d 15.45.23.67 --dport 80 -j DNAT --to-destination
+192.168.1.1-192.168.1.10:80-100
+
+MIRROR 镜像数据包，也就是将来源 IP 与目的地 IP 对调后，将数据包送回，进行完此处理动作后，将会中断过滤程序。
+
+QUEUE 中断过滤程序，将数据包放入队列，交给其它程序处理。透过自行开发的处理程序，可以进行其它应用，例如：计算联机费.......等。
+
+RETURN 结束在目前规则链中的过滤程序，返回主规则链继续过滤，如果把自订规则链看成是一个子程序，那么这个动作，就相当提早结束子程序并返回到主程序中。
+
+MARK 将数据包标上某个代号，以便提供作为后续过滤的条件判断依据，进行完此处理动作后，将会继续比对其它规则。范例如下：
+
+iptables -t mangle -A PREROUTING -p tcp --dport 22 -j MARK --set-mark 2
+
+```
+
+
 
 二、 <font color=#0088 >实例
 
@@ -232,7 +283,7 @@ iptables –A OUTPUT –m state --state NEW –j DROP  //阻止反弹木马
 iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/m -j ACCEPT   //防止ping攻击
 9、只允许自己ping别人，不允许别人ping自己
 iptables -A OUTPUT -p icmp --icmp-type 8 -j ACCEPT
-iptables -A INPUT -p icmp --icmp-type 0 -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type 8 -j DROP
 10、对于127.0.0.1比较特殊，我们需要明确定义它
 iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
 iptables -A OUTPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
@@ -348,29 +399,31 @@ domainname=sshd httpd smb xinetd .........
 ```
 A. 服务列表格式：如果有多个服务，那么就用逗号隔开
 B. 地址列表格式：
-1. 标准IP地址：例如：192.168.0.254，192.168.0.56如果多于一个用，隔开
-2. 主机名称：例如：www.baidu.com，　.example.con匹配整个域
-3. 利用掩码：192.168.0.0/255.255.255.0指定整个网段
+  1. 标准IP地址：例如：192.168.0.254，192.168.0.56如果多于一个用，隔开
+  2. 主机名称：例如：www.baidu.com，　.example.con匹配整个域
+  3. 利用掩码：192.168.0.0/255.255.255.0指定整个网段
    注意：tcp_wrappers的掩码只支持长格式，不能用：192.168.0.0/24
-4. 网络名称：例如 @mynetwork
-宏定义
-ALL ：指代所有主机
-LOCAL ：指代本地主机
-KNOWN ：能够解析的
-UNKNOWN ：不能解析的
-PARANOID ：
+  4. 网络名称：例如 @mynetwork
+  宏定义
+  ALL ：指代所有主机
+  LOCAL ：指代本地主机
+  KNOWN ：能够解析的
+  UNKNOWN ：不能解析的
+  PARANOID ：
 如：
 /etc/hosts.allow
  sshd:192.168.0.0
-    /etc/hosts.deny
+
+/etc/hosts.deny
  sshd:ALL
  此例子表明：sshd服务只允许192.168.0.0网段的主机访问，其他拒绝。
+
 C. 扩展选项：
-1、spawn : 执行某个命令
+  1、spawn : 执行某个命令
 如：
 vsftpd:192.168.0.0/255.255.255.0 ：spawn echo “login attempt from %c”to %s” | mail –s warning root
  其意是当192.168.0.0网段的主机来访问时，给root发一封邮件，邮件主题是：waring，邮件内容是：客户端主机（%c）试图访问服务端主机（%s)
-2、twist : 中断命令的执行：
+ 2、twist : 中断命令的执行：
 vsftpd:192.168.0.0/255.255.255.0: twist echo -e "\n\nWARNING connection not allowed.\n\n"
  其意是当未经允许的电脑尝试登入你的主机时， 对方的屏幕上就会显示上面的最后一行
 ```
