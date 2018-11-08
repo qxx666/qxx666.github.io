@@ -37,7 +37,7 @@
         <entry file="file://$PROJECT_DIR$/mysql操作.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-2244" />
+              <first_editor relative-caret-position="-2366" />
               <second_editor />
             </state>
           </provider>
@@ -45,9 +45,9 @@
       </file>
     </leaf>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="148" />
-    <option name="y" value="214" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="434" />
+    <option name="y" value="65" />
     <option name="width" value="1440" />
     <option name="height" value="839" />
   </component>
@@ -181,7 +181,7 @@
     <entry file="file://$PROJECT_DIR$/mysql操作.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-2244" />
+          <first_editor relative-caret-position="-2366" />
           <second_editor />
         </state>
       </provider>
