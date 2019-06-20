@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>浅谈crontab | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要：我们在linux系统除了部署一些服务外，经常会做一些定时任务，以减少人工干预。对于linux系统，有at工具和crontab工具以帮助我们定制我们的定时任务。对于at工具是针对仅运行一次的计划任务，运行完后便退出系统。crontabs则提供周期性的执行定时任务，在系统安装完成后这两个服务均是默认与系统一起安装了。下面就介绍crond服务的安装和使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈crontab">
+<meta property="og:url" content="http://yoursite.com/2018/07/27/浅谈crontab/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要：我们在linux系统除了部署一些服务外，经常会做一些定时任务，以减少人工干预。对于linux系统，有at工具和crontab工具以帮助我们定制我们的定时任务。对于at工具是针对仅运行一次的计划任务，运行完后便退出系统。crontabs则提供周期性的执行定时任务，在系统安装完成后这两个服务均是默认与系统一起安装了。下面就介绍crond服务的安装和使用。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/assets/img/cronatb/crontab-list.png">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.764Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈crontab">
+<meta name="twitter:description" content="摘要：我们在linux系统除了部署一些服务外，经常会做一些定时任务，以减少人工干预。对于linux系统，有at工具和crontab工具以帮助我们定制我们的定时任务。对于at工具是针对仅运行一次的计划任务，运行完后便退出系统。crontabs则提供周期性的执行定时任务，在系统安装完成后这两个服务均是默认与系统一起安装了。下面就介绍crond服务的安装和使用。">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/cronatb/crontab-list.png">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-浅谈crontab" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/27/浅谈crontab/" class="article-date">
+  <time datetime="2018-07-27T01:17:41.000Z" itemprop="datePublished">2018-07-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈crontab
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h4><p>我们在linux系统除了部署一些服务外，经常会做一些定时任务，以减少人工干预。<br>对于linux系统，有at工具和crontab工具以帮助我们定制我们的定时任务。对于at工具<br>是针对仅运行一次的计划任务，运行完后便退出系统。crontabs则提供周期性的执行定时任务，在<br>系统安装完成后这两个服务均是默认与系统一起安装了。下面就介绍crond服务的安装和使用。</p>
+<a id="more"></a>
+<h4 id="查看crond服务并安装"><a href="#查看crond服务并安装" class="headerlink" title=" 查看crond服务并安装"></a><font color="#0099ff"> 查看crond服务并安装</font></h4><p>1、查看crontabs服务软件是否安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@www at]# rpm -qa crontabs</span><br><span class="line">crontabs-1.11-6.20121102git.el7.noarch</span><br></pre></td></tr></table></figure></p>
+<p>2、若没有返回信息，则可通过以下命令安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum  install crontabs   //安装crontabs</span><br></pre></td></tr></table></figure></p>
+<p>3、查看crontab服务安装信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@www at]# rpm -ql crontabs</span><br><span class="line">/etc/cron.daily     </span><br><span class="line">/etc/cron.hourly</span><br><span class="line">/etc/cron.monthly</span><br><span class="line">/etc/cron.weekly</span><br><span class="line">/etc/crontab</span><br><span class="line">/etc/sysconfig/run-parts</span><br><span class="line">/usr/bin/run-parts</span><br><span class="line">/usr/share/man/man4/crontabs.4.gz</span><br><span class="line">/usr/share/man/man4/run-parts.4.gz</span><br></pre></td></tr></table></figure></p>
+<h4 id="crontab-各文件说明"><a href="#crontab-各文件说明" class="headerlink" title=" crontab 各文件说明"></a><font color="#0099ff"> crontab 各文件说明</font></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1、/etc/cron.deny         //该文件中所列用户不允许使用crontab命令</span><br><span class="line">2、/etc/cron.allow        //该文件中所列用户允许使用crontab命令</span><br><span class="line">3、/var/spool/cron/      //所有用户crontab文件存放的目录,以用户名命名</span><br><span class="line">4、/etc/crontab            //用户所建立的crontab文件中</span><br><span class="line">5、/etc/cron.daily/         //该目录下定义用户每天执行的任务脚本</span><br><span class="line">6、/etc/cron.hourly/      //该目录下定义用户每小时要执行的任务脚本</span><br><span class="line">7、/etc/cron.monthly/   //该目录下定义用户每月执行的任务脚本</span><br><span class="line">8、/etc/cron.weekly/    //该目录下定义用户每周执行的任务脚本</span><br></pre></td></tr></table></figure>
+<h4 id="详解-etc-crontab文件"><a href="#详解-etc-crontab文件" class="headerlink" title=" 详解/etc/crontab文件"></a><font color="#0099ff"> 详解/etc/crontab文件</font></h4><p>用户所建立的crontab文件中，每一行都代表一项任务，每行的每个字段代表一项设置，<br>它的格式共分为六个字段，前五段是时间设定段，第六段是要执行的命令段，</p>
+<p>1、查看一下该文件内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@www at]# cat /etc/crontab</span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">MAILTO=root</span><br><span class="line"></span><br><span class="line"># For details see man 4 crontabs</span><br><span class="line"></span><br><span class="line"># Example of job definition:</span><br><span class="line"># .---------------- minute (0 - 59)</span><br><span class="line"># |  .------------- hour (0 - 23)</span><br><span class="line"># |  |  .---------- day of month (1 - 31)</span><br><span class="line"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span><br><span class="line"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span><br><span class="line"># |  |  |  |  |</span><br><span class="line"># *  *  *  *  * user-name  command to be executed</span><br></pre></td></tr></table></figure></p>
+<p>2、说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">minute： 表示分钟，可以是从0到59之间的任何整数。</span><br><span class="line">hour：表示小时，可以是从0到23之间的任何整数。</span><br><span class="line">day：表示日期，可以是从1到31之间的任何整数。</span><br><span class="line">month：表示月份，可以是从1到12之间的任何整数。</span><br><span class="line">week：表示星期几，可以是从0到7之间的任何整数，这里的0或7代表星期日。</span><br><span class="line">command：要执行的命令，可以是系统命令，也可以是自己编写的脚本文件。</span><br></pre></td></tr></table></figure></p>
+<p><img src="/assets/img/cronatb/crontab-list.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在以上各个字段中，还可以使用以下特殊字符：</span><br><span class="line">星号（*）：代表所有可能的值，例如month字段如果是星号，则表示在满足其它字段的制约条件后每月都执行该命令操作。</span><br><span class="line">逗号（,）：可以用逗号隔开的值指定一个列表范围，例如，“1,2,5,7,8,9”</span><br><span class="line">中杠（-）：可以用整数之间的中杠表示一个整数范围，例如“2-6”表示“2,3,4,5,6”</span><br><span class="line">正斜线（/）：可以用正斜线指定时间的间隔频率，例如“0-23/2”表示每两小时执行一次。同时正斜线可以和星号一起使用，例如*/10，如果用在minute字段，表示每十分钟执行一次。</span><br></pre></td></tr></table></figure>
+<h4 id="crontab命令详解"><a href="#crontab命令详解" class="headerlink" title=" crontab命令详解"></a><font color="#0099ff"> crontab命令详解</font></h4><p>1、命令格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">crontab [-u user] file</span><br><span class="line">crontab [-u user] [ -e | -l | -r ]</span><br><span class="line">-u user：用来设定某个用户的crontab服务，例如，“-u ixdba”表示设定ixdba用户的crontab服务，此参数一般有root用户来运行。</span><br><span class="line"> file：file是命令文件的名字,表示将file做为crontab的任务列表文件并载入crontab。如果在命令行中没有指定这个文件，crontab命令将接受标准输入（键盘）上键入的命令，并将它们载入crontab。</span><br><span class="line">-e：编辑某个用户的crontab文件内容。如果不指定用户，则表示编辑当前用户的crontab文件。</span><br><span class="line">-l：显示某个用户的crontab文件内容，如果不指定用户，则表示显示当前用户的crontab文件内容。</span><br><span class="line">-r：从/var/spool/cron目录中删除某个用户的crontab文件，如果不指定用户，则默认删除当前用户的crontab文件。</span><br><span class="line">-i：在删除用户的crontab文件时给确认提示</span><br></pre></td></tr></table></figure></p>
+<h4 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a><font color="#0099ff">一些例子</font></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crontab -uroot -e</span><br><span class="line">3,15 * * * * command //在上午8点到11点的第3和第15分钟执行</span><br><span class="line"></span><br><span class="line">01   *   *   *   *    root run-parts /etc/cron.hourly   //run-parts这个参数了，如果去掉这个参数的话，后面就可以写要运行的某个脚本名，而不是目录名了</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><p>有时我们创建了一个crontab，但是这个任务却无法自动执行，而手动执行这个任务却没有问题，这种情况一般是由于在crontab文件中没有配置环境变量引起的。<br>在crontab文件中定义多个调度任务时，需要特别注意的一个问题就是环境变量的设置，因为我们手动执行某个任务时，是在当前shell环境下进行的，程序当然能找到环境变量，而系统自动执行任务调度时，是不会加载任何环境变量的，因此，就需要在crontab文件中指定任务运行所需的所有环境变量，这样，系统执行任务调度时就没有问题了。<br>不要假定cron知道所需要的特殊环境，它其实并不知道。所以你要保证在shelll脚本中提供所有必要的路径和环境变量，除了一些自动设置的全局变量，所以注意如下3点：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1、脚本中涉及文件路径时写全局路径；</span><br><span class="line">2、脚本执行要用到java或其他环境变量时，通过source命令引入环境变量，如：</span><br><span class="line">cat start_cbp.sh</span><br><span class="line">#!/bin/sh</span><br><span class="line">source /etc/profile</span><br><span class="line">export RUN_CONF=/home/d139/conf/platform/cbp/cbp_jboss.conf</span><br><span class="line">/usr/local/jboss-4.0.5/bin/run.sh -c mev &amp;</span><br><span class="line">3、当手动执行脚本OK，但是crontab死活不执行时。这时必须大胆怀疑是环境变量惹的祸，并可以尝试在crontab中直接引入环境变量解决问题。如：</span><br><span class="line">0 * * * * . /etc/profile;/bin/sh /var/www/java/audit_no_count/bin/restart_audit.sh</span><br></pre></td></tr></table></figure></p>
+<p> 注意清理系统用户的邮件日志</p>
+<p>每条任务调度执行完毕，系统都会将任务输出信息通过电子邮件的形式发送给当前系统用户，这样日积月累，日志信息会非常大，可能会影响系统的正常运行，因此，将每条任务进行重定向处理非常重要。<br>例如，可以在crontab文件中设置如下形式，忽略日志输出：</p>
+<p>0 <em>/3 </em> <em> </em> /usr/local/apache2/apachectl restart &gt;/dev/null 2&gt;&amp;1</p>
+<p>“/dev/null 2&gt;&amp;1”表示先将标准输出重定向到/dev/null，然后将标准错误重定向到标准输出，由于标准输出已经重定向到了/dev/null，因此标准错误也会重定向到/dev/null，这样日志输出问题就解决了。</p>
+<h5 id="其他注意事项"><a href="#其他注意事项" class="headerlink" title="其他注意事项"></a>其他注意事项</h5><p>新创建的cron job，不会马上执行，至少要过2分钟才执行。如果重启cron则马上执行。</p>
+<p>当crontab突然失效时，可以尝试/etc/init.d/crond restart解决问题。或者查看日志看某个job有没有执行/报错tail -f /var/log/cron。</p>
+<p>千万别乱运行crontab -r。它从Crontab目录（/var/spool/cron）中删除用户的Crontab文件。删除了该用户的所有crontab都没了。</p>
+<p>在crontab中%是有特殊含义的，表示换行的意思。如果要用的话必须进行转义\%，如经常用的date ‘+%Y%m%d’在crontab里是不会执行的，应该换成date ‘+\%Y\%m\%d’。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/27/浅谈crontab/" data-id="cjx4bixfv000ak0vth2qoijul" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/27/浅谈系统调优/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅谈系统调优
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/07/一些命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">一些命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

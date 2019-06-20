@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>将内网主机映射到外网 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要：大部分服务都是放在内网主机上，然后通过一个外网的路由进行访问控制，内网的主机是无法通过外网直接访问的，那么如何将家里内网的主机映射出来，使得在外面也可以访问到家里的电脑呢？如何在外网可以自由访问搭在内网的服务？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将内网主机映射到外网">
+<meta property="og:url" content="http://yoursite.com/2018/01/19/将内网主机映射到外网/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要：大部分服务都是放在内网主机上，然后通过一个外网的路由进行访问控制，内网的主机是无法通过外网直接访问的，那么如何将家里内网的主机映射出来，使得在外面也可以访问到家里的电脑呢？如何在外网可以自由访问搭在内网的服务？">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://raw.githubusercontent.com/qxx666/frp/master/doc/pic/architecture.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/neiwaiys.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/frps.png">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.760Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="将内网主机映射到外网">
+<meta name="twitter:description" content="摘要：大部分服务都是放在内网主机上，然后通过一个外网的路由进行访问控制，内网的主机是无法通过外网直接访问的，那么如何将家里内网的主机映射出来，使得在外面也可以访问到家里的电脑呢？如何在外网可以自由访问搭在内网的服务？">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/qxx666/frp/master/doc/pic/architecture.png">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-将内网主机映射到外网" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/19/将内网主机映射到外网/" class="article-date">
+  <time datetime="2018-01-19T12:48:03.000Z" itemprop="datePublished">2018-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      将内网主机映射到外网
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h3><p>大部分服务都是放在内网主机上，然后通过一个外网的路由进行访问控制，内网的主机是无法通过外网直接访问的，那么如何将家里内网的主机映射出来，使得在外面也可以访问到家里的电脑呢？如何在外网可以自由访问搭在内网的服务？</p>
+<a id="more"></a>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>1、一具有外网ip的电脑，即外网可以直接访问的主机，可以去各大云平台去租用一台云主机</p>
+<p>2、frp映射服务软件</p>
+<p>3、内网需要映射出来的主机</p>
+<hr>
+<h4 id="详细过程"><a href="#详细过程" class="headerlink" title="详细过程"></a>详细过程</h4><p>原理：frp内网映射和Teamvew的工作原理是一样的，只是映射服务器得我们自己搭，在具有外网网卡的服务器上搭建frp的服务端，在需要被映射出来的主机上安装frp客户端，客户端会主动去连接服务器端，所以当我们去访问外网ip地址时，内网主机上的客户端会关注服务端的访问请求，当有服务请求时，内网客户端会主动去请求服务端的访问请求，因为是内网客户端的主动请求，所以可绕过内网限制。</p>
+<h6 id="架构图如下"><a href="#架构图如下" class="headerlink" title="架构图如下:"></a>架构图如下:</h6><p><img src="https://raw.githubusercontent.com/qxx666/frp/master/doc/pic/architecture.png" alt=""></p>
+<p>用户访问外网的IP地址，frps服务端会将访问请求转发给客户端进行处理，客户端收到请求后会将请求转发给本机的代理端口进行处理，监听在相应的端口的服务会收到请求，进行处理并返回给用户。</p>
+<h5 id="访问流程图："><a href="#访问流程图：" class="headerlink" title="访问流程图："></a>访问流程图：</h5><p><img src="/assets/img/neiwaiys.png" alt=""></p>
+<p>1、申请一台可供外网访问的主机，可以去阿里云，腾讯云，亚马逊云等云服务供应商那去租一台主机，最小配置的即可，如果有信用卡可以免费租用亚马逊服务器一年</p>
+<p>2、下载frp软件包</p>
+<p> <a href="https://github.com/fatedier/frp/releases" target="_blank" rel="noopener">frp下载地址</a>根据不同系统下载相应的软件包</p>
+<p>3、下载好的软件包上传到具有外网ip的服务器上，解压缩到一个目录中，其中frps是服务端软件，frps.ini是服务端的配置文件，frpc是客户端，frpc.ini是客户端的配置文件</p>
+<h5 id="服务端配置文件frps-ini"><a href="#服务端配置文件frps-ini" class="headerlink" title="服务端配置文件frps.ini"></a>服务端配置文件frps.ini</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># frps.ini</span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000    //服务端监听的端口号</span><br></pre></td></tr></table></figure>
+<p>在具有外网ip的主机上启动frp服务端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup frps -c frps.ini 2&gt;&amp;1 &amp;  //在后台启动frps</span><br></pre></td></tr></table></figure></p>
+<h5 id="客户端配置文件frpc-ini"><a href="#客户端配置文件frpc-ini" class="headerlink" title="客户端配置文件frpc.ini"></a>客户端配置文件frpc.ini</h5><p>在需要映射出来的内网主机上启动客服端frpc服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># frpc.ini</span><br><span class="line">[common]</span><br><span class="line">server_addr = x.x.x.x  //启动frps服务的外网IP</span><br><span class="line">server_port = 7000</span><br><span class="line">[ssh]            //需要映射出来的服务</span><br><span class="line">type = tcp       //监听的协议</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 22   //本地服务监听的端口</span><br><span class="line">remote_port = 6000  //外网映射的端口</span><br></pre></td></tr></table></figure></p>
+<p>在内网主机启动frpc服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup frpc -c frpc.ini 2&gt;&amp;1 &amp;  //在后台启动frpc</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat ./nohup.out 查看启动日志出现</span><br><span class="line">2018/03/15 18:01:57 [I] [control.go:479] [063bf4262e326d12] try to reconnect to server...</span><br><span class="line">2018/03/15 18:01:58 [I] [control.go:276] [063bf4262e326d12] login to server success, get run id [063bf4262e326d12]</span><br><span class="line">2018/03/15 18:01:58 [I] [control.go:411] [063bf4262e326d12] [gitlab] start proxy success</span><br><span class="line">代表启动成功</span><br></pre></td></tr></table></figure>
+<h4 id="服务端查看客户端的连接状况"><a href="#服务端查看客户端的连接状况" class="headerlink" title="服务端查看客户端的连接状况"></a>服务端查看客户端的连接状况</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntlp |grep frps</span><br><span class="line">在服务端可以看到客户端申请的端口号</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/img/frps.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/19/将内网主机映射到外网/" data-id="cjx4bixfi0006k0vt3suiblvh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/19/docker的入门教程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          docker的入门教程
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

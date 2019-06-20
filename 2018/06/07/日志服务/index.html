@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>日志服务 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要本文对系统的日志服务做简要的说明，主要针对syslogd这个服务进行介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="日志服务">
+<meta property="og:url" content="http://yoursite.com/2018/06/07/日志服务/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要本文对系统的日志服务做简要的说明，主要针对syslogd这个服务进行介绍">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="日志服务">
+<meta name="twitter:description" content="摘要本文对系统的日志服务做简要的说明，主要针对syslogd这个服务进行介绍">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-日志服务" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/07/日志服务/" class="article-date">
+  <time datetime="2018-06-07T10:00:07.000Z" itemprop="datePublished">2018-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      日志服务
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>本文对系统的日志服务做简要的说明，主要针对syslogd这个服务进行介绍</p>
+<a id="more"></a>
+<h3 id="日志服务"><a href="#日志服务" class="headerlink" title="日志服务"></a>日志服务</h3><ul>
+<li><p>syslogd centos提供了这个服务来统一管理日志文件，系统服务只要将信息丢给这个服务，他就会分门别类的将各信息放置到相应的日志文件中<br>syslog的配置文件：/etc/syslog.conf</p>
+</li>
+<li><p>klogd：专门记录内核信息的日志文件服务</p>
+<ul>
+<li><p>日志文件内容一般格式</p>
+<ol>
+<li>事件发生的日期与时间</li>
+<li>发生此事的主机名</li>
+<li>启动此事的服务名称或函数名称</li>
+<li>该信息的实际数据内容</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>信息等级</p>
+<ol>
+<li>info 仅是一些基本信息的说明而已</li>
+<li>notice 除了info外还需要注意的一些基本信息</li>
+<li>warning 警示信息，可能有问题，但不至于影响服务的运行</li>
+<li>err 一些重大错误信息，通过该日志可以知道服务无法启动的原因</li>
+<li>crit 比err还要严重的信息想</li>
+<li>alert 警告，已经很有问题的等级</li>
+<li>emerg “疼痛等级”，指系统要死机状态</li>
+</ol>
+</li>
+<li><p>几个符号的意思</p>
+<p>“。” 代表后面还要高的等级（包过该等级）都被记录下来，例如mail.info<br>“。=” 代表需要的等级就是等号接的等级<br>“。！”代表不等于，即除了该等级外的其他等级都记录</p>
+<p>例子：将买了相关数据写入/var/log/maillog当中</p>
+<blockquote>
+<p>vim /etc/syslog.conf</p>
+<p>mail.info  &nbsp;&nbsp;&nbsp; /var/log/maillog</p>
+</blockquote>
+<p>除此之外还有debug和none两个等级，当要做一些错误检测或者忽略某些服务信息时，就用这两个</p>
+</li>
+</ul>
+<h4 id="linux常见的日志文件"><a href="#linux常见的日志文件" class="headerlink" title="linux常见的日志文件"></a>linux常见的日志文件</h4><ul>
+<li>/var/log/cron：crontab调度日志</li>
+<li>/var/log/dmesg：记录系统在开机时内核检测过程产生的信息</li>
+<li>/var/log/lastlog：记录系统上面所有账号最近一次登录系统时的信息</li>
+<li>/var/log/maillog或者/var/log/mail/* ：记录邮件往来信息</li>
+<li>/var/log/messages：记录系统发生的错误信息</li>
+<li>/var/log/secure：输入账号密码，在用户登入时的一些信息</li>
+<li>/var/log/wtmp,/var/log/failog：记录正确或错误，登录系统用户的账号信息</li>
+<li>/var/log/httpd/<em>,/var/log/news/</em>,/var/log/samba/*：一些网络服务所产生的日志</li>
+</ul>
+<h4 id="日志文件的安全性"><a href="#日志文件的安全性" class="headerlink" title="日志文件的安全性"></a>日志文件的安全性</h4><ul>
+<li>syslog日志文件只要别编辑过就无法记录信息，得重新启动syslog服务<blockquote>
+<p>chattr +a /var/log/message<br>加了这个属性后，message日志文件只能被增加，不能被删除，知道root以chattr -a /var/log/message取消这个属性参数，才能被删除和移动</p>
+<h4 id="日志文件服务器的设置"><a href="#日志文件服务器的设置" class="headerlink" title="日志文件服务器的设置"></a>日志文件服务器的设置</h4><p>可以将多个服务器中的日志信息发送到某台主机上，以便集中查看和管理</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="日志文件的轮替"><a href="#日志文件的轮替" class="headerlink" title="日志文件的轮替"></a>日志文件的轮替</h4><p>logrotate是在规定的时间到了之后来进行日志文件的轮替，所以这个logrotate程序当然挂在cron下面进行，在/etc/cron.daily/logrotate就记录了每天进行的日志轮替的行为</p>
+<p>logrotate程序的参数配置文件</p>
+<ul>
+<li>/etc/logrotate.conf :主要参数文件</li>
+<li>/etc/logrotate.d/</li>
+</ul>
+<p>一个例子：<br>  对于加了+a标签的/var/log/admin.log文件做如下条件的轮替</p>
+<ol>
+<li>日志文件轮替一个月进行一次</li>
+<li>若文件大于10M，则主动轮替，不用考虑一个月的期限</li>
+<li>保存五分备份</li>
+<li>备份压缩</li>
+</ol>
+<blockquote>
+<p>chattr +a /var/log/admin.log</p>
+<p>vim /var/logrotate.d/admin</p>
+</blockquote>
+<p>/var/log/admin.log{<br>  mouthly</p>
+<p>  size=10M<br>  rotate 5</p>
+<p>  comnpress</p>
+<p>  sharedscripts</p>
+<p>  prerotate</p>
+<pre><code>/usr/bin/chattr -a /var/log/admin.log
+</code></pre><p>  endscripts</p>
+<p>  sharescripts</p>
+<p>  prerotate</p>
+<pre><code>/usr/bin/kiallall -HUP syslogd
+
+/usr/bin/chattr +a /var/log/admin.log
+</code></pre><p>  endscripts<br>}</p>
+<h3 id="分析日志文件"><a href="#分析日志文件" class="headerlink" title="分析日志文件"></a>分析日志文件</h3><p>默认提供logwatch</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/07/日志服务/" data-id="cjx4bixfn0008k0vtcnci2gwf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/06/07/一些命令/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          一些命令
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/24/docker中的网络/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">docker中的网络</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

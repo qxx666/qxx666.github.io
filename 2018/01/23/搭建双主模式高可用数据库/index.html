@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>搭建双主模式高可用数据库 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要:所有数据存在一个数据库对于一个公司来说是比较危险的，当改数据库挂机了，或者磁盘损坏等一系列问题发生时，数据无法正常提供，公司的业务必然也会受到影响。所以数据备份都是必要的，这篇文章将介绍，如何实现双主模式的数据备份，以及服务的高可用，即当一个主机上的数据库挂掉后访问服务立刻转移到另一个备份的数据库上。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建双主模式高可用数据库">
+<meta property="og:url" content="http://yoursite.com/2018/01/23/搭建双主模式高可用数据库/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要:所有数据存在一个数据库对于一个公司来说是比较危险的，当改数据库挂机了，或者磁盘损坏等一系列问题发生时，数据无法正常提供，公司的业务必然也会受到影响。所以数据备份都是必要的，这篇文章将介绍，如何实现双主模式的数据备份，以及服务的高可用，即当一个主机上的数据库挂掉后访问服务立刻转移到另一个备份的数据库上。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.761Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建双主模式高可用数据库">
+<meta name="twitter:description" content="摘要:所有数据存在一个数据库对于一个公司来说是比较危险的，当改数据库挂机了，或者磁盘损坏等一系列问题发生时，数据无法正常提供，公司的业务必然也会受到影响。所以数据备份都是必要的，这篇文章将介绍，如何实现双主模式的数据备份，以及服务的高可用，即当一个主机上的数据库挂掉后访问服务立刻转移到另一个备份的数据库上。">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-搭建双主模式高可用数据库" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/23/搭建双主模式高可用数据库/" class="article-date">
+  <time datetime="2018-01-23T07:27:45.000Z" itemprop="datePublished">2018-01-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      搭建双主模式高可用数据库
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="摘要"><a href="#摘要" class="headerlink" title="摘要:"></a>摘要:</h5><p>所有数据存在一个数据库对于一个公司来说是比较危险的，当改数据库挂机了，或者磁盘损坏等一系列问题发生时，数据无法正常提供，公司的业务必然也会受到影响。所以数据备份都是必要的，这篇文章将介绍，如何实现双主模式的数据备份，以及服务的高可用，即当一个主机上的数据库挂掉后访问服务立刻转移到另一个备份的数据库上。</p>
+<a id="more"></a>
+<h5 id="mysql双主架构的思路"><a href="#mysql双主架构的思路" class="headerlink" title="mysql双主架构的思路"></a>mysql双主架构的思路</h5><p>1、两台mysql都可读写，互为主备，默认只使用一台（masterA）负责数据的写入，另一台（masterB）备用；</p>
+<p>2.masterA是masterB的主库，masterB又是masterA的主库，它们互为主从；</p>
+<p>3.两台主库之间做高可用,可以采用keepalived等方案（使用VIP对外提供服务）；</p>
+<p>4.所有提供服务的从服务器与masterB进行主从同步（双主多从）;</p>
+<p>5.建议采用高可用策略的时候，masterA或masterB均不因宕机恢复后而抢占VIP（非抢占模式）；</p>
+<h5 id="keepalived介绍"><a href="#keepalived介绍" class="headerlink" title="keepalived介绍"></a>keepalived介绍</h5><p>Keepalived是一个基于VRRP协议来实现的服务高可用方案，可以利用其来避免IP单点故障，类似的工具还有heartbeat、corosync、pacemaker。但是它一般不会单独出现，而是与其它负载均衡技术（如lvs、haproxy、nginx）一起工作来达到集群的高可用。</p>
+<p>VRRP全称 Virtual Router Redundancy Protocol，即 虚拟路由冗余协议。可以认为它是实现路由器高可用的容错协议，即将N台提供相同功能的路由器组成一个路由器组(Router Group)，这个组里面有一个master和多个backup，但在外界看来就像一台一样，构成虚拟路由器，拥有一个虚拟IP（vip，也就是路由器所在局域网内其他机器的默认路由），占有这个IP的master实际负责ARP相应和转发IP数据包，组中的其它路由器作为备份的角色处于待命状态。master会发组播消息，当backup在超时时间内收不到vrrp包时就认为master宕掉了，这时就需要根据VRRP的优先级来选举一个backup当master，保证路由器的高可用。</p>
+<p>在VRRP协议实现里，虚拟路由器使用 00-00-5E-00-01-XX 作为虚拟MAC地址，XX就是唯一的 VRID （Virtual Router IDentifier），这个地址同一时间只有一个物理路由器占用。在虚拟路由器里面的物理路由器组里面通过多播IP地址 224.0.0.18 来定时发送通告消息。每个Router都有一个 1-255 之间的优先级别，级别最高的（highest priority）将成为主控（master）路由器。通过降低master的优先权可以让处于backup状态的路由器抢占（pro-empt）主路由器的状态，两个backup优先级相同的IP地址较大者为master，接管虚拟IP。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/23/搭建双主模式高可用数据库/" data-id="cjx4bixfl0007k0vto5r4cpy0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/30/DNS服务/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          DNS服务
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/19/linux中的selinux/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">linux中的selinux</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>浅谈系统调优 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、系统程序文件proc说明2、一些系统监控软件3、cpu调优4、内存调优5、网络调优6、I/O调优7、文件系统调优">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈系统调优">
+<meta property="og:url" content="http://yoursite.com/2018/07/27/浅谈系统调优/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="1、系统程序文件proc说明2、一些系统监控软件3、cpu调优4、内存调优5、网络调优6、I/O调优7、文件系统调优">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.766Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈系统调优">
+<meta name="twitter:description" content="1、系统程序文件proc说明2、一些系统监控软件3、cpu调优4、内存调优5、网络调优6、I/O调优7、文件系统调优">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-浅谈系统调优" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/27/浅谈系统调优/" class="article-date">
+  <time datetime="2018-07-27T06:14:18.000Z" itemprop="datePublished">2018-07-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈系统调优
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、系统程序文件proc说明<br>2、一些系统监控软件<br>3、cpu调优<br>4、内存调优<br>5、网络调优<br>6、I/O调优<br>7、文件系统调优<br><a id="more"></a></p>
+<h4 id="proc目录说明"><a href="#proc目录说明" class="headerlink" title="/proc目录说明"></a>/proc目录说明</h4><p>/proc “文件系统”是一个目录，其中包含的文件层次结构代表了 Linux 内核的当前状态。它允许用户和管理员<br>查看系统的内核视图。<br>/proc 目录中还包含关于系统硬件及任何当前正在运行的程序信息。大部分在 /proc 中的文件是只读文件，<br>但一些文件（主要是 /proc/sys 文件）能够被用户和应用程序操作，以便向内核传达配置的修改信息。</p>
+<!---more--->
+<h4 id="一些系统监控程序包"><a href="#一些系统监控程序包" class="headerlink" title="一些系统监控程序包"></a>一些系统监控程序包</h4><h6 id="procps-ng软件包"><a href="#procps-ng软件包" class="headerlink" title="procps-ng软件包"></a>procps-ng软件包</h6><p> 1、查看 procps-ng安装包中有哪些工具<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@www doc]# rpm -ql procps-ng</span><br><span class="line">/usr/bin/free           //查看内存使用情况</span><br><span class="line">/usr/bin/pgrep           //</span><br><span class="line">/usr/bin/pkill           //</span><br><span class="line">/usr/bin/pmap            //</span><br><span class="line">/usr/bin/ps              //提供选定的一组运行进程快照</span><br><span class="line">/usr/bin/pwdx            //</span><br><span class="line">/usr/bin/skill           //</span><br><span class="line">/usr/bin/slabtop         //</span><br><span class="line">/usr/bin/snice           //</span><br><span class="line">/usr/bin/tload           //</span><br><span class="line">/usr/bin/top             //</span><br><span class="line">/usr/bin/uptime          //</span><br><span class="line">/usr/bin/vmstat          //虚拟内存统计数据工具,提供关于系统进程、内存、分页、输入/输出、中断和 CPU 活动的即时报告。</span><br><span class="line">/usr/bin/w               //</span><br><span class="line">/usr/bin/watch           //</span><br><span class="line">/usr/lib64/libprocps.so.4</span><br><span class="line">/usr/lib64/libprocps.so.4.0.0</span><br><span class="line">/usr/sbin/sysctl          //</span><br></pre></td></tr></table></figure></p>
+<h6 id="sysstat软件包"><a href="#sysstat软件包" class="headerlink" title="sysstat软件包"></a>sysstat软件包</h6><p>1、查看sysstat软件包中有哪些工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@www bin]# rpm -ql sysstat</span><br><span class="line">/usr/bin/cifsiostat             //   </span><br><span class="line">/usr/bin/iostat                 //</span><br><span class="line">/usr/bin/mpstat                 //</span><br><span class="line">/usr/bin/nfsiostat-sysstat      //</span><br><span class="line">/usr/bin/pidstat                //</span><br><span class="line">/usr/bin/sadf                  //</span><br><span class="line">/usr/bin/sar                   //收集及报告系统当天到目前为止发生的活动信息</span><br><span class="line">/usr/bin/tapestat              //</span><br></pre></td></tr></table></figure>
+<h6 id="kernel-tools软件包"><a href="#kernel-tools软件包" class="headerlink" title="kernel-tools软件包"></a>kernel-tools软件包</h6><p>1、查看kernel-tools软件包中的工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@www bin]# rpm -ql kernel-tools</span><br><span class="line">/etc/sysconfig/cpupower</span><br><span class="line">/usr/bin/centrino-decode</span><br><span class="line">/usr/bin/cpupower</span><br><span class="line">/usr/bin/powernow-k8-decode</span><br><span class="line">/usr/bin/tmon</span><br><span class="line">/usr/bin/turbostat    //对 Intel® 64 位处理器中处理器的拓扑、频率、空闲的电源状态统</span><br><span class="line">计、温度和用电量的报告</span><br><span class="line">/usr/bin/x86_energy_perf_policy</span><br></pre></td></tr></table></figure>
+<h6 id="iproute软件包"><a href="#iproute软件包" class="headerlink" title="iproute软件包"></a>iproute软件包</h6><p>1、查看iproute软件包中的工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@www bin]# rpm -ql iproute</span><br><span class="line">/usr/sbin/arpd</span><br><span class="line">/usr/sbin/bridge</span><br><span class="line">/usr/sbin/cbq</span><br><span class="line">/usr/sbin/ctstat</span><br><span class="line">/usr/sbin/devlink</span><br><span class="line">/usr/sbin/genl</span><br><span class="line">/usr/sbin/ifcfg</span><br><span class="line">/usr/sbin/ifstat</span><br><span class="line">/usr/sbin/ip</span><br><span class="line">/usr/sbin/lnstat</span><br><span class="line">/usr/sbin/nstat</span><br><span class="line">/usr/sbin/routef</span><br><span class="line">/usr/sbin/routel</span><br><span class="line">/usr/sbin/rtacct</span><br><span class="line">/usr/sbin/rtmon</span><br><span class="line">/usr/sbin/rtpr</span><br><span class="line">/usr/sbin/rtstat</span><br><span class="line">/usr/sbin/ss       //ss 是一个命令行实用程序，显示 socket 的统计信息，使管理员能够根据时间来评估设备性能。</span><br><span class="line">/usr/sbin/tc</span><br></pre></td></tr></table></figure>
+<h6 id="numactl软件包"><a href="#numactl软件包" class="headerlink" title="numactl软件包"></a>numactl软件包</h6><p>1、查看numactl软件包中的工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@www bin]# rpm -ql numactl</span><br><span class="line">/usr/bin/memhog</span><br><span class="line">/usr/bin/migratepages</span><br><span class="line">/usr/bin/migspeed</span><br><span class="line">/usr/bin/numactl</span><br><span class="line">/usr/bin/numademo</span><br><span class="line">/usr/bin/numastat  //numastat 工具以每一个 NUMA 节点为基础了，显示处理器和操作系统的内存统计数据</span><br></pre></td></tr></table></figure>
+<h6 id="valgrind软件包"><a href="#valgrind软件包" class="headerlink" title="valgrind软件包"></a>valgrind软件包</h6><p>1、查看valgrind软件包中的工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@www bin]# rpm -ql valgrind</span><br><span class="line">/usr/bin/callgrind_annotate</span><br><span class="line">/usr/bin/callgrind_control</span><br><span class="line">/usr/bin/cg_annotate</span><br><span class="line">/usr/bin/cg_diff</span><br><span class="line">/usr/bin/cg_merge</span><br><span class="line">/usr/bin/ms_print</span><br><span class="line">/usr/bin/valgrind</span><br><span class="line">/usr/bin/valgrind-di-server</span><br><span class="line">/usr/bin/valgrind-listener</span><br><span class="line">/usr/bin/vgdb</span><br></pre></td></tr></table></figure>
+<h6 id="util-linux软件包"><a href="#util-linux软件包" class="headerlink" title="util-linux软件包"></a>util-linux软件包</h6><p>Util-linux 软件包包含许多工具。其中比较重要的是加载、卸载、格式化、分区和管理硬盘驱动器，打开 tty 端口和得到内核消息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@www bin]# rpm -ql util-linux</span><br><span class="line">/usr/bin/cal</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/bin/chmem</span><br><span class="line">/usr/bin/chrt</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/col   //过滤来自输入的反向行馈送内容。</span><br><span class="line">/usr/bin/colcrt</span><br><span class="line">/usr/bin/colrm  //在某个文件中删除列。</span><br><span class="line">/usr/bin/column</span><br><span class="line">/usr/bin/dmesg  //显示内核的启动信息。</span><br><span class="line">/usr/bin/eject</span><br><span class="line">/usr/bin/fallocate</span><br><span class="line">/usr/bin/findmnt</span><br><span class="line">/usr/bin/flock</span><br><span class="line">/usr/bin/getopt</span><br><span class="line">/usr/bin/hexdump</span><br><span class="line">/usr/bin/i386</span><br><span class="line">/usr/bin/ionice</span><br><span class="line">/usr/bin/ipcmk</span><br><span class="line">/usr/bin/ipcrm</span><br><span class="line">/usr/bin/ipcs</span><br><span class="line">/usr/bin/isosize</span><br><span class="line">/usr/bin/kill</span><br><span class="line">/usr/bin/linux32</span><br><span class="line">/usr/bin/linux64</span><br><span class="line">/usr/bin/logger</span><br><span class="line">/usr/bin/login</span><br><span class="line">/usr/bin/look</span><br><span class="line">/usr/bin/lsblk</span><br><span class="line">/usr/bin/lscpu</span><br><span class="line">/usr/bin/lsipc</span><br><span class="line">/usr/bin/lslocks</span><br><span class="line">/usr/bin/lslogins</span><br><span class="line">/usr/bin/lsmem</span><br><span class="line">/usr/bin/lsns</span><br><span class="line">/usr/bin/mcookie</span><br><span class="line">/usr/bin/more</span><br><span class="line">/usr/bin/mount</span><br><span class="line">/usr/bin/mountpoint</span><br><span class="line">/usr/bin/namei</span><br><span class="line">/usr/bin/nsenter</span><br><span class="line">/usr/bin/prlimit</span><br><span class="line">/usr/bin/raw</span><br><span class="line">/usr/bin/rename</span><br><span class="line">/usr/bin/renice</span><br><span class="line">/usr/bin/rev</span><br><span class="line">/usr/bin/script</span><br><span class="line">/usr/bin/scriptreplay</span><br><span class="line">/usr/bin/setarch</span><br><span class="line">/usr/bin/setpriv</span><br><span class="line">/usr/bin/setsid</span><br><span class="line">/usr/bin/setterm</span><br><span class="line">/usr/bin/su</span><br><span class="line">/usr/bin/tailf</span><br><span class="line">/usr/bin/taskset</span><br><span class="line">/usr/bin/ul</span><br><span class="line">/usr/bin/umount</span><br><span class="line">/usr/bin/unshare</span><br><span class="line">/usr/bin/utmpdump</span><br><span class="line">/usr/bin/uuidgen</span><br><span class="line">/usr/bin/wdctl</span><br><span class="line">/usr/bin/whereis</span><br><span class="line">/usr/bin/write</span><br><span class="line">/usr/bin/x86_64</span><br><span class="line">/usr/sbin/addpart</span><br><span class="line">/usr/sbin/agetty</span><br><span class="line">/usr/sbin/blkdiscard</span><br><span class="line">/usr/sbin/blkid</span><br><span class="line">/usr/sbin/blockdev</span><br><span class="line">/usr/sbin/cfdisk</span><br><span class="line">/usr/sbin/chcpu</span><br><span class="line">/usr/sbin/clock</span><br><span class="line">/usr/sbin/ctrlaltdel</span><br><span class="line">/usr/sbin/delpart</span><br><span class="line">/usr/sbin/fdformat</span><br><span class="line">/usr/sbin/fdisk</span><br><span class="line">/usr/sbin/findfs</span><br><span class="line">/usr/sbin/fsck</span><br><span class="line">/usr/sbin/fsck.cramfs</span><br><span class="line">/usr/sbin/fsck.minix</span><br><span class="line">/usr/sbin/fsfreeze</span><br><span class="line">/usr/sbin/fstrim</span><br><span class="line">/usr/sbin/hwclock</span><br><span class="line">/usr/sbin/ldattach</span><br><span class="line">/usr/sbin/losetup</span><br><span class="line">/usr/sbin/mkfs</span><br><span class="line">/usr/sbin/mkfs.cramfs</span><br><span class="line">/usr/sbin/mkfs.minix</span><br><span class="line">/usr/sbin/mkswap</span><br><span class="line">/usr/sbin/nologin</span><br><span class="line">/usr/sbin/partx</span><br><span class="line">/usr/sbin/pivot_root</span><br><span class="line">/usr/sbin/readprofile</span><br><span class="line">/usr/sbin/resizepart</span><br><span class="line">/usr/sbin/rtcwake</span><br><span class="line">/usr/sbin/runuser</span><br><span class="line">/usr/sbin/sfdisk</span><br><span class="line">/usr/sbin/sulogin</span><br><span class="line">/usr/sbin/swaplabel</span><br><span class="line">/usr/sbin/swapoff</span><br><span class="line">/usr/sbin/swapon</span><br><span class="line">/usr/sbin/switch_root</span><br><span class="line">/usr/sbin/wipefs</span><br><span class="line">/usr/sbin/zramctl</span><br></pre></td></tr></table></figure>
+<h6 id="hwclock软件包"><a href="#hwclock软件包" class="headerlink" title="hwclock软件包"></a>hwclock软件包</h6><p>1、查看hwclock软件包中的工具<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# rpm -ql hwloc</span><br><span class="line">/usr/bin/hwloc-annotate</span><br><span class="line">/usr/bin/hwloc-assembler</span><br><span class="line">/usr/bin/hwloc-assembler-remote</span><br><span class="line">/usr/bin/hwloc-bind</span><br><span class="line">/usr/bin/hwloc-calc</span><br><span class="line">/usr/bin/hwloc-compress-dir</span><br><span class="line">/usr/bin/hwloc-diff</span><br><span class="line">/usr/bin/hwloc-distances</span><br><span class="line">/usr/bin/hwloc-distrib</span><br><span class="line">/usr/bin/hwloc-gather-topology</span><br><span class="line">/usr/bin/hwloc-info</span><br><span class="line">/usr/bin/hwloc-ls</span><br><span class="line">/usr/bin/hwloc-patch</span><br><span class="line">/usr/bin/hwloc-ps</span><br><span class="line">/usr/bin/lstopo-no-graphics</span><br><span class="line">/usr/lib/systemd/system/hwloc-dump-hwdata.service</span><br><span class="line">/usr/sbin/hwloc-dump-hwdata</span><br></pre></td></tr></table></figure></p>
+<h6 id="irqbalance软件包"><a href="#irqbalance软件包" class="headerlink" title="irqbalance软件包"></a>irqbalance软件包</h6><p>irqbalance 是一个通过分配处理器硬件中断以提高系统性能的命令行工具。</p>
+<h6 id="numad软件包"><a href="#numad软件包" class="headerlink" title="numad软件包"></a>numad软件包</h6><p>numad 是一个自动的 NUMA 关联管理后台程序。它监控系统的 NUMA 拓扑和资源使用率，目的是为了动态地<br>提高 NUMA 的资源分配和管理（从而提高系统性能）。numad 可以根据系统的工作负载来为性能基准提供高<br>达 50% 的改善。它还提供预先安置咨询服务，可以通过多种工作关联系统进行查询，以此为最初绑定的 CPU<br>和内存资源的进程提供协助。</p>
+<h4 id="tuned-和-tuned-adm"><a href="#tuned-和-tuned-adm" class="headerlink" title="tuned 和 tuned-adm"></a>tuned 和 tuned-adm</h4><p>tuned  是一个调整的后台程序，在某种工作负载量下通过设置调整配置文件使操作系统有更好的性能表现。对<br>其进行配置，使其对 CPU 和网络使用的变化做出响应，调整设置以提高激活设备的性能，并减少在未激活设<br>tuned-adm 是一个命令行工具，提供一些不同配置文件以提高一些特定用例性能。它也提供一个评估系统和<br>输出推荐的调整配置文件的子命令（tuned-adm recommend）。在您系统安装时它也能设置默认配置文<br>件，以便能用于返回默认配置文件。</p>
+<p>tuned-adm 提供的文件分为两类：节能文件和性能提升文件。性能提升文件的内容如下，其侧重点分别为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">存储和网络的低延迟</span><br><span class="line">存储和网络的高吞吐量</span><br><span class="line">虚拟计算机性能</span><br><span class="line">虚拟主机性能</span><br></pre></td></tr></table></figure></p>
+<h4 id="cpu调优"><a href="#cpu调优" class="headerlink" title="cpu调优"></a><font color="#0088" face="">cpu调优</font></h4><p>1、 系统拓扑<br>在现代计算机技术中，一个＂中央＂处理单元的观念是误导性的，因为大部分现代化的系统都有多个处理器。<br>这些处理器是如何相互连接，并且如何连接至其他系统资源 —＂系统拓扑＂— 会对系统和应用程序的性能以<br>及系统调节选项产生巨大的影响。<br>现代计算机技术主要运用两种主要的拓扑类型</p>
+<ul>
+<li>SMP 拓扑</li>
+</ul>
+<p>SMP（对称多处理器）拓扑允许所有的处理器同时访问内存。然而，由于内存访问权限的共享性和<br>平等性，固然会迫使所有 CPU 及 SMP 系统序列化的内存访问权限的局限性增加，目前这种情况常<br>不被接受。因此，几乎所有现代服务器系统都是 NUMA（非一致性内存访问）机器。</p>
+<ul>
+<li>NUMA 拓扑</li>
+</ul>
+<p>比起 SMP 拓扑，NUMA（非一致性内存访问）拓扑是近来才开发的。在 NUMA 系统中，多个处理<br>器物理分组至一个 socket。每个 socket 都有一个专用内存区，对该内存进行本地访问的服务器统称<br>为一个节点。</p>
+<p>同一个节点上的服务器能高速访问该节点的存储体，但访问其他节点上的存储体速度就较慢。因<br>此，访问非本地存储体会造成性能的损失。</p>
+<p>考虑到性能损失，服务器执行应用程序时，NUMA 拓扑结构系统中对性能敏感的应用程序应访问同<br>一节点的内存，并且应尽可能地避免访问任何远程内存。</p>
+<p>因此，在调节 NUMA 拓扑结构系统中的应用程序性能时，重要的是要考虑这一应用程序的执行点以<br>及最靠近此执行点的存储体。</p>
+<p>在 NUMA 拓扑结构系统中，/sys 文件系统包含处理器、内存及外围设备的连接信息。/sys/devices/system/cpu 目录包含处理器在系统中相互连接的详情。<br>/sys/devices/system/node 目录包含系统中 NUMA 的节点信息以及节点间的相对距离。</p>
+<p> 2、确定系统拓扑结构</p>
+<p>很多指令能帮助用户了解系统的拓扑结构。numactl –hardware 指令概述了系统的拓扑结构。</p>
+<h6 id="监控和诊断性能问题"><a href="#监控和诊断性能问题" class="headerlink" title="监控和诊断性能问题"></a>监控和诊断性能问题</h6><p>1、turbostat</p>
+<p>2、numastat</p>
+<p>3、/proc/中断</p>
+<h6 id="配置建议"><a href="#配置建议" class="headerlink" title="配置建议"></a>配置建议</h6><p>1、配置内核滴答记号时间</p>
+<p>2、设置硬件性能策略</p>
+<p>3、使用taskset设置处理器关联</p>
+<p>4、使用numaactl管理关联</p>
+<p>5、使用numad进行自动化NUMA关联管理</p>
+<p>6、调节调度策略</p>
+<p>7、设置中断关联</p>
+<p>8、使用Tuna配置CPU，线程和中断关联</p>
+<h4 id="内存调优"><a href="#内存调优" class="headerlink" title="内存调优"></a><font color="#0088" face="">内存调优</font></h4><h6 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h6><p>1、页面大小</p>
+<p>2、转换后背缓冲区大小</p>
+<h6 id="监控及诊断性能问题"><a href="#监控及诊断性能问题" class="headerlink" title="监控及诊断性能问题"></a>监控及诊断性能问题</h6><p>1、使用 vmstat 监控内存使用量</p>
+<p>2、用 Valgrind 分析应用程序的内存使用量</p>
+<p>3、使用 Memcheck 分析内存使用量</p>
+<p>4、使用 Cachegrind 分析缓存使用量</p>
+<p>5、使用 Massif 分析堆栈空间</p>
+<h6 id="配置工具"><a href="#配置工具" class="headerlink" title="配置工具"></a>配置工具</h6><p>1、配置大页面</p>
+<p>2、配置系统内存容量</p>
+<ul>
+<li>虚拟内存参数</li>
+<li>文件系统参数</li>
+<li>内核参数</li>
+</ul>
+<h4 id="网络调优"><a href="#网络调优" class="headerlink" title="网络调优"></a><font color="#0088" face="">网络调优</font></h4><h6 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h6><p>1、调节前</p>
+<p>网络性能问题最常见的是由硬件故障或基础结构层故障造成的。红帽极力推荐在开始调节网络堆栈前核实硬件<br>及基础结构层是否在按预期运行。</p>
+<p>2、数据包接收瓶颈</p>
+<ul>
+<li>NIC 硬件缓冲区或循环缓冲区</li>
+<li>硬件或软件中断队列</li>
+<li>应用程序的 socket接收队列</li>
+</ul>
+<h6 id="监控和诊断性能问题-1"><a href="#监控和诊断性能问题-1" class="headerlink" title="监控和诊断性能问题"></a>监控和诊断性能问题</h6><p>1、ss</p>
+<p>2、ip</p>
+<p>3、dropwatch</p>
+<p>4、ethtool</p>
+<p>5、/proc/net/snmp</p>
+<p>6、使用 SystemTap 监控网络</p>
+<h6 id="配置工具-1"><a href="#配置工具-1" class="headerlink" title="配置工具"></a>配置工具</h6><p>1、网络性能 Tuned-adm 配置文件</p>
+<p>2、配置硬件缓冲区</p>
+<p>3、配置中断队列</p>
+<ul>
+<li>配置繁忙轮询<br>-</li>
+</ul>
+<p>4、配置 socket 接收队列</p>
+<ul>
+<li>减少传入流量的速度</li>
+<li>增加队列深度</li>
+</ul>
+<p>5、配置 RSS</p>
+<p>6、配置 RPS</p>
+<p>7、配置 RFS</p>
+<p>8、配置加速 RFS</p>
+<h4 id="存储和文件系统"><a href="#存储和文件系统" class="headerlink" title="存储和文件系统"></a><font color="#0088" face="">存储和文件系统</font></h4><p>阅读此章节可了解影响文件系统吞吐量、可伸缩性、响应能力、资源使用和可用性的格式和挂载选项</p>
+<h6 id="I-O-调度器"><a href="#I-O-调度器" class="headerlink" title="I/O 调度器"></a>I/O 调度器</h6><p>1、deadline</p>
+<p>除了 SATA 磁盘为所有块设备的默认 I/O 调度器。Deadline 尝试为指向到达 I/O 调度器的请求提<br>供有保障的延迟。该调度器适合大多数用例，尤其适用于读取操作比写入操作更频繁的请求。</p>
+<p>2、cfq</p>
+<p>默认调度器只适用于标识为 SATA 硬盘的设备。完全公平队列调度器，cfq，将进程分成三个独立<br>类别：实时、尽其所能和空闲。实时类别的进程总是先于尽其所能类别进程执行，而尽其所能类别<br>进程总是在空闲类别进程之前执行。这意味着实时类别的进程可以使尽其所能和空闲进程等待处理<br>器时间而忍受“饥饿”。默认设置下，分配进程到尽其所能类别。</p>
+<p>Cfq 使用历史数据来预测应用是否会在不久之后发出更多 I/O 请求。如果将有更多 I/O 请求，cfq<br>空闲则会等待新的 I/O，即使有来自其他进程的 I/O 在等待处理。</p>
+<p>3、noop</p>
+<p>noop I/O 调度器执行简单的 FIFO（先进先出）调度算法。请求通过简单的最后选中的缓存数据在<br>一般块层合并。对于使用最快存储的受 CPU 限制的系统，这是最佳调度器。</p>
+<h6 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h6><p>1、XFS</p>
+<p>XFS 是一个可靠的、且可高度缩放的 64 位文件系统。它是红帽企业版 Linux 7 中默认文件系统。<br>XFS 使用基于分区的分配，具有一些分配方案，包括预先分配和延迟的分配，这两种都会减少碎片<br>和辅助性能。它也支持促进故障恢复的元数据日志。当挂载并激活时，能够对 XFS 进行碎片整理和<br>放大，红帽企业版 Linux 7 支持几种 XFS 特定的备份和还原工具程序。</p>
+<p>2、Ext4</p>
+<p>Ext4 是 ext3 文件系统的可缩放扩展。它的默认行为对大部分工作负载是最佳的。然而，它只支持最<br>大容量为 50 TB的文件系统以及最大容量为 16 TB 的文件</p>
+<p>3、GFS2</p>
+<p>GFS2 是具有极高可用性附加装置的一部分，为红帽企业版 Linux 7 提供簇文件系统支持。GFS2 集<br>群提供所有服务器一致的文件系统图像，允许服务器在一个单独共享文件系统中读取和写入。</p>
+<p>4、Btrfs（技术预览）</p>
+<p>Btrfs 是提供缩放性、容错和方便管理的 copy-on-write（写时复制）文件系统。它包括内置快照和<br>RAID 支持，通过数据和元数据校验来提供数据的完整性。它也通过数据压缩提高性能及使用空间的<br>效率。Btrfs 作为一种技术预览，支持最大容量可达 50 TB 的文件系统。</p>
+<h6 id="性能问题监控和诊断"><a href="#性能问题监控和诊断" class="headerlink" title="性能问题监控和诊断"></a>性能问题监控和诊断</h6><p>1、使用 vmstat 监控系统性能<br>Vmstat 报告整个系统的进程、内存、分页、阻止 I/O、中断和 CPU 活动。它能帮助管理员决定 I/O 子系统是<br>否对任何性能问题负责。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">下列是与 I/O 性能最相关的信息：</span><br><span class="line">si：切换进硬盘，或者以 KB 为单位写入交换空间。</span><br><span class="line">so：从硬盘中切换出，或者以 kb 为单位从交换空间读取。</span><br><span class="line">bi：写入块，或者以 kb 为单位阻止写操作。</span><br><span class="line">bo：读取块，或者以 kb 为单位阻止读操作。</span><br><span class="line">wa：等待 I/O 操作完成的队列部分。</span><br><span class="line"></span><br><span class="line">交换空间和数据在同一设备上时，而且是内存使用指示器，切换进硬盘和从硬盘中切换出尤为有用。</span><br></pre></td></tr></table></figure></p>
+<p>2、使用 iostat 监控 I/O 性能。<br>Iostat 是由 sysstat 软件包提供的。它报告加载在您系统中的 I/O 设备。如果使用 vmstat 的分析显示 I/O 子系<br>统对性能下降负责，您可以使用 iostat 来确定负责的 I/O 设备。</p>
+<p>3、使用 blktrace 详细说明 I/O 分析。<br>Blktrace 提供 I/O 子系统上时间如何消耗的详细信息。配套工具 blkparse 从 blktrace 读取原始输出，并产生<br>人们可读的输入和输出操作摘要，该摘要由 blktrace 记录</p>
+<p>4、用 btt 分析 blktrace 输出。<br>Btt 作为 blktrace 软件包的一部分而被提供。它分析 blktrace 输出，并显示该数据用在每个 I/O 栈区域的时间<br>量，使它更容易在 I/O 子系统中发现瓶颈。</p>
+<p>5、使用 seekwatcher 分析 blktrace 输出。<br>seekwatcher 工具可使用 blktrace 输出随时间绘制 I/O 图表。它集中在硬盘 I/O 的 LBA（逻辑块地址）、每<br>秒以兆计算的吞吐量、每秒搜寻的数量和每秒 I/O 操作。这能帮助您了解何时达到设备操作系统每秒的限制。</p>
+<p>6、使用 SystemTap 监控存储</p>
+<h6 id="设置和调优"><a href="#设置和调优" class="headerlink" title="设置和调优"></a>设置和调优</h6><p>1、配置存储性能的调整配置文件</p>
+<p>Tuned 和 tuned-adm 提供一些旨在为特定用例提高性能的配置文件</p>
+<p>2、设置默认 I/O 调度器</p>
+<p>如需设置默认 I/O 调度器，在重启时通过向内核命令行附加 elevator 参数来指定欲使用的调度器，或通过编辑<br>/etc/grub2.conf 文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">elevator=scheduler_name</span><br></pre></td></tr></table></figure>
+<h6 id="为设备配置-I-O-调度器"><a href="#为设备配置-I-O-调度器" class="headerlink" title="为设备配置 I/O 调度器"></a>为设备配置 I/O 调度器</h6><p>如需设置特定存储设备的调度器或调度器优先顺序，编辑 /sys/block/devname/queue/scheduler 文<br>件，devname 为您欲配置的设备名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># echo cfq &gt; /sys/block/hda/queue/scheduler</span><br></pre></td></tr></table></figure>
+<h6 id="1、调整deadline调度器"><a href="#1、调整deadline调度器" class="headerlink" title="1、调整deadline调度器"></a>1、调整deadline调度器</h6><p>使用 deadline 时，排队的 I/O 请求将分为读批处理或者写批处理，然后按照 LBA 递增的执行顺序调度。默认设置下，读批处理比写批处理优先处理，这是因为在读 I/O 上应用程序易被阻止。在批处理被处理后，deadline 会检查写操作因等待处理器时间而处于多久的“饥饿”状态，并合理调度下一个读或者写批处理。</p>
+<p>下列参数影响 deadline 调度器行为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fifo_batch</span><br><span class="line">front_merges</span><br><span class="line">read_expire</span><br><span class="line">write_expire</span><br><span class="line">writes_starved</span><br></pre></td></tr></table></figure></p>
+<h6 id="2、调整-cfq-调度器"><a href="#2、调整-cfq-调度器" class="headerlink" title="2、调整 cfq 调度器"></a>2、调整 cfq 调度器</h6><p>使用 cfq 时 ，进程分为三类：实时、尽其所能和空闲。尽其所能进程之前调度所有实时进程，而空闲进程之前调度尽其所能进程。默认设置下，进程归类为尽其所能。可使用 ionice 命令手动调整进程分类。</p>
+<p>通过使用下列参数进一步调整 cfq 调度器的行为。这些参数通过改变/sys/block/devname/queue/iosched 目录下的指定文件，基于每个设备设置的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">back_seek_max</span><br><span class="line">back_seek_penalty</span><br><span class="line">fifo_expire_async</span><br><span class="line">fifo_expire_sync</span><br><span class="line">group_idle</span><br><span class="line">group_isolation</span><br><span class="line">low_latency</span><br><span class="line">quantum</span><br><span class="line">slice_async</span><br><span class="line">slice_idle</span><br><span class="line">slice_sync</span><br></pre></td></tr></table></figure>
+<p>不向无法遭受大搜寻 penalty（惩罚）的硬件推荐 cfq 调度器，例如快速外部存储数列或者固态硬盘。如果您需要在此存储上使用 cfq ，需要编辑下列配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">设置 /sys/block/devname/queue/ionice/slice_idle为0</span><br><span class="line">设置 /sys/block/devname/queue/ionice/quantum 为64</span><br><span class="line">设置 /sys/block/devname/queue/ionice/group_idle为</span><br></pre></td></tr></table></figure></p>
+<h6 id="3、调整-noop-调度器"><a href="#3、调整-noop-调度器" class="headerlink" title="3、调整 noop 调度器"></a>3、调整 noop 调度器</h6><p>noop I/O 调度器主要对使用快速存储的受 cpu 限制的系统有用。请求在块层合并，因此通过编辑/sys/block/sdX/queue/ 目录中的文件中块层参数，修改noop 行为。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">add_random</span><br><span class="line">max_sectors_kb</span><br><span class="line">nomerges</span><br><span class="line">nr_requests</span><br><span class="line">optimal_io_size</span><br><span class="line">read_ahead_kb</span><br><span class="line">旋转</span><br><span class="line">rq_affinity</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/27/浅谈系统调优/" data-id="cjx4bixhl000lk0vtll91d9f9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/03/浅谈高可用集群套件-keepalived-Corosync-Pacemaker/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅谈高可用集群套件(keepalived+Corosync+Pacemaker)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/27/浅谈crontab/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">浅谈crontab</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

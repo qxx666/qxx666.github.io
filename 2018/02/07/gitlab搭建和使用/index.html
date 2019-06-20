@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>gitlab搭建和使用 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要：本篇主要讲述利用docker搭建企业个人的git服务器作为代码的存储和版本控制仓库，本例利用gitlab作为服务提供系统。以及介绍gitlab的使用方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitlab搭建和使用">
+<meta property="og:url" content="http://yoursite.com/2018/02/07/gitlab搭建和使用/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要：本篇主要讲述利用docker搭建企业个人的git服务器作为代码的存储和版本控制仓库，本例利用gitlab作为服务提供系统。以及介绍gitlab的使用方法。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/assets/img/docker.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/root.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/库.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/read.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/git1.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/git2.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/t1.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/w.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/w1.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/w3.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/w2.png">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.751Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gitlab搭建和使用">
+<meta name="twitter:description" content="摘要：本篇主要讲述利用docker搭建企业个人的git服务器作为代码的存储和版本控制仓库，本例利用gitlab作为服务提供系统。以及介绍gitlab的使用方法。">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/docker.png">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-gitlab搭建和使用" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/07/gitlab搭建和使用/" class="article-date">
+  <time datetime="2018-02-07T09:02:59.000Z" itemprop="datePublished">2018-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      gitlab搭建和使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h6 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h6><p>本篇主要讲述利用docker搭建企业个人的git服务器作为代码的存储和版本控制仓库，本例利用gitlab作为服务提供系统。以及介绍gitlab的使用方法。</p>
+<a id="more"></a>
+<h4 id="gitlab介绍："><a href="#gitlab介绍：" class="headerlink" title="gitlab介绍："></a>gitlab介绍：</h4><p>大家对github都很熟悉，可能没听说过gitlab，github和gitlab都是基于web的Git repositories(仓库)，拥有流水线型的web开发流程，它们为开发团队存储、分享、发布、测试和合作web开发项目提供了中心化的、云存储的场所。Git版本控制——对于多人共同开发一个project来说非常重要——它提供了分享开源项目的平台。GitLab拥有更多的特性，它可以让开发团队拥有更多的安全性和灵活性的选择</p>
+<h4 id="gitlab优势"><a href="#gitlab优势" class="headerlink" title="gitlab优势"></a>gitlab优势</h4><p>GitLab拥有GitHub拥有的一切，但他拥有更多——让团队对它们的repositories拥有更多的控制，它的特色：</p>
+<ul>
+<li><p>非常便捷的用户界面，在同一界面上获取到：projects，最近的projects，用户，最近的用户，群组和状态；</p>
+</li>
+<li><p>允许设置仓库权限是公用的还是私有的；</p>
+</li>
+<li><p>“Snippet support”让用户分享一个project的部分代码，而不是整个project。</p>
+</li>
+<li><p>受保护的分支是一种提升代码安全性的新方法，它们允许用户设置project的获取权限，所以一个团队中只有特定的人可以push，force push或者删除一个分支的代码。</p>
+</li>
+<li><p>Authentication levels更进一步的提升安全性，允许用户给人读写以外的权限。举例来说，你可以给一个组员跟踪变动的权限却不给他获取代码的权限。</p>
+</li>
+<li><p>你可以设置获取到团队的整体的改进进度，而不是你个人的进度。</p>
+</li>
+<li><p>开发者通过打上“仍在进行中”状态标签让其他成员知道代码没有完成，从而阻止未完成的代码合并到其他的代码中</p>
+</li>
+<li><p>“innersourcing”公司的资源如果员工不再权限范围内，将不知道这个资源的存在。</p>
+</li>
+</ul>
+<h4 id="利用docker中搭建gitlab"><a href="#利用docker中搭建gitlab" class="headerlink" title="利用docker中搭建gitlab"></a>利用docker中搭建gitlab</h4><ul>
+<li><p>环境准备</p>
+<p>1、linux主机，本例系统是linux发行版centos7.3平台</p>
+<p>2、先要安装docker环境，docker环境安装和使用我就不在这重复了，可以参考我博客的另一篇文章</p>
+<p><a href="/_posts/docker入门教程.md">docker介绍和安装使用</a></p>
+</li>
+</ul>
+<ul>
+<li><p>gitlab部署</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --detach \</span><br><span class="line">    --publish 443:443 --publish 80:80 --publish 22:22 \</span><br><span class="line">    --name gitlab \</span><br><span class="line">    --restart always \</span><br><span class="line">    --volume /home/gitlab/config:/etc/gitlab \</span><br><span class="line">    --volume /home/gitlab/logs:/var/log/gitlab \</span><br><span class="line">    --volume /home/gitlab/data:/var/opt/gitlab \</span><br><span class="line">    gitlab/gitlab-ce:latest</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>端口分别映射到80，22，443 如过没有开启https访问方式443端口可不做处理，各文件则分别隐射到本地/home/gitlab目录下，具体字段的意思我就不一一说明可以参考docker入门教程，</p>
+<ul>
+<li><p>查看服务是否已经启动</p>
+<p><img src="/assets/img/docker.png" alt=""><br>首次启动可能比较慢，需要等待一分钟左右的时间。我们可以使用sudo docker ps命令查看当前所有Docker容器的状态。当它的状态由starting变为运行时间时，说明成功启动了。我们直接使用上面配置的IP地址,在浏览器中访问即可。</p>
+</li>
+<li><p>浏览器访问<br>在浏览器输入你部署主机的ip地址和映射端口，第一次登入回让你设置管理员密码，设置好后，用root用户名，你设置的密码登入就可进入管理员的界面，如图：<br><img src="/assets/img/root.png" alt=""></p>
+</li>
+</ul>
+<p>其他用户则需要用邮箱进行注册后登入，登入后就可以创建自己的项目库</p>
+<ul>
+<li>更多内容参考官方文档<br><a href="https://docs.gitlab.com/omnibus/docker/README.html#run-the-image" target="_blank" rel="noopener">GitLab官方文档</a></li>
+</ul>
+<h4 id="gitlab使用教程"><a href="#gitlab使用教程" class="headerlink" title="gitlab使用教程"></a>gitlab使用教程</h4><h5 id="环境准备："><a href="#环境准备：" class="headerlink" title="环境准备："></a>环境准备：</h5><p>1、git客户端</p>
+<h5 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h5><p>1、先登入gitlab创建一个库，如下图，创建一个test库，该库可以选择是私有还是公开，还是企业内部共享<br><img src="/assets/img/库.png" alt=""></p>
+<p>2、库创建好后可以添加一个Readme.md,在此添加该文件作为下面代码修改的演示<br><img src="/assets/img/read.png" alt=""></p>
+<p>3、在本地安装git客户端</p>
+<ul>
+<li>linux用户可以直接<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install git</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>windows用户可以去官网下载git客户端进行安装，然后加入到系统的环境变量中</p>
+<p><a href="https://git-scm.com/" target="_blank" rel="noopener">git客户端下载</a></p>
+</li>
+</ul>
+<p>4、代码库的下载和上传</p>
+<ul>
+<li><p>linux用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone http://ip:port/user/yourproject</span><br></pre></td></tr></table></figure>
+<p>例如我以root身份创建的了一个test项目库<br><img src="/assets/img/git1.png" alt=""><br>进入该test文件就可以看到该项目所有文件了。<br><img src="/assets/img/git2.png" alt=""></p>
+<ul>
+<li>修改代码并上传<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim README.md   //打开文件并写入一些文字，保存退出文本编辑</span><br><span class="line">git add test  //git保存修改</span><br><span class="line">git commit   //提交修改</span><br><span class="line">git push     //上传到gitlab服务器</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>登入gitlab服务器则可以看到你提交的修改文档文档<br><img src="/assets/img/t1.png" alt=""></p>
+</li>
+<li><p>windows用户</p>
+</li>
+</ul>
+<p>1、确保已经安装了git客户端，打开powershell。从gitlab上拷贝代码库<br><img src="/assets/img/w.png" alt=""><br>2、进入test文件夹，修改README.md文件，添加一些文字，然后上传<br><img src="/assets/img/w1.png" alt=""></p>
+<p>至于怎么在powershell中打开vim编辑器可参考我另一篇博客<br><a href="/_posts/powershell的一些操作">powershell中打开vim</a></p>
+<p>然后保存修改，提交修改，并上传到gitlab，第一次上传时需要你输入用户名和密码，根据提示输入你注册时的账号和密码即可<br><img src="/assets/img/w3.png" alt=""></p>
+<ul>
+<li>浏览器登入gitlab产看修改结果<br><img src="/assets/img/w2.png" alt=""></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/07/gitlab搭建和使用/" data-id="cjx4bixey0001k0vte8wqbzwz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/16/关于一些数据库的介绍/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          关于一些数据库的介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/30/DNS服务/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">DNS服务</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

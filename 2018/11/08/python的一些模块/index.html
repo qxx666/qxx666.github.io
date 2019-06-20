@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>python的一些模块 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="python的标准模块1234567891011121、os2、sys3、glob模块提供了一个函数用于从目录通配符搜索中生成文件列表4、re5、math6、urllib7、datetime8、zlib9、doctest10、unittest11、time12、timeit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python的一些模块">
+<meta property="og:url" content="http://yoursite.com/2018/11/08/python的一些模块/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="python的标准模块1234567891011121、os2、sys3、glob模块提供了一个函数用于从目录通配符搜索中生成文件列表4、re5、math6、urllib7、datetime8、zlib9、doctest10、unittest11、time12、timeit">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python的一些模块">
+<meta name="twitter:description" content="python的标准模块1234567891011121、os2、sys3、glob模块提供了一个函数用于从目录通配符搜索中生成文件列表4、re5、math6、urllib7、datetime8、zlib9、doctest10、unittest11、time12、timeit">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python的一些模块" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/08/python的一些模块/" class="article-date">
+  <time datetime="2018-11-08T08:00:29.000Z" itemprop="datePublished">2018-11-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python的一些模块
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="python的标准模块"><a href="#python的标准模块" class="headerlink" title="python的标准模块"></a>python的标准模块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1、os</span><br><span class="line">2、sys</span><br><span class="line">3、glob模块提供了一个函数用于从目录通配符搜索中生成文件列表</span><br><span class="line">4、re</span><br><span class="line">5、math</span><br><span class="line">6、urllib</span><br><span class="line">7、datetime</span><br><span class="line">8、zlib</span><br><span class="line">9、doctest</span><br><span class="line">10、unittest</span><br><span class="line">11、time</span><br><span class="line">12、timeit</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="一、os模块"><a href="#一、os模块" class="headerlink" title="一、os模块"></a>一、os模块</h2><p>os 模块提供了非常丰富的方法用来处理文件和目录。</p>
+<p>常用的方法如下表所示：</p>
+<p>1、<br>os.access(path, mode)<br>检验权限模式</p>
+<p>2、<br>os.chdir(path)<br>改变当前工作目录</p>
+<p>3、<br>os.chflags(path, flags)<br>设置路径的标记为数字标记。</p>
+<p>4、<br>os.chmod(path, mode)<br>更改权限</p>
+<p>5、<br>os.chown(path, uid, gid)<br>更改文件所有者</p>
+<p>6、<br>os.chroot(path)<br>改变当前进程的根目录</p>
+<p>7、<br>os.close(fd)<br>关闭文件描述符 fd</p>
+<p>8、<br>os.closerange(fd_low, fd_high)<br>关闭所有文件描述符，从 fd_low (包含) 到 fd_high (不包含), 错误会忽略</p>
+<p>9、<br>os.dup(fd)<br>复制文件描述符 fd</p>
+<p>10、<br>os.dup2(fd, fd2)<br>将一个文件描述符 fd 复制到另一个 fd2</p>
+<p>11、<br>os.fchdir(fd)<br>通过文件描述符改变当前工作目录</p>
+<p>12、<br>os.fchmod(fd, mode)<br>改变一个文件的访问权限，该文件由参数fd指定，参数mode是Unix下的文件访问权限。</p>
+<p>13、<br>os.fchown(fd, uid, gid)<br>修改一个文件的所有权，这个函数修改一个文件的用户ID和用户组ID，该文件由文件描述符fd指定。</p>
+<p>14、<br>os.fdatasync(fd)<br>强制将文件写入磁盘，该文件由文件描述符fd指定，但是不强制更新文件的状态信息</p>
+<p>15、<br>os.fdopen(fd[, mode[, bufsize]])<br>通过文件描述符 fd 创建一个文件对象，并返回这个文件对象</p>
+<p>16、<br>os.fpathconf(fd, name)<br>返回一个打开的文件的系统配置信息。name为检索的系统配置的值，它也许是一个定义系统值的字符串，这些名字在很多标准中指定（POSIX.1, Unix 95, Unix 98, 和其它）。</p>
+<p>17、<br>os.fstat(fd)<br>返回文件描述符fd的状态，像stat()。</p>
+<p>18、<br>os.fstatvfs(fd)<br>返回包含文件描述符fd的文件的文件系统的信息，像 statvfs()</p>
+<p>19、<br>os.fsync(fd)<br>强制将文件描述符为fd的文件写入硬盘。</p>
+<p>20、<br>os.ftruncate(fd, length)<br>裁剪文件描述符fd对应的文件, 所以它最大不能超过文件大小。</p>
+<p>21、<br>os.getcwd()<br>返回当前工作目录</p>
+<p>22、<br>os.getcwdu()<br>返回一个当前工作目录的Unicode对象</p>
+<p>23、<br>os.isatty(fd)<br>如果文件描述符fd是打开的，同时与tty(-like)设备相连，则返回true, 否则False。</p>
+<p>24、<br>os.lchflags(path, flags)<br>设置路径的标记为数字标记，类似 chflags()，但是没有软链接</p>
+<p>25、<br>os.lchmod(path, mode)<br>修改连接文件权限</p>
+<p>26、<br>os.lchown(path, uid, gid)<br>更改文件所有者，类似 chown，但是不追踪链接。</p>
+<p>27、<br>os.link(src, dst)<br>创建硬链接，名为参数 dst，指向参数 src</p>
+<p>28、<br>os.listdir(path)<br>返回path指定的文件夹包含的文件或文件夹的名字的列表。</p>
+<p>29、<br>os.lseek(fd, pos, how)<br>设置文件描述符 fd当前位置为pos, how方式修改: SEEK_SET 或者 0 设置从文件开始的计算的pos; SEEK_CUR或者 1 则从当前位置计算; os.SEEK_END或者2则从文件尾部开始. 在unix，Windows中有效</p>
+<p>30、<br>os.lstat(path)<br>像stat(),但是没有软链接</p>
+<p>31、<br>os.major(device)<br>从原始的设备号中提取设备major号码 (使用stat中的st_dev或者st_rdev field)。</p>
+<p>32、<br>os.makedev(major, minor)<br>以major和minor设备号组成一个原始设备号</p>
+<p>33、<br>os.makedirs(path[, mode])<br>递归文件夹创建函数。像mkdir(), 但创建的所有intermediate-level文件夹需要包含子文件夹。</p>
+<p>34、<br>os.minor(device)<br>从原始的设备号中提取设备minor号码 (使用stat中的st_dev或者st_rdev field )。</p>
+<p>35、<br>os.mkdir(path[, mode])<br>以数字mode的mode创建一个名为path的文件夹.默认的 mode 是 0777 (八进制)。</p>
+<p>36、<br>os.mkfifo(path[, mode])<br>创建命名管道，mode 为数字，默认为 0666 (八进制)</p>
+<p>37、<br>os.mknod(filename[, mode=0600, device])<br>创建一个名为filename文件系统节点（文件，设备特别文件或者命名pipe）。</p>
+<p>38、<br>os.open(file, flags[, mode])<br>打开一个文件，并且设置需要的打开选项，mode参数是可选的</p>
+<p>39、<br>os.openpty()<br>打开一个新的伪终端对。返回 pty 和 tty的文件描述符。</p>
+<p>40、<br>os.pathconf(path, name)<br>返回相关文件的系统配置信息。</p>
+<p>41、<br>os.pipe()<br>创建一个管道. 返回一对文件描述符(r, w) 分别为读和写</p>
+<p>42、<br>os.popen(command[, mode[, bufsize]])<br>从一个 command 打开一个管道</p>
+<p>43、<br>os.read(fd, n)<br>从文件描述符 fd 中读取最多 n 个字节，返回包含读取字节的字符串，文件描述符 fd对应文件已达到结尾, 返回一个空字符串。</p>
+<p>44、<br>os.readlink(path)<br>返回软链接所指向的文件</p>
+<p>45、<br>os.remove(path)<br>删除路径为path的文件。如果path 是一个文件夹，将抛出OSError; 查看下面的rmdir()删除一个 directory。</p>
+<p>46、<br>os.removedirs(path)<br>递归删除目录。</p>
+<p>47、<br>os.rename(src, dst)<br>重命名文件或目录，从 src 到 dst</p>
+<p>48、<br>os.renames(old, new)<br>递归地对目录进行更名，也可以对文件进行更名。</p>
+<p>49、<br>os.rmdir(path)<br>删除path指定的空目录，如果目录非空，则抛出一个OSError异常。</p>
+<p>50、<br>os.stat(path)<br>获取path指定的路径的信息，功能等同于C API中的stat()系统调用。</p>
+<p>51、<br>os.stat_float_times([newvalue])<br>决定stat_result是否以float对象显示时间戳</p>
+<p>52、<br>os.statvfs(path)<br>获取指定路径的文件系统统计信息</p>
+<p>53、<br>os.symlink(src, dst)<br>创建一个软链接</p>
+<p>54、<br>os.tcgetpgrp(fd)<br>返回与终端fd（一个由os.open()返回的打开的文件描述符）关联的进程组</p>
+<p>55、<br>os.tcsetpgrp(fd, pg)<br>设置与终端fd（一个由os.open()返回的打开的文件描述符）关联的进程组为pg。</p>
+<p>56、<br>os.tempnam([dir[, prefix]])<br>返回唯一的路径名用于创建临时文件。</p>
+<p>57、<br>os.tmpfile()<br>返回一个打开的模式为(w+b)的文件对象 .这文件对象没有文件夹入口，没有文件描述符，将会自动删除。</p>
+<p>58、<br>os.tmpnam()<br>为创建一个临时文件返回一个唯一的路径</p>
+<p>59、<br>os.ttyname(fd)<br>返回一个字符串，它表示与文件描述符fd 关联的终端设备。如果fd 没有与终端设备关联，则引发一个异常。</p>
+<p>60、<br>os.unlink(path)<br>删除文件路径</p>
+<p>61、<br>os.utime(path, times)<br>返回指定的path文件的访问和修改的时间。</p>
+<p>62、<br>os.walk(top[, topdown=True[, onerror=None[, followlinks=False]]])<br>输出在文件夹中的文件名通过在树中游走，向上或者向下。</p>
+<p>63、<br>os.write(fd, str)<br>写入字符串到文件描述符 fd中. 返回实际写入的字符串长度</p>
+<h2 id="二、re模块"><a href="#二、re模块" class="headerlink" title="二、re模块"></a>二、re模块</h2><p>正则表达式是一个特殊的字符序列，它能帮助你方便的检查一个字符串是否与某种模式匹配。</p>
+<p>Python 自1.5版本起增加了re 模块，它提供 Perl 风格的正则表达式模式。</p>
+<p>re 模块使 Python 语言拥有全部的正则表达式功能。</p>
+<p>compile 函数根据一个模式字符串和可选的标志参数生成一个正则表达式对象。该对象拥有一系列方法用于正则表达式匹配和替换。</p>
+<p>re 模块也提供了与这些方法功能完全一致的函数，这些函数使用一个模式字符串做为它们的第一个参数。</p>
+<h4 id="re中的函数"><a href="#re中的函数" class="headerlink" title="re中的函数"></a>re中的函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [8]: re.</span><br><span class="line">re.DEBUG        re.L            re.S            re.U            re.compile      re.findall      re.search       re.sub          </span><br><span class="line">re.DOTALL       re.LOCALE       re.Scanner      re.UNICODE      re.copy_reg     re.finditer     re.split        re.subn         </span><br><span class="line">re.I            re.M            re.T            re.VERBOSE      re.error        re.match        re.sre_compile  re.sys          </span><br><span class="line">re.IGNORECASE   re.MULTILINE    re.TEMPLATE     re.X            re.escape       re.purge        re.sre_parse    re.template</span><br></pre></td></tr></table></figure>
+<h4 id="重点介绍几个函数"><a href="#重点介绍几个函数" class="headerlink" title="重点介绍几个函数"></a>重点介绍几个函数</h4><p>1、re.match函数</p>
+<p>re.match 尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，match()就返回none。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.match(pattern, string, flags=0)</span><br></pre></td></tr></table></figure>
+<p>函数参数说明：</p>
+<p>参数    描述</p>
+<p>pattern    匹配的正则表达式</p>
+<p>string    要匹配的字符串。</p>
+<p>flags    标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。</p>
+<p>参见：正则表达式修饰符 - 可选标志</p>
+<p>2、re.search方法</p>
+<p>re.search 扫描整个字符串并返回第一个成功的匹配。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.search(pattern, string, flags=0)</span><br></pre></td></tr></table></figure>
+<p>re.match与re.search的区别</p>
+<p>re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None；而re.search匹配整个字符串，直到找到一个匹配。</p>
+<p>3、re.sub方法</p>
+<p>re.sub用于替换字符串中的匹配项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.sub(pattern, repl, string, count=0, flags=0)</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>pattern : 正则中的模式字符串。</p>
+<p>repl : 替换的字符串，也可为一个函数。</p>
+<p>string : 要被查找替换的原始字符串。</p>
+<p>count : 模式匹配后替换的最大次数，默认 0 表示替换所有的匹配。</p>
+<p>4、re.compile 函数</p>
+<p>compile 函数用于编译正则表达式，生成一个正则表达式（ Pattern ）对象，供 match() 和 search() 这两个函数使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.compile(pattern[, flags])</span><br></pre></td></tr></table></figure>
+<p>参数：</p>
+<p>pattern : 一个字符串形式的正则表达式</p>
+<p>flags : 可选，表示匹配模式，比如忽略大小写，多行模式等，具体参数为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">re.I 忽略大小写</span><br><span class="line">re.L 表示特殊字符集 \w, \W, \b, \B, \s, \S 依赖于当前环境</span><br><span class="line">re.M 多行模式</span><br><span class="line">re.S 即为 . 并且包括换行符在内的任意字符（. 不包括换行符）</span><br><span class="line">re.U 表示特殊字符集 \w, \W, \b, \B, \d, \D, \s, \S 依赖于 Unicode 字符属性数据库</span><br><span class="line">re.X 为了增加可读性，忽略空格和 # 后面的注释</span><br></pre></td></tr></table></figure>
+<p>5、re.findall方法</p>
+<p>在字符串中找到正则表达式所匹配的所有子串，并返回一个列表，如果没有找到匹配的，则返回空列表。<br>注意： match 和 search 是匹配一次 findall 匹配所有。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.findall(pattern，string, flags)</span><br></pre></td></tr></table></figure>
+<p>参数<br>pattern    匹配的正则表达式</p>
+<p>string    要匹配的字符串。</p>
+<p>flags    标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。参见：正则表达式修饰符 - 可选标志</p>
+<p>或者：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pattern = re.compile() </span><br><span class="line">pattern.findall(string, pos, endpos)</span><br></pre></td></tr></table></figure>
+<p>参数:<br>string : 待匹配的字符串。</p>
+<p>pos : 可选参数，指定字符串的起始位置，默认为 0。</p>
+<p>endpos : 可选参数，指定字符串的结束位置，默认为字符串的长度。</p>
+<p>6、re.finditer</p>
+<p>和 findall 类似，在字符串中找到正则表达式所匹配的所有子串，并把它们作为一个迭代器返回。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.finditer(pattern, string, flags=0)</span><br></pre></td></tr></table></figure>
+<p>参数：<br>pattern    匹配的正则表达式</p>
+<p>string    要匹配的字符串。</p>
+<p>flags    标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。参见：正则表达式修饰符 - 可选标志</p>
+<p>7、re.split方法</p>
+<p>split 方法按照能够匹配的子串将字符串分割后返回列表，它的使用形式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">re.split(pattern, string[, maxsplit=0, flags=0])</span><br></pre></td></tr></table></figure>
+<p>参数    描述</p>
+<p>pattern    匹配的正则表达式</p>
+<p>string    要匹配的字符串。</p>
+<p>maxsplit    分隔次数，maxsplit=1 分隔一次，默认为 0，不限制次数。</p>
+<p>flags    标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。参见：正则表达式修饰符 - 可选标志</p>
+<h4 id="正则表达式对象"><a href="#正则表达式对象" class="headerlink" title="正则表达式对象"></a>正则表达式对象</h4><p>1、re.RegexObject</p>
+<p>re.compile() 返回 RegexObject 对象。</p>
+<p>2、re.MatchObject</p>
+<p>group() 返回被 RE 匹配的字符串。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start() 返回匹配开始的位置</span><br><span class="line">end() 返回匹配结束的位置</span><br><span class="line">span() 返回一个元组包含匹配 (开始,结束) 的位置</span><br></pre></td></tr></table></figure>
+<p>实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;import re</span><br><span class="line">&gt;&gt;&gt; pattern = re.compile(r&apos;([a-z]+) ([a-z]+)&apos;, re.I)   # re.I 表示忽略大小写</span><br><span class="line">&gt;&gt;&gt; m = pattern.match(&apos;Hello World Wide Web&apos;)</span><br><span class="line">&gt;&gt;&gt; print m                               # 匹配成功，返回一个 Match 对象</span><br><span class="line">&lt;_sre.SRE_Match object at 0x10bea83e8&gt;</span><br><span class="line">&gt;&gt;&gt; m.group(0)                            # 返回匹配成功的整个子串</span><br><span class="line">&apos;Hello World&apos;</span><br><span class="line">&gt;&gt;&gt; m.span(0)                             # 返回匹配成功的整个子串的索引</span><br><span class="line">(0, 11)</span><br><span class="line">&gt;&gt;&gt; m.group(1)                            # 返回第一个分组匹配成功的子串</span><br><span class="line">&apos;Hello&apos;</span><br><span class="line">&gt;&gt;&gt; m.span(1)                             # 返回第一个分组匹配成功的子串的索引</span><br><span class="line">(0, 5)</span><br><span class="line">&gt;&gt;&gt; m.group(2)                            # 返回第二个分组匹配成功的子串</span><br><span class="line">&apos;World&apos;</span><br><span class="line">&gt;&gt;&gt; m.span(2)                             # 返回第二个分组匹配成功的子串</span><br><span class="line">(6, 11)</span><br><span class="line">&gt;&gt;&gt; m.groups()                            # 等价于 (m.group(1), m.group(2), ...)</span><br><span class="line">(&apos;Hello&apos;, &apos;World&apos;)</span><br><span class="line">&gt;&gt;&gt; m.group(3)                            # 不存在第三个分组</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">IndexError: no such group</span><br></pre></td></tr></table></figure>
+<h2 id="三、sys模块"><a href="#三、sys模块" class="headerlink" title="三、sys模块"></a>三、sys模块</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/08/python的一些模块/" data-id="cjx4bixgx000gk0vtnkl2bne6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/29/浅谈python/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅谈python
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/08/python数据类型/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python数据类型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

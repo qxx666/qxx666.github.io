@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>DNS服务 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DNS（Domain Name Service）:域名解析服务摘要：该篇主要讲解DNS域名解析服务的原理以及作用，介绍了域名查询功能中正向解析与反向解析的作用，并通过实验的方式演示了如何在DNS主服务器上部署正、反解析工作模式，以便让更深刻体会到DNS域名查询的便利以及强大。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DNS服务">
+<meta property="og:url" content="http://yoursite.com/2018/01/30/DNS服务/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="DNS（Domain Name Service）:域名解析服务摘要：该篇主要讲解DNS域名解析服务的原理以及作用，介绍了域名查询功能中正向解析与反向解析的作用，并通过实验的方式演示了如何在DNS主服务器上部署正、反解析工作模式，以便让更深刻体会到DNS域名查询的便利以及强大。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/assets/img/dns结构.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/dns查询过程.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/各地域名服务器.png">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.748Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DNS服务">
+<meta name="twitter:description" content="DNS（Domain Name Service）:域名解析服务摘要：该篇主要讲解DNS域名解析服务的原理以及作用，介绍了域名查询功能中正向解析与反向解析的作用，并通过实验的方式演示了如何在DNS主服务器上部署正、反解析工作模式，以便让更深刻体会到DNS域名查询的便利以及强大。">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/dns结构.png">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-DNS服务" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/30/DNS服务/" class="article-date">
+  <time datetime="2018-01-30T06:46:25.000Z" itemprop="datePublished">2018-01-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      DNS服务
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="DNS（Domain-Name-Service）-域名解析服务"><a href="#DNS（Domain-Name-Service）-域名解析服务" class="headerlink" title="DNS（Domain Name Service）:域名解析服务"></a>DNS（Domain Name Service）:域名解析服务</h3><h6 id="摘要："><a href="#摘要：" class="headerlink" title="摘要："></a>摘要：</h6><p>该篇主要讲解DNS域名解析服务的原理以及作用，介绍了域名查询功能中正向解析与反向解析的作用，并通过实验的方式演示了如何在DNS主服务器上部署正、反解析工作模式，以便让更深刻体会到DNS域名查询的便利以及强大。</p>
+<a id="more"></a>
+<h5 id="DNS域名解析服务"><a href="#DNS域名解析服务" class="headerlink" title="DNS域名解析服务"></a>DNS域名解析服务</h5><p>DNS(Domain Name System，域名系统)。这是一项用于管理和解析域名与IP地址对应关系的技术，简单来说，就是能够接受用户输入的域名或IP地址，然后自动查找与之匹配（或者说具有映射关系）的IP地址或域名，即将域名解析为IP地址（正向解析），或将IP地址解析为域名（反向解析）。这样一来，我们只需要在浏览器中输入域名就能打开想要访问的网站了。DNS域名解析技术的正向解析也是我们最常使用的一种工作模式。<br>鉴于互联网中的域名和IP地址对应关系数据库太过庞大，DNS域名解析服务采用了类似目录树的层次结构来记录域名与IP地址之间的对应关系，从而形成了一个分布式的数据库系统,如下图：<br><img src="/assets/img/dns结构.png" alt=""></p>
+<p>TLD:（顶级域有三类），根下的顶级域由根授权根下各组织进行管理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">组织域：.com .org .net .cc</span><br><span class="line">国家域: .cn .tw .hk .iq .ir .jp</span><br><span class="line">反向域(将IP转换成主机名):</span><br></pre></td></tr></table></figure></p>
+<h6 id="各记录关键字的含义"><a href="#各记录关键字的含义" class="headerlink" title="各记录关键字的含义"></a>各记录关键字的含义</h6><p>A记录：将域名指向一个IP地址<br>AAAA记录：将域名指向一个IPV6地址<br>CNAM记录：将一个域名指向另外一个域名<br>NS记录：将一个子域名指向其他DNS服务器解析<br>MX记录：将域名指向邮件服务器地址<br>TXT记录：文本长度限制512，通常做spf记录（反垃圾邮件）<br>CAA记录：ca证书颁发机构授机校验<br>SRV：记录提供的服务的服务器<br>显性URL：将域名302重定向到另一个地址<br>隐形URL：与显形URL类似，但会隐藏真实目标地址</p>
+<h5 id="一个域名的查询过程"><a href="#一个域名的查询过程" class="headerlink" title="一个域名的查询过程"></a>一个域名的查询过程</h5><h6 id="一些名词解释"><a href="#一些名词解释" class="headerlink" title="一些名词解释"></a>一些名词解释</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FQDN：Full Qualified  Domain Name 完全限定域名 如：www.qxx666.com,也叫主机名</span><br><span class="line">dns：名称解析是作为一个名称转换的数据库，将FQDN&lt;---&gt;IP</span><br><span class="line">stub resolver:名称解析器，当需要名称解析时，本地主机会调用该系统软件进行名称解析，该软件会先查hosts文件，如没查到会查询DNS服务。</span><br></pre></td></tr></table></figure>
+<p>DNS域名解析服务采用分布式的数据结构来存放海量的“区域数据”信息，在执行用户发起的域名查询请求时，具有递归查询和迭代查询两种方式。所谓递归查询，是指DNS服务器在收到用户发起的请求时，必须向用户返回一个准确的查询结果。如果DNS服务器本地没有存储与之对应的信息，则该服务器需要询问其他服务器，并将返回的查询结果提交给用户。而迭代查询则是指，DNS服务器在收到用户发起的请求时，并不直接回复查询结果，而是告诉另一台DNS服务器的地址，用户再向这台DNS服务器提交请求，这样依次反复，直到返回查询结果。</p>
+<p>以本机查询www.qxx.com为例，说明其主机查询过程：<br><img src="/assets/img/dns查询过程.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hosts文件格式：</span><br><span class="line">IPADDR    FQDN    Ailases</span><br></pre></td></tr></table></figure>
+<p>当用户向网络指定的DNS服务器发起一个域名请求时，通常情况下会有本地由此DNS服务器向上级的DNS服务器发送迭代查询请求；如果该DNS服务器没有要查询的信息，则会进一步向上级DNS服务器发送迭代查询请求，直到获得准确的查询结果为止。其中最高级、最权威的根DNS服务器总共有13台，分布在世界各地，其管理单位、具体的地理位置，以及IP地址如下表所示。<br><img src="/assets/img/各地域名服务器.png" alt=""></p>
+<h4 id="Bind服务介绍和安装"><a href="#Bind服务介绍和安装" class="headerlink" title="Bind服务介绍和安装"></a>Bind服务介绍和安装</h4><p>BIND（Berkeley Internet Name Domain，伯克利因特网名称域）服务是全球范围内使用最广泛、最安全可靠且高效的域名解析服务程序。DNS域名解析服务作为互联网基础设施服务，其责任之重可想而知，因此建议大家在生产环境中安装部署bind服务程序时加上chroot（俗称牢笼机制）扩展包，以便有效地限制bind服务程序仅能对自身的配置文件进行操作，以确保整个服务器的安全。</p>
+<p><font color="#ff00">cnetos上安装bind服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install bind-chroot</span><br></pre></td></tr></table></figure></font></p>
+<p>bind服务程序的配置并不简单，因为要想为用户提供健全的DNS查询服务，要在本地保存相关的域名数据库，而如果把所有域名和IP地址的对应关系都写入到某个配置文件中，估计要有上千万条的参数，这样既不利于程序的执行效率，也不方便日后的修改和维护。因此在bind服务程序中有下面这三个比较关键的文件。</p>
+<p>1、<font color="#00888">主配置文件（/etc/named.conf）</font>：只有58行，而且在去除注释信息和空行之后，实际有效的参数仅有30行左右，这些参数用来定义bind服务程序的运行。</p>
+<p>2、<font color="#00888">区域配置文件（/etc/named.rfc1912.zones）</font>：用来保存域名和IP地址对应关系的所在位置。类似于图书的目录，对应着每个域和相应IP地址所在的具体位置，当需要查看或修改时，可根据这个位置找到相关文件</p>
+<p>3、<font color="#00888">数据配置文件目录（/var/named）</font>：该目录用来保存域名和IP地址真实对应关系的数据配置文件。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/30/DNS服务/" data-id="cjx4bixej0000k0vty33bfk3y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/07/gitlab搭建和使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          gitlab搭建和使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/23/搭建双主模式高可用数据库/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">搭建双主模式高可用数据库</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

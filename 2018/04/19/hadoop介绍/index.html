@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>hadoop介绍 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="123456789101112## hadoop生态1、 MapReduce：分布式计算框架3、hive：建立在hdfs上的数据仓库 Hive 主要是用来做数据分析的数据仓库，支持标准SQL 查询， 做数据分析很是方便，4、hbase：建立在hadoop上的面向列的开源数据库当我们用HBase 存储实时数据的时候， 如果要做一些数据分析方面的操作， 就比较困难了， 要写MapReduce Job。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop介绍">
+<meta property="og:url" content="http://yoursite.com/2018/04/19/hadoop介绍/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="123456789101112## hadoop生态1、 MapReduce：分布式计算框架3、hive：建立在hdfs上的数据仓库 Hive 主要是用来做数据分析的数据仓库，支持标准SQL 查询， 做数据分析很是方便，4、hbase：建立在hadoop上的面向列的开源数据库当我们用HBase 存储实时数据的时候， 如果要做一些数据分析方面的操作， 就比较困难了， 要写MapReduce Job。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/assets/img/hadoop生态.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/1.0.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/2.0.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/核心.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/yarm.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/mapreduce.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/hive.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/pig-vs-hive.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/mashout.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/hbase.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/sqoop.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/flum-og-vs-ng.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/Flume%20OG.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/Flume%20OG1.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/Oozie.jpg">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.752Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hadoop介绍">
+<meta name="twitter:description" content="123456789101112## hadoop生态1、 MapReduce：分布式计算框架3、hive：建立在hdfs上的数据仓库 Hive 主要是用来做数据分析的数据仓库，支持标准SQL 查询， 做数据分析很是方便，4、hbase：建立在hadoop上的面向列的开源数据库当我们用HBase 存储实时数据的时候， 如果要做一些数据分析方面的操作， 就比较困难了， 要写MapReduce Job。">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/hadoop生态.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hadoop介绍" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/19/hadoop介绍/" class="article-date">
+  <time datetime="2018-04-19T02:09:02.000Z" itemprop="datePublished">2018-04-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      hadoop介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/assets/img/hadoop生态.jpg" alt="hadoop生态"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">## hadoop生态</span><br><span class="line">1、 MapReduce：分布式计算框架</span><br><span class="line">3、hive：建立在hdfs上的数据仓库</span><br><span class="line"> Hive 主要是用来做数据分析的数据仓库，支持标准SQL 查询， 做数据分析很是方便，</span><br><span class="line">4、hbase：建立在hadoop上的面向列的开源数据库</span><br><span class="line">当我们用HBase 存储实时数据的时候， 如果要做一些数据分析方面的操作， 就比较困难了， 要写MapReduce Job。</span><br><span class="line">5、pig和hive都是数据分析的工具</span><br><span class="line">6、Flume、Scribe，Chukwa数据收集，收集非结构化数据的工具。</span><br><span class="line">7、 Hiho、Sqoop：将关系数据库中的数据导入HDFS的或hbase中的工具</span><br><span class="line">8、 Oozie：作业流调度引擎</span><br><span class="line">9、 Avro:数据序列化工具</span><br><span class="line">10、 mahout:数据挖掘工具</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>首先我们先了解一下Hadoop的起源。然后介绍一些关于Hadoop生态系统中的具体工具的使用方法。如:HDFS、MapReduce、Yarn、Zookeeper、Hive、HBase、Oozie、Mahout、Pig、Flume、Sqoop。</p>
+<h2 id="Hadoop的起源"><a href="#Hadoop的起源" class="headerlink" title="Hadoop的起源"></a>Hadoop的起源</h2><p>Doug Cutting是Hadoop之父 ，起初他开创了一个开源软件Lucene（用Java语言编写，提供了全文检索引擎的架构，与Google类似），Lucene后来面临与Google同样的错误。于是，Doug Cutting学习并模仿Google解决这些问题的办法，产生了一个Lucene的微缩版Nutch。</p>
+<p>后来，Doug Cutting等人根据2003-2004年Google公开的部分GFS和Mapreduce思想的细节，利用业余时间实现了GFS和Mapreduce的机制，从而提高了Nutch的性能。由此Hadoop产生了。</p>
+<p>Hadoop于2005年秋天作为Lucene的子项目Nutch的一部分正式引入Apache基金会。2006年3月份，Map-Reduce和Nutch Distributed File System(NDFS)分别被纳入Hadoop的项目中。关于Hadoop名字的来源，是Doug Cutting儿子的玩具大象。</p>
+<h2 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h2><p>Hadoop是一个开源框架，可编写和运行分布式应用处理大规模数据。 Hadoop框架的核心是HDFS和MapReduce。其中 HDFS 是分布式文件系统，MapReduce 是分布式数据处理模型和执行环境。<br>在一个宽泛而不断变化的分布式计算领域，Hadoop凭借什么优势能脱颖而出呢？</p>
+<p>1、运行方便：Hadoop是运行在由一般商用机器构成的大型集群上。Hadoop在云计算服务层次中属于PaaS(Platform-as-a- Service)：平台即服务。</p>
+<p>2、健壮性：Hadoop致力于在一般的商用硬件上运行，能够从容的处理类似硬件失效这类的故障。</p>
+<p>3、可扩展性：Hadoop通过增加集群节点，可以线性地扩展以处理更大的数据集。</p>
+<p>4、简单：Hadoop允许用户快速编写高效的并行代码。</p>
+<h2 id="Hadoop生态系统的特点"><a href="#Hadoop生态系统的特点" class="headerlink" title="Hadoop生态系统的特点"></a>Hadoop生态系统的特点</h2><pre><code>* 源代码开源
+* 社区活跃、参与者众多
+* 涉及分布式存储和计算的方方面面
+* 已得到企业界验证
+</code></pre><h2 id="Hadoop生态系统的各组成部分详解"><a href="#Hadoop生态系统的各组成部分详解" class="headerlink" title="Hadoop生态系统的各组成部分详解"></a>Hadoop生态系统的各组成部分详解</h2><p>上面的图可能有些乱，下面我们用一个简易的Hadoop生态系统图谱来描述Hadoop生态系统中出现的各种数据工具。<br>Hadoop1.0时代的生态系统如下：</p>
+<p><img src="/assets/img/1.0.jpg" alt=""></p>
+<p>Hadoop2.0时代的生态系统如下：<br><img src="/assets/img/2.0.jpg" alt=""></p>
+<h2 id="Hadoop的核心"><a href="#Hadoop的核心" class="headerlink" title="Hadoop的核心"></a>Hadoop的核心</h2><p><img src="/assets/img/核心.jpg" alt=""><br>由上图可以看出Hadoop1.0与Hadoop2.0的区别。Hadoop1.0的核心由HDFS（Hadoop Distributed File System）和MapReduce(分布式计算框架)构成。而在Hadoop2.0中增加了Yarn(Yet Another Resource Negotiator),来负责集群资源的统一管理和调度。</p>
+<h2 id="HDFS-分布式文件系统"><a href="#HDFS-分布式文件系统" class="headerlink" title="HDFS(分布式文件系统)"></a>HDFS(分布式文件系统)</h2><p>HDFS源自于Google发表于2003年10月的GFS论文，也即是说HDFS是GFS的克隆版。</p>
+<h4 id="HDFS具有如下特点："><a href="#HDFS具有如下特点：" class="headerlink" title="HDFS具有如下特点："></a>HDFS具有如下特点：</h4><pre><code>1. 良好的扩展性
+2. 高容错性
+3. 适合PB级以上海量数据的存储
+</code></pre><h4 id="HDFS的基本原理"><a href="#HDFS的基本原理" class="headerlink" title="HDFS的基本原理"></a>HDFS的基本原理</h4><pre><code>* 将文件切分成等大的数据块，存储到多台机器上
+* 将数据切分、容错、负载均衡等功能透明化
+* 可将HDFS看成容量巨大、具有高容错性的磁盘
+</code></pre><h4 id="HDFS的应用场景"><a href="#HDFS的应用场景" class="headerlink" title="HDFS的应用场景"></a>HDFS的应用场景</h4><pre><code>* 海量数据的可靠性存储
+* 数据归档
+</code></pre><h2 id="Yarn-资源管理系统"><a href="#Yarn-资源管理系统" class="headerlink" title="Yarn(资源管理系统)"></a>Yarn(资源管理系统)</h2><p>Yarn是Hadoop2.0新增的系统，负责集群的资源管理和调度，使得多种计算框架可以运行在一个集群中。</p>
+<h4 id="Yarn具有如下特点："><a href="#Yarn具有如下特点：" class="headerlink" title="Yarn具有如下特点："></a>Yarn具有如下特点：</h4><pre><code>1. 良好的扩展性、高可用性
+2. 对多种数据类型的应用程序进行统一管理和资源调度
+3. 自带了多种用户调度器，适合共享集群环境
+</code></pre><p><img src="/assets/img/yarm.jpg" alt=""></p>
+<h2 id="MapReduce-分布式计算框架"><a href="#MapReduce-分布式计算框架" class="headerlink" title="MapReduce(分布式计算框架)"></a>MapReduce(分布式计算框架)</h2><p>MapReduce源自于Google发表于2004年12月的MapReduce论文，也就是说，Hadoop MapReduce是Google MapReduce的克隆版。</p>
+<h4 id="MapReduce具有如下特点："><a href="#MapReduce具有如下特点：" class="headerlink" title="MapReduce具有如下特点："></a>MapReduce具有如下特点：</h4><pre><code>1. 良好的扩展性
+2. 高容错性
+3. 适合PB级以上海量数据的离线处理
+</code></pre><p><img src="/assets/img/mapreduce.jpg" alt=""></p>
+<h2 id="Hive-基于MR的数据仓库"><a href="#Hive-基于MR的数据仓库" class="headerlink" title="Hive(基于MR的数据仓库)"></a>Hive(基于MR的数据仓库)</h2><p>Hive由facebook开源，最初用于解决海量结构化的日志数据统计问题；是一种ETL(Extraction-Transformation-Loading)工具。它也是构建在Hadoop之上的数据仓库；数据计算使用MR,数据存储使用HDFS。</p>
+<p>Hive定义了一种类似SQL查询语言的HiveQL查询语言，除了不支持更新、索引和实物，几乎SQL的其他特征都能支持。它通常用于离线数据处理（采用MapReduce);我们可以认为Hive的HiveQL语言是MapReduce语言的翻译器，把MapReduce程序简化为HiveQL语言。但有些复杂的MapReduce程序是无法用HiveQL来描述的。</p>
+<p>Hive提供shell、JDBC/ODBC、Thrift、Web等接口。</p>
+<h4 id="Hive应用场景"><a href="#Hive应用场景" class="headerlink" title="Hive应用场景"></a>Hive应用场景</h4><pre><code>1. 日志分析：统计一个网站一个时间段内的pv、uv ；比如百度。淘宝等互联网公司使用hive进行日志分析
+2. 多维度数据分析
+3. 海量结构化数据离线分析
+4. 低成本进行数据分析（不直接编写MR）
+</code></pre><p><img src="/assets/img/hive.jpg" alt=""></p>
+<h2 id="Pig-数据仓库"><a href="#Pig-数据仓库" class="headerlink" title="Pig(数据仓库)"></a>Pig(数据仓库)</h2><p>Pig由yahoo!开源，设计动机是提供一种基于MapReduce的ad-hoc数据分析工具。它通常用于进行离线分析。<br>Pig是构建在Hadoop之上的数据仓库，定义了一种类似于SQL的数据流语言–Pig Latin,Pig Latin可以完成排序、过滤、求和、关联等操作，可以支持自定义函数。Pig自动把Pig Latin映射为MapReduce作业，上传到集群运行，减少用户编写Java程序的苦恼。<br>Pig有三种运行方式：Grunt shell、脚本方式、嵌入式。</p>
+<h3 id="Pig与Hive的比较"><a href="#Pig与Hive的比较" class="headerlink" title="Pig与Hive的比较"></a>Pig与Hive的比较</h3><p><img src="/assets/img/pig-vs-hive.jpg" alt=""></p>
+<h2 id="Mahout-数据挖掘库"><a href="#Mahout-数据挖掘库" class="headerlink" title="Mahout(数据挖掘库)"></a>Mahout(数据挖掘库)</h2><p>Mahout是基于Hadoop的机器学习和数据挖掘的分布式计算框架。它实现了三大算法：推荐、聚类、分类。<br><img src="/assets/img/mashout.jpg" alt=""></p>
+<h2 id="HBase-分布式数据库"><a href="#HBase-分布式数据库" class="headerlink" title="HBase(分布式数据库)"></a>HBase(分布式数据库)</h2><p>HBase源自Google发表于2006年11月的Bigtable论文。也就是说，HBase是Google Bigtable的克隆版。<br>HBase可以使用shell、web、api等多种方式访问。它是NoSQL的典型代表产品。</p>
+<h4 id="HBase的特点"><a href="#HBase的特点" class="headerlink" title="HBase的特点"></a>HBase的特点</h4><pre><code>1. 高可靠性
+2. 高性能
+3. 面向列
+4. 良好的扩展性
+</code></pre><h4 id="HBase的数据模型"><a href="#HBase的数据模型" class="headerlink" title="HBase的数据模型"></a>HBase的数据模型</h4><p>下面简要介绍一下：<br><img src="/assets/img/hbase.jpg" alt=""></p>
+<pre><code>* Table（表）：类似于传统数据库中的表
+* Column Family(列簇)：Table在水平方向有一个或者多个Column Family组成；一个Column Family 中可以由任意多个Column组成。
+* Row Key(行健)：Table的主键；Table中的记录按照Row Key排序。
+* Timestamp（时间戳）：每一行数据均对应一个时间戳；也可以当做版本号。
+</code></pre><h2 id="Zookeeper-分布式协作服务"><a href="#Zookeeper-分布式协作服务" class="headerlink" title="Zookeeper(分布式协作服务)"></a>Zookeeper(分布式协作服务)</h2><p>Zookeeper源自Google发表于2006年11月的Chubby论文，也就是说Zookeeper是Chubby的克隆版。</p>
+<h4 id="Zookeeper解决分布式环境下数据管理问题："><a href="#Zookeeper解决分布式环境下数据管理问题：" class="headerlink" title="Zookeeper解决分布式环境下数据管理问题："></a>Zookeeper解决分布式环境下数据管理问题：</h4><pre><code>1. 统一命名
+2. 状态同步
+3. 集群管理
+4. 配置同步
+</code></pre><h4 id="Zookeeper的应用"><a href="#Zookeeper的应用" class="headerlink" title="Zookeeper的应用"></a>Zookeeper的应用</h4><pre><code>* HDFS
+* Yarn
+* Storm
+* HBase
+* Flume
+* Dubbo
+* Metaq
+</code></pre><h2 id="Sqoop（数据同步工具）"><a href="#Sqoop（数据同步工具）" class="headerlink" title="Sqoop（数据同步工具）"></a>Sqoop（数据同步工具）</h2><p>Sqoop是连接Hadoop与传统数据库之间的桥梁，它支持多种数据库，包括MySQL、DB2等；插拔式，用户可以根据需要支持新的数据库。<br>Sqoop实质上是一个MapReduce程序，充分利用MR并行的特点,充分利用MR的容错性。<br><img src="/assets/img/sqoop.jpg" alt=""></p>
+<h2 id="Flume-日志收集工具"><a href="#Flume-日志收集工具" class="headerlink" title="Flume(日志收集工具)"></a>Flume(日志收集工具)</h2><p>Flume是Cloudera开源的日志收集系统。</p>
+<h4 id="Flume的特点"><a href="#Flume的特点" class="headerlink" title="Flume的特点"></a>Flume的特点</h4><pre><code>1. 分布式
+2. 高可靠性
+3. 高容错性
+4. 易于定制与扩展
+</code></pre><h4 id="Flume-OG与Flume-NG的对比"><a href="#Flume-OG与Flume-NG的对比" class="headerlink" title="Flume OG与Flume NG的对比"></a>Flume OG与Flume NG的对比</h4><pre><code>* Flume OG：Flume original generation 即Flume 0.9.x版本，它由agent、collector、master等组件构成。
+</code></pre><p><img src="/assets/img/flum-og-vs-ng.jpg" alt=""></p>
+<pre><code>* Flume NG：Flume next generation ，即Flume 1.x版本，它由Agent、Client等组件构成。一个Agent包含Source、Channel、Sink和其他组件。
+</code></pre><p><img src="/assets/img/Flume OG.jpg" alt=""><br><img src="/assets/img/Flume OG1.jpg" alt=""></p>
+<h2 id="Oozie-作业流调度系统"><a href="#Oozie-作业流调度系统" class="headerlink" title="Oozie(作业流调度系统)"></a>Oozie(作业流调度系统)</h2><p>目前计算框架和作业类型种类繁多：如MapReduce、Stream、HQL、Pig等。这些作业之间存在依赖关系，周期性作业，定时执行的作业，作业执行状态监控与报警等。如何对这些框架和作业进行统一管理和调度？<br>解决方案有多种：</p>
+<pre><code>1. Linux Crontab
+2. 自己设计调度系统（淘宝等公司）
+3. 直接使用开源系统（Oozie）
+</code></pre><p><img src="/assets/img/Oozie.jpg" alt=""></p>
+<h2 id="Hadoop发行版（开源版）介绍"><a href="#Hadoop发行版（开源版）介绍" class="headerlink" title="Hadoop发行版（开源版）介绍"></a>Hadoop发行版（开源版）介绍</h2><pre><code>* Apache Hadoop
+</code></pre><p>推荐使用2.x.x版本</p>
+<p>下载地址：<a href="http://hadoop.apache.org/releases.html" target="_blank" rel="noopener">http://hadoop.apache.org/releases.html</a></p>
+<pre><code>* CDH(Cloudera Distributed Hadoop)
+</code></pre><p>推荐使用CDH5版本</p>
+<p>下载地址：<a href="http://archive.cloudera.com/cdh5/cdh/5/" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/cdh/5/</a></p>
+<p>详细安装步骤查看文章：搭建5个节点的hadoop集群环境（CDH5）</p>
+<pre><code>* HDP(HortonWorks Data Platform)
+</code></pre><p>推荐使用HDP2.x版本</p>
+<p>下载地址：<a href="http://zh.hortonworks.com/downloads/#data-platform" target="_blank" rel="noopener">http://zh.hortonworks.com/downloads/#data-platform</a></p>
+<p>最后建议：关于不同发行版在架构、部署和使用方法一致，不同之处仅在于内部实现。建议选择公司发行版，比如CDH或者HDP,因为它们经过集成测试，不会面临版本兼容性问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/19/hadoop介绍/" data-id="cjx4bixgm000dk0vtb5zzsjk4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/22/linux中文本处理工具/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          linux中文本处理工具
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/16/关于一些数据库的介绍/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于一些数据库的介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

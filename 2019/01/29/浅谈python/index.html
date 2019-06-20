@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>浅谈python | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要：自己学习python的几个笔记1、python中的异常处理 2、一些函数的说明 3、杂项：关于迭代器、装饰器，生成器、闭包等 4、python的设模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈python">
+<meta property="og:url" content="http://yoursite.com/2019/01/29/浅谈python/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要：自己学习python的几个笔记1、python中的异常处理 2、一些函数的说明 3、杂项：关于迭代器、装饰器，生成器、闭包等 4、python的设模式">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20181011142208335?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3F4eGhqeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.765Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈python">
+<meta name="twitter:description" content="摘要：自己学习python的几个笔记1、python中的异常处理 2、一些函数的说明 3、杂项：关于迭代器、装饰器，生成器、闭包等 4、python的设模式">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20181011142208335?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3F4eGhqeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-浅谈python" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/29/浅谈python/" class="article-date">
+  <time datetime="2019-01-29T06:53:35.000Z" itemprop="datePublished">2019-01-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈python
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="摘要：自己学习python的几个笔记"><a href="#摘要：自己学习python的几个笔记" class="headerlink" title="摘要：自己学习python的几个笔记"></a>摘要：自己学习python的几个笔记</h3><p>1、python中的异常处理</p>
+<p>2、一些函数的说明</p>
+<p>3、杂项：关于迭代器、装饰器，生成器、闭包等</p>
+<p>4、python的设模式</p>
+<a id="more"></a>
+<h2 id="一、python异常处理"><a href="#一、python异常处理" class="headerlink" title="一、python异常处理"></a>一、python异常处理</h2><p>python异常处理使用try，catche，else和finally关键字来尝试可能未成功的操作，处理失败及正常情况以及在事后清理资源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">try：</span><br><span class="line">	block_try</span><br><span class="line">except Exception 1：  、、第一种except形式</span><br><span class="line">	block_when_exceptin_1_happen:</span><br><span class="line">except (Exception_1 Exception_2 Exception_3): //第二种except形式</span><br><span class="line">	block_when_exception_1_or_2_or_3_happen</span><br><span class="line">except Exception_5 variance:</span><br><span class="line">	block_when_exception_5_happen</span><br><span class="line">except (Exception_6 Exception_7),variance:</span><br><span class="line">	block_when_exception_6_or_7_happen</span><br><span class="line">except :</span><br><span class="line">	block_for_all_other_exceptions</span><br><span class="line">else:</span><br><span class="line">	block_for_no_exception</span><br><span class="line">finally:</span><br><span class="line">	block_anyway</span><br></pre></td></tr></table></figure>
+<h5 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h5><p>自定义异常的边长方法是建立一个继承子系统异常的子类，并且需要引发该异常时用raise语句跑出异常</p>
+<h2 id="二、-一些函数说明"><a href="#二、-一些函数说明" class="headerlink" title="二、 一些函数说明"></a>二、 一些函数说明</h2><h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><p>构造函数是一种特殊的类成员方法，主要用在创建对象时初始化对象<br>python中的构造函数用<strong>init</strong>命名</p>
+<h4 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h4><p>析构函数是构造函数的反函数，在销毁对象时调用他们，往往用来做清理善后，<br>例如：数据库连接对象可以在析构函数中释放对数据库实例资源的占用<br>python中为类定义析构函数的方法是在类中定义一个名为<strong>del</strong>的没有返回值和参数的函数<br>python中显示销毁对象的方法，使用del关键</p>
+<h4 id="静态函数和类函数"><a href="#静态函数和类函数" class="headerlink" title="静态函数和类函数"></a>静态函数和类函数</h4><p>python中支持两种基于类名访问成员函数：静态函数和类函数<br>不同点：类函数有一个隐形参数cls可以用来获取类信息<br>静态函数使用装饰器@staicmethod定义<br>类函数使用装饰器@classmethod定义</p>
+<h2 id="三-杂项"><a href="#三-杂项" class="headerlink" title="三 杂项"></a>三 杂项</h2><h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><p>迭代器是可以迭代的对象。使用<strong>iter</strong>和<strong>next</strong>方法构建自己的迭代器。<br>迭代器在Python中无处不在。 它们优雅地实现在循环，推导，生成器等中，但隐藏在明显的视觉中。<br>Python中的迭代器只是一个可以迭代的对象。一个将一次返回数据的对象或一个元素。<br>Python迭代器对象必须实现两个特殊的方法<strong>iter</strong>()和<strong>next</strong>()，统称为迭代器协议，只有实现这两个方法才算是定义了一个自己的迭代器。<br>如果我们从中获取一个迭代器，那么一个对象被称为iterable。 大多数Python中的内置容器是列表，元组，字符串等都是可迭代的。iter()函数(这又调用<strong>iter</strong>()方法)返回一个迭代器</p>
+<ul>
+<li>通过Python中的迭代器迭代<br>使用next()函数来手动遍历迭代器的所有项目。当到达结束，没有更多的数据要返回时，它将会引发StopIteration</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># define a list</span><br><span class="line">my_list = [4, 7, 0, 3]</span><br><span class="line"># get an iterator using iter()</span><br><span class="line">my_iter = iter(my_list)</span><br><span class="line">## iterate through it using next() </span><br><span class="line">#prints 4</span><br><span class="line">for i in range(4):</span><br><span class="line">	print(next(my_iter))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在Python中构建自己的Iterator<br>构建迭代器在Python中很容易。只需要实现<strong>iter</strong>()和<strong>next</strong>()方法。<br><strong>iter</strong>()方法返回迭代器对象本身。如果需要，可以执行一些初始化。<strong>next</strong>()方法必须返回序列中的下一个项目(数据对象)。 在到达结束后，并在随后的调用中它必须引发StopIteration异常。</li>
+</ul>
+<p>在这里，我们展示一个例子，在每次迭代中给出下一个2的几次方。 次幂指数从零开始到用户设定的数字。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class PowTwo:</span><br><span class="line">    &quot;&quot;&quot;Class to implement an iterator</span><br><span class="line">    of powers of two&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, max = 0):</span><br><span class="line">        self.max = max</span><br><span class="line"></span><br><span class="line">    def __iter__(self):</span><br><span class="line">        self.n = 0</span><br><span class="line">        return self</span><br><span class="line"></span><br><span class="line">    def __next__(self):</span><br><span class="line">        if self.n &lt;= self.max:</span><br><span class="line">            result = 2 ** self.n</span><br><span class="line">            self.n += 1</span><br><span class="line">            return result</span><br><span class="line">        else:</span><br><span class="line">            raise StopIteration</span><br></pre></td></tr></table></figure></p>
+<p>现在可以创建一个迭代器，并通过它迭代如下 -</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = PowTwo(4)</span><br><span class="line">&gt;&gt;&gt; i = iter(a)</span><br><span class="line">&gt;&gt;&gt; next(i)</span><br><span class="line">1</span><br><span class="line">&gt;&gt;&gt; next(i)</span><br><span class="line">2</span><br><span class="line">&gt;&gt;&gt; next(i)</span><br><span class="line">4</span><br><span class="line">&gt;&gt;&gt; next(i)</span><br><span class="line">8</span><br><span class="line">&gt;&gt;&gt; next(i)</span><br><span class="line">16</span><br><span class="line">&gt;&gt;&gt; next(i)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">...</span><br><span class="line">StopIteratio</span><br></pre></td></tr></table></figure>
+<h4 id="生成器与yield"><a href="#生成器与yield" class="headerlink" title="生成器与yield"></a>生成器与yield</h4><p>在Python中构建迭代器有很多开销; 必须使用<strong>iter</strong>()和<strong>next</strong>()方法实现一个类，跟踪内部状态，当没有值被返回时引发StopIteration异常。Python生成器是创建迭代器的简单方法。上面提到的所有开销都由Python中的生成器自动处理。简单来说，生成器是返回一个可以迭代的对象(迭代器)的函数(一次一个值)。</p>
+<ul>
+<li><p>如何在Python中创建生成器？</p>
+<p>   在Python中创建生成器是相当简单的。 它使用yield语句而不是return语句来定义，与正常函数一样简单。<br>   如果函数包含至少一个yield语句(它可能包含其他yield或return语句)，那么它将成为一个生成器函数。 yield和return都将从函数返回一些值。</p>
+<ul>
+<li>生成器函数与正常函数的差异<br>1、生成器函数包含一个或多个yield语句。<br>2、当被调用时，它返回一个对象(迭代器)，但不会立即开始执行。<br>3、<strong>iter</strong>()和<strong>next</strong>()之类的方法将自动实现。所以可以使用next()迭代项目。<br>4、一旦函数退让(yields)，该函数将被暂停，并将该控制权交给调用者。<br>5、局部变量及其状态在连续调用之间被记住。<br>6、最后，当函数终止时，StopIteration会在进一步的调用时自动引发。</li>
+</ul>
+</li>
+</ul>
+<h6 id="为什么在Python中使用生成器？"><a href="#为什么在Python中使用生成器？" class="headerlink" title="为什么在Python中使用生成器？"></a>为什么在Python中使用生成器？</h6><p>1、容易实现<br>与其迭代器类相比，发生器可以以清晰简洁的方式实现</p>
+<p>2、内存高效<br>返回序列的正常函数将在返回结果之前会在内存中的创建整个序列。如果序列中的项目数量非常大，这可是要消耗内存的。序列的生成器实现是内存友好的，并且是推荐使用的，因为它一次仅产生一个项目。</p>
+<p>3、管道生成器<br>生成器可用于管理一系列操作，下面使用一个例子说明。<br>假设我们有一个快餐连锁店的日志文件。 日志文件有一列(第4列)，用于跟踪每小时销售的比萨饼数量，我们想算出在5年内销售的总萨饼数量。假设一切都是字符串，不可用的数字标记为“N / A”。 这样做的生成器实现可以如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">with open(&apos;sells.log&apos;) as file:</span><br><span class="line">    pizza_col = (line[3] for line in file)</span><br><span class="line">    per_hour = (int(x) for x in pizza_col if x != &apos;N/A&apos;)</span><br><span class="line">    print(&quot;Total pizzas sold = &quot;,sum(per_hour))</span><br></pre></td></tr></table></figure>
+<p>4、表示无限流<br>生成器是表示无限数据流的绝佳媒介。 无限流不能存储在内存中，由于生成器一次只能生成一个项目，因此可以表示无限数据流。</p>
+<h4 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h4><p>在函数中定义另一个函数称为嵌套函数。<br>嵌套函数可以访问包围范围内的变量。<br>在Python中，这些非局部变量只能在默认情况下读取，我们必须将它们显式地声明为非局部变量(使用nonlocal关键字)才能进行修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def num_a(x):</span><br><span class="line">	def num_b(y):</span><br><span class="line">		print(x**Y)</span><br><span class="line">	return num_b</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c=num_a(3)</span><br><span class="line">c(2)</span><br><span class="line">9</span><br></pre></td></tr></table></figure>
+<p>1、什么时候闭包<br>从上面的例子可以看出，当嵌套函数引用其封闭范围内的值时，在Python中有使用了一个闭包。<br>在Python中创建闭包必须满足的标准将在以下几点</p>
+<ul>
+<li>必须有一个嵌套函数(函数内部的函数)。</li>
+<li>嵌套函数必须引用封闭函数中定义的值。</li>
+<li>闭包函数必须返回嵌套函数。</li>
+</ul>
+<p>2、何时使用闭包？<br>闭包可以避免使用全局值并提供某种形式的数据隐藏。<br>它还可以提供面向对象的解决问题的解决方案。<br>当在类中几乎没有方法(大多数情况下是一种方法)时，闭包可以提供一个替代的和更优雅的解决方案。<br>但是当属性和方法的数量变大时，更好去实现一个类。<br>这是一个简单的例子，其中闭包可能比定义类和创建对象更为优先。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def make_multiplier_of(n):</span><br><span class="line">    def multiplier(x):</span><br><span class="line">        return x * n</span><br><span class="line">    return multiplier</span><br><span class="line"></span><br><span class="line"># Multiplier of 3</span><br><span class="line">times3 = make_multiplier_of(3)</span><br><span class="line"></span><br><span class="line"># Multiplier of 5</span><br><span class="line">times5 = make_multiplier_of(5)</span><br><span class="line"></span><br><span class="line"># Output: 27</span><br><span class="line">print(times3(9))</span><br><span class="line"></span><br><span class="line"># Output: 15</span><br><span class="line">print(times5(3))</span><br><span class="line"></span><br><span class="line"># Output: 30</span><br><span class="line">print(times5(times3(2)))</span><br></pre></td></tr></table></figure>
+<h4 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h4><p>为了了解装饰器，我们首先在Python中了解一些基本的东西。<br>Python中的一切(是的，甚至是类)都是对象。 我们定义的名称只是绑定到这些对象的标识符。 函数也不例外，它们也是对象(带有属性)。 各种不同的名称可以绑定到同一个功能对象。</p>
+<p>函数可以作为参数传递给另一个函数。如果您在Python中使用了map，filter和reduce等功能，那么您就了解了</p>
+<p>装饰器是将其他函数增强<br>1、装饰器本身是一个函数，目的用于装饰其他函数<br>2、增强被装饰函数的功能<br>3、装饰器一般接受一个函数对象作为参数以对其进行功能的增强<br>4、装饰器用@deco定义装饰</p>
+<ul>
+<li>用参数装饰函数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def works_for_all(func):</span><br><span class="line">    def inner(*args, **kwargs):</span><br><span class="line">        print(&quot;I can decorate any function&quot;)</span><br><span class="line">        return func(*args, **kwargs)</span><br><span class="line">    return inner</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在Python中链接装饰器<br>多个装饰器可以在Python中链接。<br>这就是说，一个函数可以用不同(或相同)装饰器多次装饰。只需将装饰器放置在所需函数之上。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def star(func):</span><br><span class="line">    def inner(*args, **kwargs):</span><br><span class="line">        print(&quot;*&quot; * 30)</span><br><span class="line">        func(*args, **kwargs)</span><br><span class="line">        print(&quot;*&quot; * 30)</span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">def percent(func):</span><br><span class="line">    def inner(*args, **kwargs):</span><br><span class="line">        print(&quot;%&quot; * 30)</span><br><span class="line">        func(*args, **kwargs)</span><br><span class="line">        print(&quot;%&quot; * 30)</span><br><span class="line">    return inner</span><br><span class="line"></span><br><span class="line">@star   // 再用这个进行装饰下面的结果</span><br><span class="line">@percent  //先用这个进行装饰下面的函数</span><br><span class="line">def printer(msg):</span><br><span class="line">    print(msg)</span><br><span class="line"></span><br><span class="line">printer(&quot;Hello&quot;)</span><br></pre></td></tr></table></figure>
+<p>相当于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def printer(msg):</span><br><span class="line">    print(msg)</span><br><span class="line">printer = star(percent(printer))</span><br></pre></td></tr></table></figure></p>
+<h2 id="四、python设计模式"><a href="#四、python设计模式" class="headerlink" title="四、python设计模式"></a>四、python设计模式</h2><ul>
+<li>模型视图</li>
+<li>控制器模式</li>
+<li>单身模式</li>
+<li>工厂模式</li>
+<li>生成器模式</li>
+<li>原型模式</li>
+<li>门面模式</li>
+<li>命令模式</li>
+<li>适配器模式</li>
+<li>原型模式</li>
+<li>装饰模式</li>
+<li>代理模式</li>
+<li>责任链模式</li>
+<li>观察者模式</li>
+<li>状态模式</li>
+<li>策略模式</li>
+<li>模板模式</li>
+<li>享元模式</li>
+<li>抽象工厂模式</li>
+<li>面向对象模式<h4 id="模型视图控制器-MVC"><a href="#模型视图控制器-MVC" class="headerlink" title="模型视图控制器(MVC)"></a>模型视图控制器(MVC)</h4>模型视图控制器(MVC)是最常用的设计模式。 开发人员发现很容易实现这种设计模式。以下是模型视图控制器(MVC)的基本架构<br><img src="https://img-blog.csdn.net/20181011142208335?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3F4eGhqeQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></li>
+</ul>
+<h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h4><p>单例模式将类的实例化限制为一个对象。 它是一种创建模式，只涉及创建方法和指定对象的一个类。它提供了创建实例的全局访问点。</p>
+<h4 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h4><p>工厂模式属于创建模式列表类别。它提供了创建对象的最佳方法。在工厂模式中，创建对象时不会将逻辑公开给客户端，并使用通用接口引用新创建的对象。<br>工厂模式使用工厂方法在Python中实现。 当用户调用一个方法时，传入一个字符串，并通过工厂方法实现创建一个新对象，并将此对象作为返回值。 工厂方法中使用的对象类型由通过方法传递的字符串确定。在下面的例子中，每个方法都包含对象作为参数，这是通过工厂方法实现的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/29/浅谈python/" data-id="cjx4bixh3000ik0vtjb4bw6y4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/08/python的一些模块/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python的一些模块</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

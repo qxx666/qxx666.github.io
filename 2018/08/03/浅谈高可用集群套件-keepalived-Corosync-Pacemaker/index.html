@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>浅谈高可用集群套件(keepalived+Corosync+Pacemaker) | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、什么是集群2、集群分类3、实现方法4、kleepalive介绍5、heartbeat / Corosync+Pacemaker介绍6、heartbeat介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈高可用集群套件(keepalived+Corosync+Pacemaker)">
+<meta property="og:url" content="http://yoursite.com/2018/08/03/浅谈高可用集群套件-keepalived-Corosync-Pacemaker/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="1、什么是集群2、集群分类3、实现方法4、kleepalive介绍5、heartbeat / Corosync+Pacemaker介绍6、heartbeat介绍">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/assets/img/ha/ha.png">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.767Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈高可用集群套件(keepalived+Corosync+Pacemaker)">
+<meta name="twitter:description" content="1、什么是集群2、集群分类3、实现方法4、kleepalive介绍5、heartbeat / Corosync+Pacemaker介绍6、heartbeat介绍">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/ha/ha.png">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-浅谈高可用集群套件-keepalived-Corosync-Pacemaker" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/03/浅谈高可用集群套件-keepalived-Corosync-Pacemaker/" class="article-date">
+  <time datetime="2018-08-03T02:21:48.000Z" itemprop="datePublished">2018-08-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈高可用集群套件(keepalived+Corosync+Pacemaker)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、什么是集群<br>2、集群分类<br>3、实现方法<br>4、kleepalive介绍<br>5、heartbeat / Corosync+Pacemaker介绍<br>6、heartbeat介绍</p>
+<a id="more"></a>
+<p>在讲个组件之前现将一下集群</p>
+<h5 id="什么是集群"><a href="#什么是集群" class="headerlink" title="什么是集群"></a>什么是集群</h5><p>将多台同构或异构的计算机连接起来协同完成特定的任务就构成了集群系统。各个Linux厂商也推出了能够显著地提高基于TCP/IP协议的多种网络服务的服务质量的高可用性集群系统，通过将物理上分离的多个集群连接在一起使使多个同构或异构的计算机能够通过局域网或广域网共享计算资源，并能够为用户提供对资源的透明访问。</p>
+<h5 id="集群分类"><a href="#集群分类" class="headerlink" title="集群分类"></a>集群分类</h5><p>1、 LB：load  balancing      负载均衡（针对大容量的请求）</p>
+<p>负载均衡群集为企业需求提供了更实用的系统。该系统使负载可以在计算机群集中尽可能平均地分摊处理。该负载可能是需要均衡的应用程序处理负载或网络流量负载。这样的系统非常适合于运行同一组应用程序的大量用户。每个节点都可以处理一部分负载，并且可以在节点之间动态分配负载，以实现平衡。对于网络流量也如此。通常，网络服务器应用程序接受了太多入网流量，以致无法迅速处理，这就需要将流量发送给在其它节点上运行的网络服务器应用。还可以根据每个节点上不同的可用资源或网络的特殊环境来进行优化。</p>
+<p>2、 HA：high  Availability   高可用 （7X24小时在线）</p>
+<p>  高可用性群集的出现是为了使群集的整体服务尽可能可用，以便考虑计算硬件和软件的易错性。如果高可用性群集中的主节点发生了故障，那么这段时间内将由次节点代替它。次节点通常是主节点的镜像，所以当它代替主节点时，它可以完全接管其身份，并且因此使系统环境对于用户是一致的。能够实现服务器实时在线的功能。</p>
+<p>3、 HP：high performance     高性能（科学计算集群）</p>
+<p>通常，多个计算机同时处理数据，以解决复杂的科学问题。这是并行计算的基础，尽管它不使用专门的并行超级计算机，这种超级计算机内部由十至上万个独立处理器组成。但它却使用商业系统，如通过高速连接来链接的一组单处理器或双处理器 PC，并且在公共消息传递层上进行通信以运行并行应用程序。使用最多的就是气象分析，科学勘探，核爆炸分析等。</p>
+<!---more--->
+<h5 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h5><p>1、对于负载均衡集群，要实现可通过LVS，nginx，haproxy等工具实现</p>
+<p>2、对于高可用集群，要实现可借助keepalived、hearbeat、corosync+pacemaker工具实现</p>
+<p>3、对于高性能集群，要实现得从软硬件双方面着手</p>
+<p>本文重点介绍高可用集群实现的几大组件。</p>
+<h5 id="keepalived介绍"><a href="#keepalived介绍" class="headerlink" title="keepalived介绍"></a>keepalived介绍</h5><p>Keepalived是一个基于VRRP协议来实现的服务高可用方案，可以利用其来避免IP单点故障，类似的工具还有heartbeat、corosync、pacemaker。但是它一般不会单独出现，而是与其它负载均衡技术（如lvs、haproxy、nginx）一起工作来达到集群的高可用。</p>
+<p>VRRP全称 Virtual Router Redundancy Protocol，即 虚拟路由冗余协议。可以认为它是实现路由器高可用的容错协议，即将N台提供相同功能的路由器组成一个路由器组(Router Group)，这个组里面有一个master和多个backup，但在外界看来就像一台一样，构成虚拟路由器，拥有一个虚拟IP（vip，也就是路由器所在局域网内其他机器的默认路由），占有这个IP的master实际负责ARP相应和转发IP数据包，组中的其它路由器作为备份的角色处于待命状态。master会发组播消息，当backup在超时时间内收不到vrrp包时就认为master宕掉了，这时就需要根据VRRP的优先级来选举一个backup当master，保证路由器的高可用。</p>
+<p>在VRRP协议实现里，虚拟路由器使用 00-00-5E-00-01-XX 作为虚拟MAC地址，XX就是唯一的 VRID （Virtual Router IDentifier），这个地址同一时间只有一个物理路由器占用。在虚拟路由器里面的物理路由器组里面通过多播IP地址 224.0.0.18 来定时发送通告消息。每个Router都有一个 1-255 之间的优先级别，级别最高的（highest priority）将成为主控（master）路由器。通过降低master的优先权可以让处于backup状态的路由器抢占（pro-empt）主路由器的状态，两个backup优先级相同的IP地址较大者为master，接管虚拟IP。</p>
+<h5 id="heartbeat-Corosync-Pacemaker"><a href="#heartbeat-Corosync-Pacemaker" class="headerlink" title="heartbeat / Corosync+Pacemaker"></a>heartbeat / Corosync+Pacemaker</h5><h6 id="一些慨念性问题"><a href="#一些慨念性问题" class="headerlink" title="一些慨念性问题"></a>一些慨念性问题</h6><ol>
+<li>集群事物信息层（massage layer）<br>传递集群事物信息</li>
+</ol>
+<ol>
+<li><p>集群资源管理（Cluster Resource Manager）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CRM包过:</span><br><span class="line">  DC(Designated Coordinator):DC上运行了两个进程，pe（决策引擎） te（事务引擎）</span><br><span class="line">    PE(Policy Engine) 策略引擎,获取所有的节点信息，决定资源怎么分配，资源怎样启动，怎样启动，这样要通过资源约束来实现，资源约束通过配置接口实现。各个节点之间通过xml传递数据。pe通过CIB接受messaging layer信息。</span><br><span class="line">    TE(Transactio Engine)</span><br><span class="line"></span><br><span class="line">  LRM（Local Resource Manager）CRM通过LRM（本地资源管理器）管理执行，LRM调用RA来具体实现。</span><br><span class="line">  CLB (cluster information base)集群信息库:使用CIB来配置xml文件。在配置集群时，可以连接到任何节点的CRM，配置cib，然后cib信息可以同步到DC中，DC再通知给 所有的CIB中。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>资源代理（Resource Agent）</p>
+</li>
+</ol>
+<p>当节点发生故障时，心跳信息传递给CRM，CRM通过集群决策，决定哪个备用节点启动，但是CRM没有能力启动节点上的服务（资源），因此需要借助于RA来实现</p>
+<p>RA：Resource agent（服务启动的脚本？），能够被CRM调用，用于实现在节点上对某资源进行管理的工具，通常情况下是一个脚本。必须能够接受参数｛start|stop|restart|status｝。CRM会每隔固定时长（自定义）检查资源状态，因此status必须是runing或者stopped，而不能是否定状态的短语。</p>
+<p>####### 架构图<br><img src="/assets/img/ha/ha.png" alt=""></p>
+<p>简单描述下整个过程，在最底部的messaging layer，所有的节点都安装了heartbeat或者corosync等软件，节点之间能够互相通信，然后在上一层，资源管理层，CRM来统筹管理由messaging传递过来的信息，托举一个DC，DC运行了两个进程，pe和te，pe是策略引擎，它根据CIB（集群资源仓库）收集到的所有的资源配置信息（获取当前互动节点的信息），进行决策。连接到任何一个节点的CRM都可以配置CIB，然后就可以同步到DC中，DC再通知所有的节点。然后CRM通过LRM来管理资源管理，而LRM则调用RA来具体控制资源。</p>
+<p>在高可用的情况下，所有的资源都是由CRM控制LRM调用RA来控制，自动启动的，因此，不用让资源服务开机自动启动。一定要保证。可以通过chkconfig service off来停止开机自动启动服务</p>
+<p>DC发现集群中有一个节点发生故障，剔除掉，然后根据在CRM中配置的规则（比如倾向性，倾向于优先使用哪个备用服务器），然后通过底层信息将集群事务决策传递给备节点，备节点CRM收到来自底层的信息后，通知LRM，调用RA，启动资源。</p>
+<p>实现服务的高可用。一个服务由多个资源组成，例如一个web服务需要有vip、web服务、网页文件，又如lvs服务，至少有ipvs和规则等组成才能算是一个完整的服务。</p>
+<p>集群系统可以通过单播，组播，广播进行集群事务信息通告。</p>
+<h6 id="上文涉及的策略"><a href="#上文涉及的策略" class="headerlink" title="上文涉及的策略"></a>上文涉及的策略</h6><ol>
+<li><p>资源组：</p>
+<ul>
+<li>一组资源共进退，比如vip和ipvs</li>
+</ul>
+</li>
+<li><p>资源约束</p>
+<pre><code>* 排列约束（colation）：定义资源是否能够运行于同一节点
+
+    * score：
+
+        * 正值：可以在一起（inf：正无穷）
+        * 负值：不能在一起（-inf：负无穷）
+* 位置约束（location）：定义资源更倾向于运行在那个节点
+
+    * score（分数）
+
+        * 正值：倾向运行于该节点
+        * 负值：倾向于逃离此节点
+* 顺序约束（order）：定义资源启动或关闭时的次序
+</code></pre></li>
+<li><p>资源隔离</p>
+<ul>
+<li>节点级别：STONITH（爆头）：预防某个节点没挂透</li>
+<li>资源级别：FC,SAN,SWITH可以实现在存储资源级别拒绝某节点的访问</li>
+</ul>
+</li>
+</ol>
+<h6 id="共享设备和文件系统"><a href="#共享设备和文件系统" class="headerlink" title="共享设备和文件系统"></a>共享设备和文件系统</h6><p>要想所有数据在各节点进行共享使用，必须使用共享设备和共享文件系统</p>
+<ul>
+<li>支持共享的设备<ul>
+<li>NAS (在文件级别进行共享)</li>
+<li>SAN</li>
+<li>SCIC</li>
+</ul>
+</li>
+</ul>
+<h6 id="提供集群事务传递的软件"><a href="#提供集群事务传递的软件" class="headerlink" title="提供集群事务传递的软件"></a>提供集群事务传递的软件</h6><p>1、heartbeat：heartbeat v1 heartbear v2 heartbear v3</p>
+<p>2、corosync：OpenAIS定义了一套规范，分隔为corosync和一组api。这里corosync是主要使的，只用于实现messaging layer，不实现资源管理的功能。</p>
+<p>3、cman：cluser manger,红帽的，是对OpenAIS的一种实现。</p>
+<p>4、keepalived</p>
+<p>5、ultramokey</p>
+<h6 id="提供集群资源管理的软件"><a href="#提供集群资源管理的软件" class="headerlink" title="提供集群资源管理的软件"></a>提供集群资源管理的软件</h6><p>1、heartbeat v1:haresources（hearbeat自带功能，配置接口是一个配置文件：haresource）。</p>
+<p>2、heartbear v2:可以作为独立进程:crm（各个节点均运行进程crmd，5566，客户端使用crm进行交互（shell），完成配置），也有图形界面heartbeat-GUI</p>
+<p>3、heartbeat v3:分隔多个项目 heartbear（底层信息传递）+pacemaker（CRM资源管理）+cluster-glue。pacemaker不仅可以与heartbear一起工作，也可以与corosync一起工作，这个时候需要使用cluster-glue进行粘合。</p>
+<p>4、pacemaker：仍然使用crmd运行，配置接口使用crm(红帽对应的为psc)，对应的GUI接口为hwk,LCMC,pacemaker-mgmt</p>
+<p>5、rgmanager:cman使用的工具，resource group manager。故障转移域,failover domain。</p>
+<p>RHCS:Redhat Cluster Suite（套件），配置接口，conga，全生命周期的配置接口</p>
+<h6 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h6><p>1、 节点名称必须与uname -n命令结果一致</p>
+<p>2、 ssh互信通信</p>
+<p>3、时间同步</p>
+<h6 id="heartbeat"><a href="#heartbeat" class="headerlink" title="heartbeat"></a>heartbeat</h6><p>三个主要配置文件<br>1、秘钥文件，600，authkeys<br>2、heartbeat服务的配置文件ha.cf<br>3、资源管理配置文件</p>
+<p>heartbeat通过resource配置文件管理资源，可以使用替代产品crmd来进行资源管理<br>crmd：提供命令行和推行界面的两种配置方式</p>
+<h6 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h6><p>1、 HA MYSQL + HA HTTP</p>
+<p>可以定义资源粘性，比如mysql更倾向于运行在A节点，http更倾向于B节点</p>
+<p>2、 HA 双主mysql</p>
+<p>集群文件系统：当一个节点在写共享文件时，会向文件施加一个所，而集群文件系统会向其他集结宣告这个锁，其他节点就不能同步写该共享文件。</p>
+<p>集群文件系统有：GFS,OCFS2</p>
+<p>支持集群文件系统的设备：DAS,SAN</p>
+<p>d当测试到某个服务失败时，先尝试重启，再尝试资源转移</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/03/浅谈高可用集群套件-keepalived-Corosync-Pacemaker/" data-id="cjx4bixh4000jk0vtbqnafmb5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/05/浅谈安全/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅谈安全
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/27/浅谈系统调优/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">浅谈系统调优</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

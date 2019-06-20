@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>mysql操作 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、mysql的基本操作，增、删、减、改、查2、mysql备份3、myql用户管理4、mysql事务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql操作">
+<meta property="og:url" content="http://yoursite.com/2018/10/31/mysql操作/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="1、mysql的基本操作，增、删、减、改、查2、mysql备份3、myql用户管理4、mysql事务">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.756Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql操作">
+<meta name="twitter:description" content="1、mysql的基本操作，增、删、减、改、查2、mysql备份3、myql用户管理4、mysql事务">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-mysql操作" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/31/mysql操作/" class="article-date">
+  <time datetime="2018-10-31T07:15:28.000Z" itemprop="datePublished">2018-10-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mysql操作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、mysql的基本操作，增、删、减、改、查<br>2、mysql备份<br>3、myql用户管理<br>4、mysql事务</p>
+<a id="more"></a>
+<p>数据库的操作无非就是增删改查，增删前需要新建数据库和数据表</p>
+<h2 id="1、-新建create"><a href="#1、-新建create" class="headerlink" title="1、 新建create"></a>1、 新建create</h2><h4 id="新建数据库"><a href="#新建数据库" class="headerlink" title="新建数据库"></a>新建数据库</h4><p>CREATE DATABASE用来新建数据库<br>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE database_name；</span><br></pre></td></tr></table></figure>
+<h4 id="新建数据数据表"><a href="#新建数据数据表" class="headerlink" title="新建数据数据表"></a>新建数据数据表</h4><p>CREATE TABLE用来新建数据表<br>mysql语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS `runoob_tbl`(</span><br><span class="line">   `runoob_id` INT UNSIGNED AUTO_INCREMENT,</span><br><span class="line">   `runoob_title` VARCHAR(100) NOT NULL,</span><br><span class="line">   `runoob_author` VARCHAR(40) NOT NULL,</span><br><span class="line">   `submission_date` DATE,</span><br><span class="line">   PRIMARY KEY ( `runoob_id` )</span><br><span class="line">)ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+<p>在新建数据表时对字段会用到一些约束<br>1、数据类型<br>2、NOT NULL 约束强制字段始终包含值。这意味着，如果不向字段添加值，就无法插入新记录或者更新记录。<br>3、UNIQE<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UNIQUE 和 PRIMARY KEY 约束均为列或列集合提供了唯一性的保证。</span><br><span class="line"></span><br><span class="line">PRIMARY KEY 约束拥有自动定义的 UNIQUE 约束。</span><br><span class="line"></span><br><span class="line">请注意，每个表可以有多个 UNIQUE 约束，但是每个表只能有一个 PRIMARY KEY 约束</span><br></pre></td></tr></table></figure></p>
+<p>4、PRIMARY KEY 约束唯一标识数据库表中的每条记录。<br>5、FORIMARY KEY  一个表中的 FOREIGN KEY 指向另一个表中的 UNIQUE KEY(唯一约束的键)。<br>6、CHECK  约束用于限制列中的值的范围。<br>7、ENGINE<br>8、DEFAULT CHARSET<br>10、DEFAULT  约束用于向列中插入默认值。如果没有规定其他的值，那么会将默认值添加到所有的新记录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE Persons</span><br><span class="line">(</span><br><span class="line">    P_Id int NOT NULL,</span><br><span class="line">    LastName varchar(255) NOT NULL,</span><br><span class="line">    FirstName varchar(255),</span><br><span class="line">    Address varchar(255),</span><br><span class="line">    City varchar(255) DEFAULT &apos;Sandnes&apos;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>11、AUTO_INCREMENT </p>
+<h4 id="新建索引"><a href="#新建索引" class="headerlink" title="新建索引"></a>新建索引</h4><p>CREATE INDEX 语句用于在表中创建索引。<br>在不读取整个表的情况下，索引使数据库应用程序可以更快地查找数据。<br>注释：更新一个包含索引的表需要比更新一个没有索引的表花费更多的时间，这是由于索引本身也需要更新。因此，理想的做法是仅仅在常常被搜索的列（以及表）上面创建索引。<br>语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX index_name  ON table_name (column_name)</span><br></pre></td></tr></table></figure></p>
+<p>在Persion表中给LastName创建索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX PIndex ON Persons (LastName)</span><br></pre></td></tr></table></figure></p>
+<h4 id="新建视图"><a href="#新建视图" class="headerlink" title="新建视图"></a>新建视图</h4><p>CREATE VIEW<br>视图是可视化的表。<br>在 SQL 中，视图是基于 SQL 语句的结果集的可视化的表。<br>视图包含行和列，就像一个真实的表。视图中的字段就是来自一个或多个数据库中的真实的表中的字段。<br>您可以向视图添加 SQL 函数、WHERE 以及 JOIN 语句，也可以呈现数据，就像这些数据来自于某个单一的表一样。</p>
+<h2 id="2、增-即数据插入表操作"><a href="#2、增-即数据插入表操作" class="headerlink" title="2、增(即数据插入表操作)"></a>2、增(即数据插入表操作)</h2><h4 id="INSERT-INTO"><a href="#INSERT-INTO" class="headerlink" title="INSERT INTO"></a>INSERT INTO</h4><p>INSERT INTO 语句用于向表中插入新记录。<br>INSERT INTO 语法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO table_name (column1,column2,column3,...)</span><br><span class="line">VALUES (value1,value2,value3,...),(value1,value2,value3,...),(value1,value2,value3,...),....;</span><br></pre></td></tr></table></figure>
+<h4 id="INSERT-INTO-SELECT-语句"><a href="#INSERT-INTO-SELECT-语句" class="headerlink" title="INSERT INTO SELECT 语句"></a>INSERT INTO SELECT 语句</h4><p>INSERT INTO SELECT 语句从一个表复制数据，然后把数据插入到一个已存在的表中。目标表中任何已存在的行都不会受影响。<br>SQL INSERT INTO SELECT 语法<br>我们可以从一个表中复制所有的列插入到另一个已存在的表中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO table2</span><br><span class="line">SELECT * FROM table1;</span><br></pre></td></tr></table></figure></p>
+<p>或者我们可以只复制希望的列插入到另一个已存在的表中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO table2</span><br><span class="line">(column_name(s))</span><br><span class="line">SELECT column_name(s)</span><br><span class="line">FROM table1;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3、-删"><a href="#3、-删" class="headerlink" title="3、 删"></a>3、 删</h2><p>1、DELETE<br>DELETE 语句用于删除表中的行。<br>SQL DELETE 语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM table_name WHERE some_column=some_value;</span><br></pre></td></tr></table></figure></p>
+<p>2、TRUNCATE<br>如果我们仅仅需要删除表内的数据，但并不删除表本身<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRUNCATE TABLE table_name</span><br></pre></td></tr></table></figure></p>
+<p>3、DROP<br>通过使用 DROP 语句，可以轻松地删除索引、表和数据库。<br>1）DROP TABLE 语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE table_name</span><br></pre></td></tr></table></figure>
+<p>2）DROP DATABASE 语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE database_name</span><br></pre></td></tr></table></figure>
+<p>3）DROP INDEX 语句<br>用于 MySQL 的 DROP INDEX 语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name DROP INDEX index_name；</span><br></pre></td></tr></table></figure></p>
+<h2 id="4、-改"><a href="#4、-改" class="headerlink" title="4、 改"></a>4、 改</h2><p>1、ALTER<br> ALTER TABLE 语句用于在已有的表中添加、删除或修改列。<br> 1）如需在表中添加列，请使用下面的语法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name ADD column_name datatype</span><br></pre></td></tr></table></figure></p>
+<p>2）如需删除表中的列，请使用下面的语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name DROP COLUMN column_name</span><br></pre></td></tr></table></figure>
+<p>3）要改变表中列的数据类型，请使用下面的语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name MODIFY COLUMN column_name datatype</span><br></pre></td></tr></table></figure>
+<p>2、UPDATE<br> UPDATE语句用于更新表中已存在的记录<br> SQL UPDATE 语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE table_name</span><br><span class="line">SET column1=value1,column2=value2,...</span><br><span class="line">WHERE some_column=some_value;</span><br></pre></td></tr></table></figure></p>
+<p>例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE Websites </span><br><span class="line">SET alexa=&apos;5000&apos;, country=&apos;USA&apos; </span><br><span class="line">WHERE name=&apos;菜鸟教程&apos;;</span><br></pre></td></tr></table></figure>
+<p>注意：<br>在更新记录时要格外小心！在上面的实例中，如果我们省略了 WHERE 子句，会将 Websites 表中所有数据的 alexa 改为 5000，country 改为 USA。</p>
+<h2 id="5、查（表查询select）"><a href="#5、查（表查询select）" class="headerlink" title="5、查（表查询select）"></a>5、查（表查询select）</h2><p>数据操作的大部分在于查，其中用于查的条件有<br>1、DISTNCT<br>2、WHERE<br>3、AND &amp; OR<br>4、ORDER BY<br>5、LIKE<br>6、IN<br>7、BETWEEN<br>8、JOIN</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INNER JOIN：如果表中有至少一个匹配，则返回行</span><br><span class="line">LEFT JOIN：即使右表中没有匹配，也从左表返回所有的行</span><br><span class="line">RIGHT JOIN：即使左表中没有匹配，也从右表返回所有的行</span><br><span class="line">FULL JOIN：只要其中一个表中存在匹配，则返回行</span><br></pre></td></tr></table></figure>
+<p>9、HAVING WHERE 关键字无法与聚合函数一起使用。HAVING 子句可以让我们筛选分组后的各组数据。<br>10、GROUP BY 语句根据一个或多个列对结果集进行分组。。<br>11、LIMIT<br>12、 AS给查的列取别名<br>13、UNION 操作符用于合并两个或多个 SELECT 语句的结果集。</p>
+<h2 id="6、-mysql表结构，数据库配置数据等查询和修改"><a href="#6、-mysql表结构，数据库配置数据等查询和修改" class="headerlink" title="6、 mysql表结构，数据库配置数据等查询和修改"></a>6、 mysql表结构，数据库配置数据等查询和修改</h2><h4 id="show语句"><a href="#show语句" class="headerlink" title="show语句"></a>show语句</h4><p>1、数据库信息查询<br>|命令|                             描述|<br>|—-|—-|<br>|SELECT VERSION( )     |         服务器版本信息|<br>|SELECT DATABASE( )     |    当前数据库名 (或者返回空)|<br>|SELECT USER( )      |             当前用户名|<br>|SHOW STATUS    |服务器状态|<br>|SHOW VARIABLES|    服务器配置变量|<br>|SHOW COLUMNS FROM table_name|查询表结构信息|<br>|DESCRIBE table_name|查询表结构信息|<br>|SELECT CREATE TABLE table_name|查询表结构信息|</p>
+<p>2、修改数据库变量信息<br>有两种方法可以将值分配给用户定义的变量。</p>
+<ul>
+<li>第一种方法是使用SET语句如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET @variable_name = value;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第二种方法是使用SELECT语句</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT @variable_name := value;</span><br></pre></td></tr></table></figure>
+<h2 id="7、SQL-函数"><a href="#7、SQL-函数" class="headerlink" title="7、SQL 函数"></a>7、SQL 函数</h2><p>SQL 拥有很多可用于计数和计算的内建函数。</p>
+<h4 id="SQL-Aggregate-函数"><a href="#SQL-Aggregate-函数" class="headerlink" title="SQL Aggregate 函数"></a>SQL Aggregate 函数</h4><p>SQL Aggregate 函数计算从列中取得的值，返回一个单一的值。</p>
+<p>有用的 Aggregate 函数：</p>
+<p>AVG() - 返回平均值<br>COUNT() - 返回行数<br>FIRST() - 返回第一个记录的值<br>LAST() - 返回最后一个记录的值<br>MAX() - 返回最大值<br>MIN() - 返回最小值<br>SUM() - 返回总和</p>
+<h4 id="SQL-Scalar-函数"><a href="#SQL-Scalar-函数" class="headerlink" title="SQL Scalar 函数"></a>SQL Scalar 函数</h4><p>SQL Scalar 函数基于输入值，返回一个单一的值。<br>有用的 Scalar 函数：</p>
+<p>UCASE() - 将某个字段转换为大写<br>LCASE() - 将某个字段转换为小写<br>MID() - 从某个文本字段提取字符，MySql 中使用<br>SubString(字段，1，end) - 从某个文本字段提取字符<br>LEN() - 返回某个文本字段的长度<br>ROUND() - 对某个数值字段进行指定小数位数的四舍五入<br>NOW() - 返回当前的系统日期和时间<br>FORMAT() - 格式化某个字段的显示方式</p>
+<h2 id="8、mysql用户管理"><a href="#8、mysql用户管理" class="headerlink" title="8、mysql用户管理"></a>8、mysql用户管理</h2><h4 id="新建用户"><a href="#新建用户" class="headerlink" title="新建用户"></a>新建用户</h4><p> CREATE USER语句创建用户帐户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER dbadmin@192.168.1.100 </span><br><span class="line">IDENTIFIED BY &apos;pwd123&apos;;</span><br></pre></td></tr></table></figure></p>
+<h4 id="查看用户访问权限"><a href="#查看用户访问权限" class="headerlink" title="查看用户访问权限"></a>查看用户访问权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW GRANTS FOR remote_user;</span><br><span class="line">SHOW GRANTS FOR &apos;api@localhost&apos;;</span><br></pre></td></tr></table></figure>
+<h4 id="用户授权"><a href="#用户授权" class="headerlink" title="用户授权"></a>用户授权</h4><p>创建新的用户帐户后，用户没有任何权限，如要向用户帐户授予权限，请使用GRANT语句。<br>GRANT语句的语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GRANT privilege,[privilege],.. ON privilege_level </span><br><span class="line">TO user [IDENTIFIED BY password]</span><br><span class="line">[REQUIRE tsl_option]</span><br><span class="line">[WITH [GRANT_OPTION | resource_option]];</span><br></pre></td></tr></table></figure>
+<p>可指定用户是否必须通过安全连接(如SSL，X059等)连接到数据库服务器。可选的WITH GRANT OPTION子句允许此用户授予其他用户或从其他用户删除您拥有的权限。此外，可以使用WITH子句来分配MySQL数据库服务器的资源，例如，设置用户每小时可以使用多少个连接或语句。这在MySQL共享托管等共享环境中非常有用。<br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL ON *.* TO &apos;super&apos;@&apos;localhost&apos; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<p>ON <em>.</em>子句表示MySQL中的所有数据库和所有对象。WITH GRANT OPTION允许super@localhost向其他用户授予权限。</p>
+<h4 id="撤销用户某权限"><a href="#撤销用户某权限" class="headerlink" title="撤销用户某权限"></a>撤销用户某权限</h4><p>要从用户帐户撤销权限，您可以使用MySQL REVOKE语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">REVOKE   privilege_type [(column_list)]      </span><br><span class="line">        [, priv_type [(column_list)]]...</span><br><span class="line">ON [object_type] privilege_level</span><br><span class="line">FROM user [, user]...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先，在REVOKE关键字之后指定要从用户撤销的权限列表，需要用逗号分隔权限。</li>
+<li>其次，在ON子句中指定要撤销权限的权限级别。</li>
+<li>第三，在FROM子句中指定要撤销的权限的用户帐户</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE UPDATE, DELETE ON yiibaidb.*  FROM rfc;</span><br></pre></td></tr></table></figure>
+<h4 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h4><p>要删除一个或多个用户帐户，请按如下所示使用DROP USER语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER [IF EXISTS] user, [user],...;</span><br></pre></td></tr></table></figure>
+<p>除了删除用户帐户之外，DROP USER语句还会从所有授权表中删除所有权限。</p>
+<h4 id="MySQL角色"><a href="#MySQL角色" class="headerlink" title="MySQL角色"></a>MySQL角色</h4><p>通常，MySQL数据库拥有多个相同权限集合的用户。以前，向多个用户授予和撤销权限的唯一方法是单独更改每个用户的权限，假如用户数量比较多的时候，这是非常耗时的。为了用户权限管理更容易，MySQL提供了一个名为role的新对象，它是一个命名的特权集合。如果要向多个用户授予相同的权限集，<br>则应如下所示：</p>
+<ul>
+<li>首先，创建新的角色。</li>
+<li>第二，授予角色权限。</li>
+<li>第三，授予用户角色。</li>
+</ul>
+<p>1、创建角色<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE ROLE IF NOT EXISTS &apos;crm_dev&apos;, &apos;crm_read&apos;, &apos;crm_write&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>2、授予角色权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT SELECT ON crmdb.* TO crm_read;</span><br></pre></td></tr></table></figure></p>
+<p>3、将角色分配给用户帐户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GRANT crm_dev TO crm_dev1@localhost;</span><br><span class="line"></span><br><span class="line">GRANT crm_read TO crm_read1@localhost;</span><br><span class="line"></span><br><span class="line">GRANT crm_read, crm_write TO crm_write1@localhost, crm_write2@localhost;</span><br></pre></td></tr></table></figure></p>
+<p>4、设置默认角色<br>在向用户帐户授予角色时，当用户帐户连接到数据库服务器时，它不会自动使角色变为活动状态，要在每次用户帐户连接到数据库服务器时指定哪些角色应该处于活动状态，请使用SET DEFAULT ROLE语句。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET DEFAULT ROLE ALL TO crm_read1@localhost;</span><br></pre></td></tr></table></figure></p>
+<p>5、撤销角色的权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE INSERT, UPDATE, DELETE ON crmdb.* FROM crm_write;</span><br></pre></td></tr></table></figure></p>
+<p>6、删除角色<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP ROLE role_name, role_name, ...;</span><br></pre></td></tr></table></figure></p>
+<p>如果要更改用户的权限，则需要仅更改授权角色的权限。这些更改角色的权限将对授予角色的所有用户生效。</p>
+<h2 id="9、维护MySQL数据库表"><a href="#9、维护MySQL数据库表" class="headerlink" title="9、维护MySQL数据库表"></a>9、维护MySQL数据库表</h2><h4 id="分析表语句"><a href="#分析表语句" class="headerlink" title="分析表语句"></a>分析表语句</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ANALYZE TABLE table_name;</span><br></pre></td></tr></table></figure>
+<h4 id="优化表语句"><a href="#优化表语句" class="headerlink" title="优化表语句"></a>优化表语句</h4><p>MySQL提供了一个语句，允许您优化表以避免此碎片整理问题。 以下说明如何优化表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPTIMIZE TABLE table_name;</span><br></pre></td></tr></table></figure></p>
+<h4 id="检查表语句"><a href="#检查表语句" class="headerlink" title="检查表语句"></a>检查表语句</h4><p>MySQL允许您使用CHECK TABLE语句检查数据库表的完整性。以下说明CHECK TABLE语句的语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CHECK TABLE table_name;</span><br></pre></td></tr></table></figure></p>
+<h4 id="修复表语句"><a href="#修复表语句" class="headerlink" title="修复表语句"></a>修复表语句</h4><p>REPAIR TABLE语句允许您修复数据库表中发生的一些错误。 MySQL不保证REPAIR TABLE语句可以修复表所有可能的错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REPAIR TABLE table_name;</span><br></pre></td></tr></table></figure>
+<h2 id="10、MySQL使用mysqldump备份数据库"><a href="#10、MySQL使用mysqldump备份数据库" class="headerlink" title="10、MySQL使用mysqldump备份数据库"></a>10、MySQL使用mysqldump备份数据库</h2><h4 id="如何备份MySQL数据库"><a href="#如何备份MySQL数据库" class="headerlink" title="如何备份MySQL数据库"></a>如何备份MySQL数据库</h4><p>通过执行以下命令，所有数据库结构和数据将导出到一个[dump_file.sql]转储文件中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u [username] –p[password] [database_name] &gt; [dump_file.sql]</span><br></pre></td></tr></table></figure></p>
+<h4 id="如何仅备份MySQL数据库结构"><a href="#如何仅备份MySQL数据库结构" class="headerlink" title="如何仅备份MySQL数据库结构"></a>如何仅备份MySQL数据库结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u [username] –p[password] –no-data [database_name] &gt; [dump_file.sql]</span><br></pre></td></tr></table></figure>
+<h4 id="如何仅备份MySQL数据库数据"><a href="#如何仅备份MySQL数据库数据" class="headerlink" title="如何仅备份MySQL数据库数据"></a>如何仅备份MySQL数据库数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump –u root –p123456 –no-create-info yiibaidb &gt; D:\worksp\bakup\backup003.sql</span><br></pre></td></tr></table></figure>
+<h4 id="如何将多个MySQL数据库备份到一个文件中"><a href="#如何将多个MySQL数据库备份到一个文件中" class="headerlink" title="如何将多个MySQL数据库备份到一个文件中"></a>如何将多个MySQL数据库备份到一个文件中</h4><p>如果要通过[database_name]中的命令来备份多个数据库，只需单独的数据库名称即可。 如果要备份数据库服务器中的所有数据库，请使用选项-all-database。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u [username] –p[password]  [dbname1,dbname2,…] &gt; [all_dbs_dump_file.sql]</span><br><span class="line"></span><br><span class="line">mysqldump -u [username] –p[password] –all-database &gt; [all_dbs_dump_file.sql]</span><br></pre></td></tr></table></figure></p>
+<h2 id="11、mysql数据导入"><a href="#11、mysql数据导入" class="headerlink" title="11、mysql数据导入"></a>11、mysql数据导入</h2><h4 id="mysql-命令导入"><a href="#mysql-命令导入" class="headerlink" title="mysql 命令导入"></a>mysql 命令导入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u用户名    -p密码    &lt;  要导入的数据库数据(runoob.sql)</span><br></pre></td></tr></table></figure>
+<h4 id="source-命令导入"><a href="#source-命令导入" class="headerlink" title="source 命令导入"></a>source 命令导入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; source /home/abc/abc.sql  # 导入备份数据库</span><br></pre></td></tr></table></figure>
+<h4 id="使用-LOAD-DATA-导入数据"><a href="#使用-LOAD-DATA-导入数据" class="headerlink" title="使用 LOAD DATA 导入数据"></a>使用 LOAD DATA 导入数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; LOAD DATA LOCAL INFILE &apos;dump.txt&apos; INTO TABLE mytbl;</span><br></pre></td></tr></table></figure>
+<h4 id="使用-mysqlimport-导入数据"><a href="#使用-mysqlimport-导入数据" class="headerlink" title="使用 mysqlimport 导入数据"></a>使用 mysqlimport 导入数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mysqlimport -u root -p --local database_name dump.txt</span><br><span class="line">password *****</span><br></pre></td></tr></table></figure>
+<ul>
+<li>mysqlimport的常用选项介绍</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-d or –delete</td>
+<td>新数据导入数据表中之前删除数据数据表中的所有信息</td>
+</tr>
+<tr>
+<td>-f or –force</td>
+<td>不管是否遇到错误，mysqlimport将强制继续插入数据</td>
+</tr>
+<tr>
+<td>-i or –ignore</td>
+<td>mysqlimport跳过或者忽略那些有相同唯一 关键字的行， 导入文件中的数据将被忽略。</td>
+</tr>
+<tr>
+<td>-l or -lock-tables</td>
+<td>数据被插入之前锁住表，这样就防止了， 你在更新数据库时，用户的查询和更新受到影响。</td>
+</tr>
+<tr>
+<td>-r or -replace</td>
+<td>这个选项与－i选项的作用相反；此选项将替代 表中有相同唯一关键字的记录。</td>
+</tr>
+<tr>
+<td>–fields-enclosed- by= char</td>
+<td>指定文本文件中数据的记录时以什么括起的， 很多情况下 数据以双引号括起。 默认的情况下数据是没有被字符括起的。</td>
+</tr>
+<tr>
+<td>–fields-terminated- by=char</td>
+<td>指定各个数据的值之间的分隔符，在句号分隔的文件中， 分隔符是句号。您可以用此选项指定数据之间的分隔符。 默认的分隔符是跳格符（Tab）</td>
+</tr>
+<tr>
+<td>–lines-terminated- by=str</td>
+<td>此选项指定文本文件中行与行之间数据的分隔字符串 或者字符。 默认的情况下mysqlimport以newline为行分隔符。 您可以选择用一个字符串来替代一个单个的字符： 一个新行或者一个回车。</td>
+</tr>
+</tbody>
+</table>
+<p>mysqlimport命令常用的选项还有-v 显示版本（version）， -p 提示输入密码（password）等。</p>
+<h2 id="12、mysql事务"><a href="#12、mysql事务" class="headerlink" title="12、mysql事务"></a>12、mysql事务</h2><h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><p>1、原子性：一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</p>
+<p>2、一致性：在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</p>
+<p>3、隔离性：数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。</p>
+<p>4、持久性：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</p>
+<h4 id="事务控制语句："><a href="#事务控制语句：" class="headerlink" title="事务控制语句："></a>事务控制语句：</h4><ul>
+<li><p>BEGIN或START TRANSACTION；显式地开启一个事务；</p>
+</li>
+<li><p>COMMIT；也可以使用COMMIT WORK，不过二者是等价的。COMMIT会提交事务，并使已对数据库进行的所有修改成为永久性的；</p>
+</li>
+<li><p>ROLLBACK；有可以使用ROLLBACK WORK，不过二者是等价的。回滚会结束用户的事务，并撤销正在进行的所有未提交的修改；</p>
+</li>
+<li><p>SAVEPOINT identifier；SAVEPOINT允许在事务中创建一个保存点，一个事务中可以有多个SAVEPOINT；</p>
+</li>
+<li><p>RELEASE SAVEPOINT identifier；删除一个事务的保存点，当没有指定的保存点时，执行该语句会抛出一个异常；</p>
+</li>
+<li><p>ROLLBACK TO identifier；把事务回滚到标记点；</p>
+</li>
+<li><p>SET TRANSACTION；用来设置事务的隔离级别。InnoDB存储引擎提供事务的隔离级别有READ UNCOMMITTED、READ COMMITTED、REPEATABLE READ和SERIALIZABLE。</p>
+<h4 id="MYSQL-事务处理主要有两种方法："><a href="#MYSQL-事务处理主要有两种方法：" class="headerlink" title="MYSQL 事务处理主要有两种方法："></a>MYSQL 事务处理主要有两种方法：</h4><p>1、用 BEGIN, ROLLBACK, COMMIT来实现</p>
+</li>
+</ul>
+<p>BEGIN 开始一个事务<br>ROLLBACK 事务回滚<br>COMMIT 事务确认<br>2、直接用 SET 来改变 MySQL 的自动提交模式:</p>
+<p>SET AUTOCOMMIT=0 禁止自动提交<br>SET AUTOCOMMIT=1 开启自动提交</p>
+<h2 id="13、-mysql以及sql注入"><a href="#13、-mysql以及sql注入" class="headerlink" title="13、 mysql以及sql注入"></a>13、 mysql以及sql注入</h2><p>如果您通过网页获取用户输入的数据并将其插入一个MySQL数据库，那么就有可能发生SQL注入安全的问题。<br>本节将为大家介绍如何防止SQL注入，并通过脚本来过滤SQL中注入的字符。<br>所谓SQL注入，就是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。<br>我们永远不要信任用户的输入，我们必须认定用户输入的数据都是不安全的，我们都需要对用户输入的数据进行过滤处理。<br>以下实例中，输入的用户名必须为字母、数字及下划线的组合，且用户名长度为 8 到 20 个字符之间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (preg_match(&quot;/^\w&#123;8,20&#125;$/&quot;, $_GET[&apos;username&apos;], $matches))</span><br><span class="line">&#123;</span><br><span class="line">   $result = mysqli_query($conn, &quot;SELECT * FROM users </span><br><span class="line">                          WHERE username=$matches[0]&quot;);</span><br><span class="line">&#125;</span><br><span class="line"> else </span><br><span class="line">&#123;</span><br><span class="line">   echo &quot;username 输入异常&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>让我们看下在没有过滤特殊字符时，出现的SQL情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 设定$name 中插入了我们不需要的SQL语句</span><br><span class="line">$name = &quot;Qadir&apos;; DELETE FROM users;&quot;;</span><br><span class="line"> mysqli_query($conn, &quot;SELECT * FROM users WHERE name=&apos;&#123;$name&#125;&apos;&quot;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/31/mysql操作/" data-id="cjx4bixhk000kk0vtr9eb16ue" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/08/python数据类型/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          python数据类型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/02/机器学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">机器学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

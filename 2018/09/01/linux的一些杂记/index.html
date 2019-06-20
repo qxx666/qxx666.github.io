@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>linux的一些杂记 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要1、shell特殊变量 2、 bash中如何实现条件判断 3、特殊权限SUID等详解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux的一些杂记">
+<meta property="og:url" content="http://yoursite.com/2018/09/01/linux的一些杂记/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要1、shell特殊变量 2、 bash中如何实现条件判断 3、特殊权限SUID等详解">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux的一些杂记">
+<meta name="twitter:description" content="摘要1、shell特殊变量 2、 bash中如何实现条件判断 3、特殊权限SUID等详解">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-linux的一些杂记" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/01/linux的一些杂记/" class="article-date">
+  <time datetime="2018-09-01T07:17:40.000Z" itemprop="datePublished">2018-09-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux的一些杂记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>1、shell特殊变量</p>
+<p>2、 bash中如何实现条件判断</p>
+<p>3、特殊权限SUID等详解</p>
+<a id="more"></a>
+<h2 id="shell特殊变量"><a href="#shell特殊变量" class="headerlink" title="shell特殊变量"></a>shell特殊变量</h2><p>bash变量类型：</p>
+<pre><code>1. 环境变量
+2. 本地变量(局部变量)
+3. 位置变量
+4. 特殊变量
+</code></pre><h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export VARNAME=VALUE</span><br><span class="line">VARNAME=VALUE</span><br><span class="line">export VARNAME  “导出”</span><br></pre></td></tr></table></figure>
+<h4 id="本地变量："><a href="#本地变量：" class="headerlink" title="本地变量："></a>本地变量：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set VARNAME=VALUE: 作用域为整个bash进程；</span><br></pre></td></tr></table></figure>
+<h4 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">local VARNAME=VALUE：作用域为当前代码段；</span><br></pre></td></tr></table></figure>
+<h4 id="位置变量"><a href="#位置变量" class="headerlink" title="位置变量"></a>位置变量</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$1, $2, ...</span><br><span class="line">shift 轮替</span><br></pre></td></tr></table></figure>
+<h5 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$：表示当前shell的进程ID即PID</span><br><span class="line">$0:当前脚本的文件名</span><br><span class="line">$n：传递给脚本或函数，n是一个数字，表示第几个参数</span><br><span class="line">$#：传递给脚本或函数的参数个数</span><br><span class="line">$*：传递给脚本或函数的所有参数</span><br><span class="line">$@：传递给脚本或函数的所有参数，被引号包含时与$*不同</span><br><span class="line">$?:上一个命令的退出状态或函数的返回值</span><br><span class="line">$$：当前shell进程ID，对于shell脚本就是这些脚本所在的进程ID</span><br></pre></td></tr></table></figure>
+<h4 id="撤消变量："><a href="#撤消变量：" class="headerlink" title="撤消变量："></a>撤消变量：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unset VARNAME</span><br></pre></td></tr></table></figure>
+<h4 id="查看当shell中变量："><a href="#查看当shell中变量：" class="headerlink" title="查看当shell中变量："></a>查看当shell中变量：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set</span><br></pre></td></tr></table></figure>
+<h4 id="查看当前shell中的环境变量："><a href="#查看当前shell中的环境变量：" class="headerlink" title="查看当前shell中的环境变量："></a>查看当前shell中的环境变量：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">printenv</span><br><span class="line">env</span><br><span class="line">export</span><br></pre></td></tr></table></figure>
+<h2 id="bash中如何实现条件判断"><a href="#bash中如何实现条件判断" class="headerlink" title="bash中如何实现条件判断"></a>bash中如何实现条件判断</h2><p>条件测试类型：<br>1、整数测试<br>2、字符测试<br>3、文件测试</p>
+<p>条件测试的表达式：<br>[ expression ]<br>[[ expression ]]<br>test expression</p>
+<h4 id="整数比较"><a href="#整数比较" class="headerlink" title="整数比较"></a>整数比较</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-eq: 测试两个整数是否相等；比如 $A -eq $B</span><br><span class="line">-ne: 测试两个整数是否不等；不等，为真；相等，为假；</span><br><span class="line">-gt: 测试一个数是否大于另一个数；大于，为真；否则，为假；</span><br><span class="line">-lt: 测试一个数是否小于另一个数；小于，为真；否则，为假；</span><br><span class="line">-ge: 大于或等于</span><br><span class="line">-le：小于或等于</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INT1=63</span><br><span class="line">INT2=77</span><br><span class="line">[ $INT1 -eq $INI2 ]</span><br><span class="line">[[ $INT1 -eq $INT2 ]]</span><br><span class="line">test $INT1 -eq $INT2</span><br></pre></td></tr></table></figure>
+<h4 id="文件测试"><a href="#文件测试" class="headerlink" title="文件测试"></a>文件测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-e FILE：测试文件是否存在</span><br><span class="line">-f FILE: 测试文件是否为普通文件</span><br><span class="line">-d FILE: 测试指定路径是否为目录</span><br><span class="line">-r FILE: 测试当前用户对指定文件是否有读取权限；</span><br><span class="line">-w FILE: 测试</span><br><span class="line">-x FILE: 测试</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ -e /etc/inittab ]</span><br><span class="line">[ -x /etc/rc.d/rc.sysinit ]</span><br></pre></td></tr></table></figure>
+<h4 id="字符测试"><a href="#字符测试" class="headerlink" title="字符测试"></a>字符测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">==：测试是否相等，相等为真，不等为假</span><br><span class="line">!=: 测试是否不等，不等为真，等为假</span><br><span class="line">&gt;</span><br><span class="line">&lt;</span><br><span class="line">-n string: 测试指定字符串是否为空，空则真，不空则假</span><br><span class="line">-z string: 测试指定字符串是否不空，不空为真，空则为假</span><br></pre></td></tr></table></figure>
+<h4 id="组合测试条件"><a href="#组合测试条件" class="headerlink" title="组合测试条件"></a>组合测试条件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  -a ：与关系</span><br><span class="line">  -o ：或关系</span><br><span class="line">   ！：非关系</span><br><span class="line">例如</span><br><span class="line">if [ $# -gt 1 -a $# -le 3 ] 测试大于1小于3的数</span><br><span class="line">等价于 if [ $# -gt 1 ]&amp;&amp;if[ $# -le 3]</span><br></pre></td></tr></table></figure>
+<h4 id="shell中如何进行算术运算："><a href="#shell中如何进行算术运算：" class="headerlink" title="shell中如何进行算术运算："></a>shell中如何进行算术运算：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A=3</span><br><span class="line">B=6</span><br><span class="line">1、let 算术运算表达式</span><br><span class="line">    let C=$A+$B</span><br><span class="line">2、$[算术运算表达式]</span><br><span class="line">    C=$[$A+$B]</span><br><span class="line">3、$((算术运算表达式))</span><br><span class="line">    C=$(($A+$B))</span><br><span class="line">4、expr 算术运算表达式，表达式中各操作数及运算符之间要有空格，而且要使用命令引用</span><br><span class="line">    C=`expr $A + $B`</span><br></pre></td></tr></table></figure>
+<h4 id="定义脚本退出状态码"><a href="#定义脚本退出状态码" class="headerlink" title="定义脚本退出状态码"></a>定义脚本退出状态码</h4><p>exit: 退出脚本<br>当在脚本运行到某个命令满足退出条件时，使用exit n退出当前脚本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">exit #   //如果脚本没有明确定义退出状态码，那么，最后执行的一条命令的退出码即为脚本的退出状态码</span><br><span class="line">exit ：退出码不变，即为最后一个命令的退出码</span><br><span class="line">0表示成功（Zero - Success）</span><br><span class="line"></span><br><span class="line">非0表示失败（Non-Zero  - Failure）</span><br><span class="line"></span><br><span class="line">2表示用法不当（Incorrect Usage）</span><br><span class="line"></span><br><span class="line">127表示命令没有找到（Command Not Found）</span><br><span class="line"></span><br><span class="line">126表示不是可执行的（Not an executable）</span><br><span class="line"></span><br><span class="line">&gt;=128 信号产生</span><br></pre></td></tr></table></figure></p>
+<h4 id="测试脚本是否有语法错误："><a href="#测试脚本是否有语法错误：" class="headerlink" title="测试脚本是否有语法错误："></a>测试脚本是否有语法错误：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -n 测试脚本是否有语法错误</span><br></pre></td></tr></table></figure>
+<h2 id="特殊权限SUID等详解"><a href="#特殊权限SUID等详解" class="headerlink" title="特殊权限SUID等详解"></a>特殊权限SUID等详解</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">passwd:s</span><br><span class="line"></span><br><span class="line">SUID: 运行某程序时，相应进程的属主是程序文件自身的属主，而不是启动者；</span><br><span class="line">    chmod u+s FILE  给文件加s</span><br><span class="line">    chmod u-s FILE  给文件减s</span><br><span class="line">        如果FILE本身原来就有执行权限，则SUID显示为s；否则显示S；</span><br><span class="line">SGID: 运行某程序时，相应进程的属组是程序文件自身的属组，而不是启动者所属的基本组；</span><br><span class="line">    chmod g+s FILE</span><br><span class="line">    chmod g-s FILE</span><br><span class="line">        develop team, hadoop, hbase, hive 开发团队下三个用户</span><br><span class="line">        /tmp/project/  </span><br><span class="line">            develop</span><br><span class="line">Sticky: 在一个公共目录，每个都可以创建文件，删除自己的文件，但不能删除别人的文件；</span><br><span class="line">    chmod o+t DIR</span><br><span class="line">    chmod o-t DIR</span><br><span class="line"></span><br><span class="line">SUID:SGID:Sticky</span><br><span class="line">000-111</span><br><span class="line"></span><br><span class="line">chmod 5755 /backup/test</span><br><span class="line">umask 0022</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/01/linux的一些杂记/" data-id="cjx4bixf90003k0vt9by4znew" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/02/mysql的一些记录/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mysql的一些记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/05/浅谈安全/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">浅谈安全</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

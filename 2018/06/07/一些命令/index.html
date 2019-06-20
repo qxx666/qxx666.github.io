@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>一些命令 | 浅萧荨_Live</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="摘要   该文主要讲解一些命令，暂时做个记录，往后有时间对其进行整理和分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些命令">
+<meta property="og:url" content="http://yoursite.com/2018/06/07/一些命令/index.html">
+<meta property="og:site_name" content="浅萧荨_Live">
+<meta property="og:description" content="摘要   该文主要讲解一些命令，暂时做个记录，往后有时间对其进行整理和分类">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-20T06:53:13.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一些命令">
+<meta name="twitter:description" content="摘要   该文主要讲解一些命令，暂时做个记录，往后有时间对其进行整理和分类">
+  
+    <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">浅萧荨_Live</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">welcome to my home</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-一些命令" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/07/一些命令/" class="article-date">
+  <time datetime="2018-06-07T10:08:05.000Z" itemprop="datePublished">2018-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      一些命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h4><p>   该文主要讲解一些命令，暂时做个记录，往后有时间对其进行整理和分类</p>
+<a id="more"></a>
+<h3 id="用户对谈"><a href="#用户对谈" class="headerlink" title="用户对谈"></a>用户对谈</h3><ul>
+<li>write<blockquote>
+<p>write user tty</p>
+</blockquote>
+</li>
+</ul>
+<p>向用户正在使用的终端发送信息，在在之前可以用w或者who查看有哪些用户和正使用的终端</p>
+<ul>
+<li>mesg<blockquote>
+<p>mesg&nbsp;n</p>
+</blockquote>
+</li>
+</ul>
+<p>拒绝接受用户用write发送的信息，但一般用户都无法拒绝root发送的信息</p>
+<blockquote>
+<p>mesg&nbsp;y</p>
+</blockquote>
+<p>解开拒绝接受信息的设置</p>
+<ul>
+<li>wall<blockquote>
+<p>wall&nbsp;信息</p>
+</blockquote>
+</li>
+</ul>
+<p>给系统所有用户广播消息</p>
+<p>可以在/etc/security/limits.conf里面设置用户同时可以登入的连接数</p>
+<ul>
+<li>可以用&amp;符号将命令调到后台执行</li>
+<li>jobs [-lrs] 查看目前后天的工作状态</li>
+<li>fg将后台工作拿到前台处理</li>
+<li>bg唤醒后台某个工作</li>
+<li>ps aux 查看系统所有进程数据</li>
+<li>ps -lA 也能查看系统所有进程数据</li>
+<li>ps axjf 连同部分进程状态</li>
+<li>ps -l仅查看自己bash的相关进程</li>
+<li>top 动态查看进程的变化</li>
+<li>free 查看内存使用情况</li>
+<li>uname 查看内核相关情况</li>
+<li>uptime 查看系统启动时间与工作负载</li>
+<li>netstat 跟踪王网络</li>
+<li>dmesg 分析内核产生的信息</li>
+<li>vmstat 检测系统资源变化</li>
+<li>fuser 通过文件（或文件系统）找出正在使用该文件的程序<blockquote>
+<p>fuser [-uvm]&nbsp;[-k &nbsp;[i]&nbsp;[-signal]] ]&nbsp;file/dir</p>
+</blockquote>
+</li>
+<li><p>lsof列出被进程所打开的文件名</p>
+<blockquote>
+<p>lsof [-aUu] [+d]</p>
+<p>lsof +d /dev</p>
+</blockquote>
+</li>
+<li><p>lsmod查看当前系统加载了那些内核模块</p>
+<blockquote>
+<p>insmod [/full/path/module_name][parameters] 手动添加内核模块</p>
+<p>rmmod [-fw]moudle_name 删除内核模块</p>
+</blockquote>
+</li>
+<li>ls -Z查看安全上下文</li>
+<li>ldd 查询某个程序的动态函数库支持状态</li>
+<li><p>eclare、typeset</p>
+<p>-i 声明为整数</p>
+<p>-a 声明为数组</p>
+<p>-f 声明为函数</p>
+<p>-r 声明为只读</p>
+</li>
+<li><p>diff [参数] [文件1或目录1] [文件2或目录2] | 比较单个文件或者容</p>
+<p>-b 　不检查空格字符的不同。</p>
+<p>-B 　不检查空白行。</p>
+<p>-i 不检查大小写</p>
+<p>-q 仅显示差异而不显示详细信息</p>
+<p>eg: diff a b &gt; parch.log 比较两个文件的不同并产生补丁</p>
+</li>
+<li><p>date [参数]… [+格式] | 显示或设定系统的日期与时间</p>
+<p>%H 小时(以00-23来表示)。</p>
+<p>%M 分钟(以00-59来表示)。</p>
+<p>%P AM或PM。</p>
+<p>%D 日期(含年月日)</p>
+<p>%U 该年中的周数。</p>
+<p>date -s “2015-10-17 01:01:01″ //时间设定</p>
+<p>date +%Y%m%d //显示前天年月日</p>
+<p>date +%Y%m%d –date=”+1 day/month/year” //显示前一天/月/年/日期</p>
+<p>date +%Y%m%d –date=”-1 day/month/year” //显示后一天/月/年/日期</p>
+<p>date -d ‘2 weeks’ 2周后的日期</p>
+</li>
+<li><p>vmstat | 对操作系统的虚拟内存、进程、CPU活动进行监控</p>
+</li>
+<li><p>iostat [参数] [时间t] [次数n](每隔t时间刷新一次，最多刷新n次）| 对系统的磁盘操作活动进行监视,汇报磁盘活动统计情况，同时也会汇报出CPU使用情况</p>
+</li>
+<li><p>at [参数] [时间] | 在一个指定的时间执行一个指定任务，只能执行一次<br>HH:MM[am|pm] + number [minutes|hours|days|weeks] 强制在某年某月某日的某时刻进行该项任务</p>
+<p>atq 查看系统未执行的任务</p>
+<p>atrm n 删除编号为n的任务</p>
+<p>at -c n 显示编号为n的任务的内容</p>
+</li>
+<li><p>paste 合并文件，需确保合并的两文件行数相同</p>
+<p>-d 指定不同于空格或tab键的域分隔符</p>
+<p>-s 按行合并，单独一个文件为一行</p>
+</li>
+</ul>
+<h3 id="proc-代表的意义"><a href="#proc-代表的意义" class="headerlink" title="proc/*代表的意义"></a>proc/*代表的意义</h3><p>所有的进程都在内存中，而内存中的数据又都写在/proc/*这个目录下，目前各个进程的pid都是以目录的形式存在于/proc当中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/07/一些命令/" data-id="cjx4bixfg0005k0vttt7qzyyt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/27/浅谈crontab/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅谈crontab
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/07/日志服务/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">日志服务</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/29/浅谈python/">浅谈python</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python的一些模块/">python的一些模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/08/python数据类型/">python数据类型</a>
+          </li>
+        
+          <li>
+            <a href="/2018/10/31/mysql操作/">mysql操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/02/机器学习/">机器学习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 浅萧荨<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
