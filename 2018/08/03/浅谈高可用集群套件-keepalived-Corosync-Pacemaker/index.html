@@ -14,12 +14,12 @@
 <meta property="og:site_name" content="浅萧荨_Live">
 <meta property="og:description" content="1、什么是集群2、集群分类3、实现方法4、kleepalive介绍5、heartbeat / Corosync+Pacemaker介绍6、heartbeat介绍">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/assets/img/ha/ha.png">
-<meta property="og:updated_time" content="2019-06-20T06:53:13.767Z">
+<meta property="og:image" content="http://yoursite.com/2018/08/03/assets/img/ha/ha.png">
+<meta property="og:updated_time" content="2019-08-30T12:52:26.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈高可用集群套件(keepalived+Corosync+Pacemaker)">
 <meta name="twitter:description" content="1、什么是集群2、集群分类3、实现方法4、kleepalive介绍5、heartbeat / Corosync+Pacemaker介绍6、heartbeat介绍">
-<meta name="twitter:image" content="http://yoursite.com/assets/img/ha/ha.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/03/assets/img/ha/ha.png">
   
     <link rel="alternate" href="/atom.xml" title="浅萧荨_Live" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 <p>VRRP全称 Virtual Router Redundancy Protocol，即 虚拟路由冗余协议。可以认为它是实现路由器高可用的容错协议，即将N台提供相同功能的路由器组成一个路由器组(Router Group)，这个组里面有一个master和多个backup，但在外界看来就像一台一样，构成虚拟路由器，拥有一个虚拟IP（vip，也就是路由器所在局域网内其他机器的默认路由），占有这个IP的master实际负责ARP相应和转发IP数据包，组中的其它路由器作为备份的角色处于待命状态。master会发组播消息，当backup在超时时间内收不到vrrp包时就认为master宕掉了，这时就需要根据VRRP的优先级来选举一个backup当master，保证路由器的高可用。</p>
 <p>在VRRP协议实现里，虚拟路由器使用 00-00-5E-00-01-XX 作为虚拟MAC地址，XX就是唯一的 VRID （Virtual Router IDentifier），这个地址同一时间只有一个物理路由器占用。在虚拟路由器里面的物理路由器组里面通过多播IP地址 224.0.0.18 来定时发送通告消息。每个Router都有一个 1-255 之间的优先级别，级别最高的（highest priority）将成为主控（master）路由器。通过降低master的优先权可以让处于backup状态的路由器抢占（pro-empt）主路由器的状态，两个backup优先级相同的IP地址较大者为master，接管虚拟IP。</p>
 <h5 id="heartbeat-Corosync-Pacemaker"><a href="#heartbeat-Corosync-Pacemaker" class="headerlink" title="heartbeat / Corosync+Pacemaker"></a>heartbeat / Corosync+Pacemaker</h5><h6 id="一些慨念性问题"><a href="#一些慨念性问题" class="headerlink" title="一些慨念性问题"></a>一些慨念性问题</h6><ol>
-<li>集群事物信息层（massage layer）<br>传递集群事物信息</li>
+<li>集群事物信息层（massage layer）<br> 传递集群事物信息</li>
 </ol>
 <ol>
 <li><p>集群资源管理（Cluster Resource Manager）</p>
@@ -122,18 +122,19 @@
 </ol>
 <p>当节点发生故障时，心跳信息传递给CRM，CRM通过集群决策，决定哪个备用节点启动，但是CRM没有能力启动节点上的服务（资源），因此需要借助于RA来实现</p>
 <p>RA：Resource agent（服务启动的脚本？），能够被CRM调用，用于实现在节点上对某资源进行管理的工具，通常情况下是一个脚本。必须能够接受参数｛start|stop|restart|status｝。CRM会每隔固定时长（自定义）检查资源状态，因此status必须是runing或者stopped，而不能是否定状态的短语。</p>
-<p>####### 架构图<br><img src="/assets/img/ha/ha.png" alt=""></p>
+<p>####### 架构图<br><img src="../assets/img/ha/ha.png" alt=""></p>
 <p>简单描述下整个过程，在最底部的messaging layer，所有的节点都安装了heartbeat或者corosync等软件，节点之间能够互相通信，然后在上一层，资源管理层，CRM来统筹管理由messaging传递过来的信息，托举一个DC，DC运行了两个进程，pe和te，pe是策略引擎，它根据CIB（集群资源仓库）收集到的所有的资源配置信息（获取当前互动节点的信息），进行决策。连接到任何一个节点的CRM都可以配置CIB，然后就可以同步到DC中，DC再通知所有的节点。然后CRM通过LRM来管理资源管理，而LRM则调用RA来具体控制资源。</p>
 <p>在高可用的情况下，所有的资源都是由CRM控制LRM调用RA来控制，自动启动的，因此，不用让资源服务开机自动启动。一定要保证。可以通过chkconfig service off来停止开机自动启动服务</p>
 <p>DC发现集群中有一个节点发生故障，剔除掉，然后根据在CRM中配置的规则（比如倾向性，倾向于优先使用哪个备用服务器），然后通过底层信息将集群事务决策传递给备节点，备节点CRM收到来自底层的信息后，通知LRM，调用RA，启动资源。</p>
 <p>实现服务的高可用。一个服务由多个资源组成，例如一个web服务需要有vip、web服务、网页文件，又如lvs服务，至少有ipvs和规则等组成才能算是一个完整的服务。</p>
 <p>集群系统可以通过单播，组播，广播进行集群事务信息通告。</p>
 <h6 id="上文涉及的策略"><a href="#上文涉及的策略" class="headerlink" title="上文涉及的策略"></a>上文涉及的策略</h6><ol>
-<li><p>资源组：</p>
+<li>资源组：</li>
+</ol>
 <ul>
 <li>一组资源共进退，比如vip和ipvs</li>
 </ul>
-</li>
+<ol>
 <li><p>资源约束</p>
 <pre><code>* 排列约束（colation）：定义资源是否能够运行于同一节点
 
@@ -192,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/03/浅谈高可用集群套件-keepalived-Corosync-Pacemaker/" data-id="cjx4bixh4000jk0vtbqnafmb5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/03/浅谈高可用集群套件-keepalived-Corosync-Pacemaker/" data-id="cjzy4e2gu000j9wut53974xlg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -237,7 +238,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -248,6 +249,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/08/30/微服务网关/">微服务网关</a>
+          </li>
         
           <li>
             <a href="/2019/01/29/浅谈python/">浅谈python</a>
@@ -263,10 +268,6 @@
         
           <li>
             <a href="/2018/10/31/mysql操作/">mysql操作</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/02/机器学习/">机器学习</a>
           </li>
         
       </ul>
