@@ -15,9 +15,9 @@
 <meta property="og:description" content="摘要：大部分服务都是放在内网主机上，然后通过一个外网的路由进行访问控制，内网的主机是无法通过外网直接访问的，那么如何将家里内网的主机映射出来，使得在外面也可以访问到家里的电脑呢？如何在外网可以自由访问搭在内网的服务？">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://raw.githubusercontent.com/qxx666/frp/master/doc/pic/architecture.png">
-<meta property="og:image" content="http://yoursite.com/2018/01/19/assets/img/neiwaiys.png">
-<meta property="og:image" content="http://yoursite.com/2018/01/19/assets/img/frps.png">
-<meta property="og:updated_time" content="2019-08-30T12:52:05.538Z">
+<meta property="og:image" content="http://yoursite.com/assets/img/neiwaiys.png">
+<meta property="og:image" content="http://yoursite.com/assets/img/frps.png">
+<meta property="og:updated_time" content="2019-10-05T06:13:26.360Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="将内网主机映射到外网">
 <meta name="twitter:description" content="摘要：大部分服务都是放在内网主机上，然后通过一个外网的路由进行访问控制，内网的主机是无法通过外网直接访问的，那么如何将家里内网的主机映射出来，使得在外面也可以访问到家里的电脑呢？如何在外网可以自由访问搭在内网的服务？">
@@ -103,7 +103,7 @@
 <h4 id="详细过程"><a href="#详细过程" class="headerlink" title="详细过程"></a>详细过程</h4><p>原理：frp内网映射和Teamvew的工作原理是一样的，只是映射服务器得我们自己搭，在具有外网网卡的服务器上搭建frp的服务端，在需要被映射出来的主机上安装frp客户端，客户端会主动去连接服务器端，所以当我们去访问外网ip地址时，内网主机上的客户端会关注服务端的访问请求，当有服务请求时，内网客户端会主动去请求服务端的访问请求，因为是内网客户端的主动请求，所以可绕过内网限制。</p>
 <h6 id="架构图如下"><a href="#架构图如下" class="headerlink" title="架构图如下:"></a>架构图如下:</h6><p><img src="https://raw.githubusercontent.com/qxx666/frp/master/doc/pic/architecture.png" alt=""></p>
 <p>用户访问外网的IP地址，frps服务端会将访问请求转发给客户端进行处理，客户端收到请求后会将请求转发给本机的代理端口进行处理，监听在相应的端口的服务会收到请求，进行处理并返回给用户。</p>
-<h5 id="访问流程图："><a href="#访问流程图：" class="headerlink" title="访问流程图："></a>访问流程图：</h5><p><img src="../assets/img/neiwaiys.png" alt=""></p>
+<h5 id="访问流程图："><a href="#访问流程图：" class="headerlink" title="访问流程图："></a>访问流程图：</h5><p><img src="/assets/img/neiwaiys.png" alt=""></p>
 <p>1、申请一台可供外网访问的主机，可以去阿里云，腾讯云，亚马逊云等云服务供应商那去租一台主机，最小配置的即可，如果有信用卡可以免费租用亚马逊服务器一年</p>
 <p>2、下载frp软件包</p>
 <p> <a href="https://github.com/fatedier/frp/releases" target="_blank" rel="noopener">frp下载地址</a>根据不同系统下载相应的软件包</p>
@@ -114,12 +114,12 @@
 <p>在内网主机启动frpc服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup frpc -c frpc.ini 2&gt;&amp;1 &amp;  //在后台启动frpc</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat ./nohup.out 查看启动日志出现</span><br><span class="line">2018/03/15 18:01:57 [I] [control.go:479] [063bf4262e326d12] try to reconnect to server...</span><br><span class="line">2018/03/15 18:01:58 [I] [control.go:276] [063bf4262e326d12] login to server success, get run id [063bf4262e326d12]</span><br><span class="line">2018/03/15 18:01:58 [I] [control.go:411] [063bf4262e326d12] [gitlab] start proxy success</span><br><span class="line">代表启动成功</span><br></pre></td></tr></table></figure>
 <h4 id="服务端查看客户端的连接状况"><a href="#服务端查看客户端的连接状况" class="headerlink" title="服务端查看客户端的连接状况"></a>服务端查看客户端的连接状况</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -ntlp |grep frps</span><br><span class="line">在服务端可以看到客户端申请的端口号</span><br></pre></td></tr></table></figure>
-<p><img src="../assets/img/frps.png" alt=""></p>
+<p><img src="/assets/img/frps.png" alt=""></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/将内网主机映射到外网/" data-id="ck1d4w7m90006toutk6bf4dce" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/19/将内网主机映射到外网/" data-id="ck1d63kvn00067outvrpgbzlo" class="article-share-link">Share</a>
       
       
     </footer>
